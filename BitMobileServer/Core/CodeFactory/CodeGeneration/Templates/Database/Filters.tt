@@ -1,0 +1,232 @@
+﻿<#@ template language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+
+CREATE TABLE [admin].FiltersInfo([CreationTime] DATETIME, Anchor NTEXT, Scope VARCHAR(200), UserId UNIQUEIDENTIFIER)
+GO
+ALTER TABLE [admin].FiltersInfo ADD CONSTRAINT UQ_Admin_FiltersInfo UNIQUE NONCLUSTERED([CreationTime],[Scope])
+GO
+
+---------------------------------------------------------FILTER TABLES-------------------------------------------------------
+
+<# foreach(var entity in config.Entities){ #>
+
+<# if(entity.SyncFilterIsComplicated){ #>
+CREATE TABLE [<#= entity.Schema #>].[<#= entity.Name #>_filterids](
+	[ScopeId] INT NOT NULL,
+	[Id] UNIQUEIDENTIFIER NOT NULL,
+	[IsNew] INT NOT NULL
+)
+GO
+ALTER TABLE [<#= entity.Schema #>].[<#= entity.Name #>_filterids] ADD CONSTRAINT UQ_<#= entity.Schema #>_<#= entity.Name #>_filterids UNIQUE([ScopeId],[Id],[IsNew])
+GO
+
+CREATE PROCEDURE [<#= entity.Schema #>].[<#= entity.Name #>_adm_getfilterids] @UserId UNIQUEIDENTIFIER
+AS
+DECLARE @ScopeId INT
+SELECT TOP 1 @ScopeId = si.scope_local_id
+FROM [admin].FiltersInfo fi
+JOIN [dbo].scope_info si on si.[sync_scope_name] = fi.scope
+WHERE fi.UserId = @UserId
+ORDER BY fi.CreationTime DESC
+
+SELECT [base].[Id] 
+FROM [<#= entity.Schema #>].[<#= entity.Name #>] [base]
+JOIN [<#= entity.Schema #>].[<#= entity.Name #>_filterids] T ON T.Id = [base].[<#= entity.SyncFilterColumn #>]
+WHERE T.ScopeId = @ScopeId AND T.IsNew < 2
+OPTION (OPTIMIZE FOR(@ScopeId UNKNOWN))
+GO
+
+<#}#>
+
+<# foreach(var tabularSection in entity.TabularSections){ #>
+
+<# if(tabularSection.SyncFilterIsComplicated){ #>
+CREATE TABLE [<#= entity.Schema #>].[<#= entity.Name #>_<#= tabularSection.Name #>_filterids](
+	[ScopeId] INT NOT NULL,
+	[Id] UNIQUEIDENTIFIER NOT NULL,
+	[IsNew] INT NOT NULL
+)
+GO
+ALTER TABLE [<#= entity.Schema #>].[<#= entity.Name #>_<#= tabularSection.Name #>_filterids] ADD CONSTRAINT UQ_<#= entity.Schema #>_<#= entity.Name #>_<#= tabularSection.Name #>_filterids UNIQUE([ScopeId],[Id],[IsNew])
+GO
+<#}#>
+
+<#}#>
+<#}#>
+
+---------------------------------------------------------UPDATE FILTER PROC-------------------------------------------------------
+
+<# foreach(var entity in config.Entities){ #>
+<# if(entity.SyncFilterIsComplicatedEx){ #>
+
+<# if(entity.SyncFilterIsComplicated){ #>
+ALTER TABLE [<#= entity.Schema #>].[<#= entity.Name #>_filterids] ADD CONSTRAINT FK_<#= entity.Schema #>_<#= entity.Name #>_filterids FOREIGN KEY([Id]) REFERENCES [<#= entity.SyncFilterField.SqlLinkedSchema #>].[<#= entity.SyncFilterField.SqlLinkedTable #>]([Id])
+GO
+<#}#>
+
+<# foreach(var tabularSection in entity.TabularSections){ #>
+<# if(tabularSection.SyncFilterIsComplicated){ #>
+ALTER TABLE [<#= entity.Schema #>].[<#= entity.Name #>_<#= tabularSection.Name #>_filterids] ADD CONSTRAINT FK_<#= entity.Schema #>_<#= entity.Name #>_<#= tabularSection.Name #>_filterids FOREIGN KEY([Id]) REFERENCES [<#= tabularSection.SyncFilterField.SqlLinkedSchema #>].[<#= tabularSection.SyncFilterField.SqlLinkedTable #>]([Id])
+GO
+<#}#>
+<#}#>
+
+<#}#>
+<#}#>
+
+<# foreach(var entity in config.Entities){ #>
+<# if(entity.SyncFilterIsComplicatedEx){ #>
+
+CREATE PROCEDURE [<#= entity.Schema #>].[<#= entity.Name #>_updatefilters] @ScopeId INT, @FirstSync BIT, @SameAnchor BIT, @UserId UNIQUEIDENTIFIER
+AS
+SET NOCOUNT ON
+IF @FirstSync = 1
+BEGIN
+<# if(entity.SyncFilterIsComplicated){ #>
+DELETE FROM [<#= entity.Schema #>].[<#= entity.Name #>_filterids] WHERE ScopeId = @ScopeId
+INSERT INTO [<#= entity.Schema #>].[<#= entity.Name #>_filterids]([ScopeId],[Id],[IsNew])
+SELECT DISTINCT @ScopeId, [<#= entity.SyncFilterColumn #>], 0
+FROM [<#= entity.Schema #>].[<#= entity.Name #>] T
+WHERE <#= entity.SyncFilter2 #>
+<#}#>
+<# foreach(var tabularSection in entity.TabularSections){ #>
+<# if(tabularSection.SyncFilterIsComplicated){ #>
+DELETE FROM [<#= entity.Schema #>].[<#= entity.Name #>_<#= tabularSection.Name #>_filterids] WHERE ScopeId = @ScopeId
+INSERT INTO [<#= entity.Schema #>].[<#= entity.Name #>_<#= tabularSection.Name #>_filterids]([ScopeId],[Id],[IsNew])
+SELECT DISTINCT @ScopeId, [<#= tabularSection.SyncFilterColumn #>], 0 
+FROM [<#= entity.Schema #>].[<#= entity.Name #>_<#= tabularSection.Name #>] T
+WHERE <#= tabularSection.SyncFilter2 #>
+<#}#>
+<#}#>
+END
+ELSE
+BEGIN
+	<# if(entity.SyncFilterIsComplicated){ #>
+	IF @SameAnchor = 0
+	BEGIN
+		UPDATE [<#= entity.Schema #>].[<#= entity.Name #>_filterids] SET IsNew = 0 WHERE ScopeId = @ScopeId AND IsNew = 1
+		DELETE FROM [<#= entity.Schema #>].[<#= entity.Name #>_filterids] WHERE ScopeId = @ScopeId AND IsNew = 2
+	END
+
+	DECLARE @<#= entity.Schema #>_<#= entity.Name #> TABLE([<#= entity.SyncFilterColumn #>] UNIQUEIDENTIFIER)
+	INSERT @<#= entity.Schema #>_<#= entity.Name #>
+	SELECT DISTINCT [<#= entity.SyncFilterColumn #>] FROM [<#= entity.Schema #>].[<#= entity.Name #>] T
+	WHERE <#= entity.SyncFilter2 #>
+
+	INSERT INTO [<#= entity.Schema #>].[<#= entity.Name #>_filterids]([ScopeId],[Id], [IsNew])
+	SELECT @ScopeId, T.[<#= entity.SyncFilterColumn #>], 1
+	FROM @<#= entity.Schema #>_<#= entity.Name #> T
+	LEFT JOIN [<#= entity.Schema #>].[<#= entity.Name #>_filterids] T2 ON T2.Id = T.[<#= entity.SyncFilterColumn #>] AND T2.ScopeId = @ScopeId
+	WHERE T2.Id IS NULL
+	OPTION (OPTIMIZE FOR(@ScopeId UNKNOWN))
+
+	UPDATE [<#= entity.Schema #>].[<#= entity.Name #>_filterids] SET [IsNew] = 2
+	FROM [<#= entity.Schema #>].[<#= entity.Name #>_filterids] T2
+	LEFT JOIN @<#= entity.Schema #>_<#= entity.Name #> T ON T2.[Id] =  T.[<#= entity.SyncFilterColumn #>] AND T2.ScopeId = @ScopeId
+	WHERE T.[<#= entity.SyncFilterColumn #>] IS NULL AND T2.ScopeId = @ScopeId
+	OPTION (OPTIMIZE FOR(@ScopeId UNKNOWN))
+
+	<#}#>
+	<# foreach(var tabularSection in entity.TabularSections){ #>
+	<# if(tabularSection.SyncFilterIsComplicated){ #>
+
+	IF @SameAnchor = 0
+	BEGIN
+		UPDATE [<#= entity.Schema #>].[<#= entity.Name #>_<#= tabularSection.Name #>_filterids] SET IsNew = 0 WHERE ScopeId = @ScopeId AND IsNew = 1
+		DELETE FROM [<#= entity.Schema #>].[<#= entity.Name #>_<#= tabularSection.Name #>_filterids] WHERE ScopeId = @ScopeId AND IsNew = 2
+	END
+
+	DECLARE @<#= entity.Schema #>_<#= entity.Name #>_<#= tabularSection.Name #> TABLE([<#= tabularSection.SyncFilterColumn #>] UNIQUEIDENTIFIER)
+	INSERT @<#= entity.Schema #>_<#= entity.Name #>_<#= tabularSection.Name #>
+	SELECT DISTINCT [<#= tabularSection.SyncFilterColumn #>] FROM [<#= entity.Schema #>].[<#= entity.Name #>_<#= tabularSection.Name #>] T
+	WHERE <#= tabularSection.SyncFilter2 #>
+
+	INSERT INTO [<#= entity.Schema #>].[<#= entity.Name #>_<#= tabularSection.Name #>_filterids]([ScopeId],[Id], [IsNew])
+	SELECT @ScopeId, T.[<#= tabularSection.SyncFilterColumn #>], 1
+	FROM @<#= entity.Schema #>_<#= entity.Name #>_<#= tabularSection.Name #> T
+	LEFT JOIN [<#= entity.Schema #>].[<#= entity.Name #>_<#= tabularSection.Name #>_filterids] T2 ON T2.Id = T.[<#= tabularSection.SyncFilterColumn #>] AND T2.ScopeId = @ScopeId
+	WHERE T2.Id IS NULL
+	OPTION (OPTIMIZE FOR(@ScopeId UNKNOWN))
+
+	UPDATE [<#= entity.Schema #>].[<#= entity.Name #>_<#= tabularSection.Name #>_filterids] SET [IsNew] = 2
+	FROM [<#= entity.Schema #>].[<#= entity.Name #>_<#= tabularSection.Name #>_filterids] T2
+	LEFT JOIN @<#= entity.Schema #>_<#= entity.Name #>_<#= tabularSection.Name #> T ON T2.[Id] =  T.[<#= tabularSection.SyncFilterColumn #>] AND T2.ScopeId = @ScopeId
+	WHERE T.[<#= tabularSection.SyncFilterColumn #>] IS NULL AND T2.ScopeId = @ScopeId
+	OPTION (OPTIMIZE FOR(@ScopeId UNKNOWN))
+
+	<#}#>
+	<#}#>
+END
+GO
+<#}#>
+<#}#>
+
+CREATE PROCEDURE [admin].BeforeSyncSession @anchor NTEXT, @scope VARCHAR(200), @UserId UNIQUEIDENTIFIER
+AS
+SET NOCOUNT ON
+DECLARE @ScopeId INT
+SELECT @ScopeId = scope_local_id FROM dbo.scope_info WHERE sync_scope_name = @scope
+IF @ScopeId IS NULL
+BEGIN
+	RAISERROR('Scope "%s" not found', 16, 1, @scope)
+	RETURN
+END
+
+DECLARE @FirstSync BIT
+DECLARE @SameAnchor BIT
+SET @FirstSync = 1
+SET @SameAnchor = 1
+IF DATALENGTH(@anchor) <> 0
+BEGIN
+	SET @FirstSync = 0
+    DECLARE @lastAnchor VARCHAR(MAX)
+	SELECT @lastAnchor = CONVERT(VARCHAR(MAX), Anchor) FROM [admin].FiltersInfo WHERE Scope = @scope AND CreationTime = (SELECT MAX(CreationTime) FROM [admin].FiltersInfo WHERE Scope = @scope)
+	IF CONVERT(VARCHAR(MAX), @anchor) <> @lastAnchor
+		SET @SameAnchor = 0
+END
+
+<# foreach(var entity in config.Entities){ #>
+<# if(entity.SyncFilterIsComplicatedEx){ #>
+EXEC [<#= entity.Schema #>].[<#= entity.Name #>_updatefilters] @ScopeId, @FirstSync, @SameAnchor, @UserId
+<#}#>
+<#}#>
+INSERT INTO [admin].FiltersInfo([CreationTime], [Anchor], [Scope], [UserId]) SELECT GETDATE(), @anchor, @scope, @UserId
+GO
+
+
+CREATE PROCEDURE [admin].RemoveFilters
+AS
+BEGIN
+<# foreach(var entity in config.Entities){ #>
+
+<# if(entity.SyncFilterIsComplicated){ #>
+ALTER TABLE [<#= entity.Schema #>].[<#= entity.Name #>_filterids] DROP CONSTRAINT UQ_<#= entity.Schema #>_<#= entity.Name #>_filterids
+DROP TABLE [<#= entity.Schema #>].[<#= entity.Name #>_filterids]
+<#}#>
+
+<# foreach(var tabularSection in entity.TabularSections){ #>
+
+<# if(tabularSection.SyncFilterIsComplicated){ #>
+ALTER TABLE [<#= entity.Schema #>].[<#= entity.Name #>_<#= tabularSection.Name #>_filterids] DROP CONSTRAINT UQ_<#= entity.Schema #>_<#= entity.Name #>_<#= tabularSection.Name #>_filterids
+DROP TABLE [<#= entity.Schema #>].[<#= entity.Name #>_<#= tabularSection.Name #>_filterids]
+<#}#>
+
+<#}#>
+<#}#>
+
+<# foreach(var entity in config.Entities){ #>
+<# if(entity.SyncFilterIsComplicatedEx){ #>
+DROP PROCEDURE [<#= entity.Schema #>].[<#= entity.Name #>_updatefilters]
+<#}#>
+<#}#>
+
+DROP TABLE [admin].FiltersInfo
+DROP PROCEDURE [admin].BeforeSyncSession
+DROP PROCEDURE [admin].RemoveFilters
+
+END
+GO
+

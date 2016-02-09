@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Configuration Version="1.0.0.0" Name="LicensesDB">
+  <GlobalParameters/>
+  <Entities>
+
+    <Entity Schema="Catalog" Name="User" SyncUpload="True" SyncDownload="False" SyncFilter="t.[Id] = @UserId">
+      <Fields>
+        <Field Name="Predefined" AllowNull="true" Type="Boolean"/>
+        <Field Name="Id" Type="Guid" KeyField="true"/>
+        <Field Name="DeletionMark" AllowNull="true" Type="Boolean"/>
+        <Field Name="Description" AllowNull="false" Type="String" Length="100"/>
+        <Field Name="Code" AllowNull="true" Type="String" Length="9"/>
+        <Field Name="EMail" AllowNull="true" Type="String" Length="50"/>
+        <Field Name="UserID" AllowNull="true" Type="Guid"/>
+        <Field Name="UserName" AllowNull="false" Type="String" Length="100"/>
+        <Field Name="Role" AllowNull="true" Type="String" Length="25"/>
+        <Field Name="Password" AllowNull="true" Type="String" Length="100"/>
+      </Fields>
+      <TabularSections/>
+    </Entity>
+
+    <Entity Schema="Catalog" Name="Licences" SyncUpload="False" SyncDownload="False" SyncFilter="">
+      <Fields>
+        <Field Name="PredefinedName" AllowNull="true" Type="String" Length="256"/>
+        <Field Name="Predefined" AllowNull="true" Type="Boolean"/>
+        <Field Name="Id" Type="Guid" KeyField="true"/>
+        <Field Name="DeletionMark" AllowNull="true" Type="Boolean"/>
+        <Field Name="Description" AllowNull="false" Type="String" Length="150"/>
+        <Field Name="Code" AllowNull="true" Type="String" Length="9"/>
+      </Fields>
+      <TabularSections/>
+    </Entity>
+    
+  </Entities>
+</Configuration>

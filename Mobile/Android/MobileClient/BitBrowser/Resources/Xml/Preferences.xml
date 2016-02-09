@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+  <PreferenceCategory android:title="@string/settings">
+    <CheckBoxPreference
+      android:title=""
+      android:defaultValue="true"
+      android:summary=""
+      android:key="clearCache" />
+    <CheckBoxPreference
+      android:title=""
+      android:defaultValue="true"
+      android:summary=""
+      android:key="anonymousAccess" />
+    <EditTextPreference
+      android:name=""
+      android:title=""
+      android:key="url" />
+    <EditTextPreference
+      android:name=""
+      android:title=""
+      android:key="application" />
+    <EditTextPreference
+      android:name=""
+      android:title=""
+      android:key="user" />
+    <EditTextPreference
+      android:name=""
+      android:title=""
+      android:password="true"
+      android:key="password" />
+    <EditTextPreference
+      android:name=""
+      android:title=""
+      android:key="ftpPort" />
+    <EditTextPreference
+      android:name=""
+      android:title=""
+      android:key="platformVersion" />
+    <EditTextPreference
+      android:name=""
+      android:title=""
+      android:key="configuration" />
+    <EditTextPreference
+      android:name=""
+      android:title=""
+      android:key="version" />
+  </PreferenceCategory>
+</PreferenceScreen>

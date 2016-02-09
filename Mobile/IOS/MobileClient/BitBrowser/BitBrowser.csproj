@@ -1,0 +1,278 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">iPhoneSimulator</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{577ABD7F-51E4-4C96-A363-4392DDEFE2B6}</ProjectGuid>
+    <ProjectTypeGuids>{6BC8ED88-2882-458C-8E55-DFD12B67127B};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>BitMobile.IOS</RootNamespace>
+    <IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
+    <AssemblyName>BitBrowser</AssemblyName>
+    <SynchReleaseVersion>false</SynchReleaseVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhoneSimulator' ">
+    <DebugSymbols>True</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>False</Optimize>
+    <OutputPath>bin\iPhoneSimulator\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>False</ConsolePause>
+    <MtouchDebug>True</MtouchDebug>
+    <MtouchI18n>
+    </MtouchI18n>
+    <MtouchSdkVersion>6.0</MtouchSdkVersion>
+    <MtouchArch>ARMv7</MtouchArch>
+    <MtouchProfiling>true</MtouchProfiling>
+    <MtouchUseSGen>true</MtouchUseSGen>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhoneSimulator' ">
+    <DebugType>none</DebugType>
+    <Optimize>True</Optimize>
+    <OutputPath>bin\iPhoneSimulator\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>False</ConsolePause>
+    <MtouchLink>None</MtouchLink>
+    <MtouchI18n>
+    </MtouchI18n>
+    <MtouchArch>i386</MtouchArch>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhone' ">
+    <DebugSymbols>True</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>False</Optimize>
+    <OutputPath>bin\iPhone\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>False</ConsolePause>
+    <CodesignKey>iPhone Distribution</CodesignKey>
+    <MtouchDebug>True</MtouchDebug>
+    <MtouchArch>ARMv7</MtouchArch>
+    <MtouchI18n>
+    </MtouchI18n>
+    <IpaPackageName>
+    </IpaPackageName>
+    <MtouchProfiling>true</MtouchProfiling>
+    <MtouchUseSGen>true</MtouchUseSGen>
+    <CodesignProvision>c99cb72c-ded8-4710-aef3-4202430a41ba</CodesignProvision>
+    <MtouchLink>None</MtouchLink>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhone' ">
+    <DebugType>none</DebugType>
+    <Optimize>True</Optimize>
+    <OutputPath>bin\iPhone\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>False</ConsolePause>
+    <CodesignKey>iPhone Distribution: BIT Intellectual Technology Ltd.</CodesignKey>
+    <MtouchI18n>
+    </MtouchI18n>
+    <MtouchArch>ARMv7</MtouchArch>
+    <BuildIpa>true</BuildIpa>
+    <IpaPackageName>
+    </IpaPackageName>
+    <CodesignProvision>c99cb72c-ded8-4710-aef3-4202430a41ba</CodesignProvision>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Ad-Hoc|iPhone' ">
+    <DebugType>none</DebugType>
+    <Optimize>True</Optimize>
+    <OutputPath>bin\iPhone\Ad-Hoc</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>False</ConsolePause>
+    <BuildIpa>True</BuildIpa>
+    <CodesignKey>iPhone Distribution</CodesignKey>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'AppStore|iPhone' ">
+    <DebugType>none</DebugType>
+    <Optimize>True</Optimize>
+    <OutputPath>bin\iPhone\AppStore</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>False</ConsolePause>
+    <CodesignKey>iPhone Distribution</CodesignKey>
+    <IpaPackageName>
+    </IpaPackageName>
+    <MtouchI18n>
+    </MtouchI18n>
+    <MtouchArch>ARMv7</MtouchArch>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core" />
+    <Reference Include="monotouch" />
+    <Reference Include="System.Json" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="ZXing.Net.Mobile">
+      <HintPath>..\Components\zxing.net.mobile-1.4.5\lib\ios\ZXing.Net.Mobile.dll</HintPath>
+    </Reference>
+    <Reference Include="zxing.monotouch">
+      <HintPath>..\Components\zxing.net.mobile-1.4.5\lib\ios\zxing.monotouch.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Info.plist" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Main.cs" />
+    <Compile Include="AppDelegate.cs" />
+    <Compile Include="ApplicationContext\ApplicationContext.cs" />
+    <Compile Include="Controllers\NavigationController.cs" />
+    <Compile Include="Controllers\ScreenController.cs" />
+    <Compile Include="Controllers\ProgressController.cs" />
+    <Compile Include="ApplicationContext\Settings.cs" />
+    <Compile Include="Controllers\LogonController.cs" />
+    <Compile Include="MailSender.cs" />
+    <Compile Include="StyleSheet\DeviceHardware.cs" />
+    <Compile Include="ExceptionHandler.cs" />
+    <Compile Include="StyleSheet\IOSStyleSheet.cs" />
+    <Compile Include="Controls\Button.cs" />
+    <Compile Include="Controls\CheckBox.cs" />
+    <Compile Include="Controls\DockLayout.cs" />
+    <Compile Include="Controls\EditText.cs" />
+    <Compile Include="Controls\HorizontalLayout.cs" />
+    <Compile Include="Controls\HorizontalLine.cs" />
+    <Compile Include="Controls\Image.cs" />
+    <Compile Include="Controls\Indicator.cs" />
+    <Compile Include="Controls\MemoEdit.cs" />
+    <Compile Include="Controls\Screen.cs" />
+    <Compile Include="Controls\ScrollView.cs" />
+    <Compile Include="Controls\TextView.cs" />
+    <Compile Include="Controls\VerticalLayout.cs" />
+    <Compile Include="Controls\WebImage.cs" />
+    <Compile Include="Controls\WebMapGoogle.cs" />
+    <Compile Include="Controls\WebView.cs" />
+    <Compile Include="Controls\CustomLayout.cs" />
+    <Compile Include="Controls\SubmitButton.cs" />
+    <Compile Include="Controls\CustomSwipeLayout.cs" />
+    <Compile Include="Controls\SwipeVerticalLayout.cs" />
+    <Compile Include="Controls\SwipeHorizontalLayout.cs" />
+    <Compile Include="StyleSheet\StyleHelper.cs" />
+    <Compile Include="NsUrlSession\NSUrlDownloadDelegate.cs" />
+    <Compile Include="NsUrlSession\NSUrlUploadDelegate.cs" />
+    <Compile Include="NsUrlSession\NSUrlCacheRequestHandler.cs" />
+    <Compile Include="ApplicationContext\DatePicker.cs" />
+    <Compile Include="Controllers\StartScreenController.cs" />
+    <Compile Include="UI\Control%27.cs" />
+    <Compile Include="UI\Control.cs" />
+    <Compile Include="Providers\GPSTracker.cs" />
+    <Compile Include="Providers\GPSProvider.cs" />
+    <Compile Include="Providers\GalleryProvider.cs" />
+    <Compile Include="Providers\CameraProvider.cs" />
+    <Compile Include="Providers\ImagePickerProvider.cs" />
+    <Compile Include="NsUrlSession\NSUrlEventArgs.cs" />
+    <Compile Include="Providers\DialogProvider.cs" />
+    <Compile Include="UI\TabOrderManager.cs" />
+    <Compile Include="Providers\ClipboardProvider.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.MonoTouch.CSharp.targets" />
+  <ItemGroup>
+    <BundleResource Include="Settings.bundle\Root.plist" />
+    <BundleResource Include="Settings.bundle\ru.lproj\Root.strings" />
+    <BundleResource Include="Settings.bundle\en.lproj\Root.strings" />
+    <BundleResource Include="Resources\Default-568h%402x.png" />
+    <BundleResource Include="Resources\Default%402x.png" />
+    <BundleResource Include="Resources\Icon-72.png" />
+    <BundleResource Include="Resources\warning.png" />
+    <BundleResource Include="Resources\Icon-60%402x.png" />
+    <BundleResource Include="Resources\Icon-76.png" />
+    <BundleResource Include="Resources\BitMobileBottom.png" />
+    <BundleResource Include="Resources\BitMobileTop.png" />
+    <BundleResource Include="Resources\Lock.png" />
+    <BundleResource Include="Resources\Password.png" />
+    <BundleResource Include="Resources\UserName.png" />
+    <BundleResource Include="Resources\SuperAgentBottom.png" />
+    <BundleResource Include="Resources\SuperAgentLogo.png" />
+    <BundleResource Include="Resources\SuperAgentTop.png" />
+    <BundleResource Include="Resources\SuperServiceBottom.png" />
+    <BundleResource Include="Resources\SuperServiceLogo.png" />
+    <BundleResource Include="Resources\SuperServiceTop.png" />
+    <BundleResource Include="Icons\SuperAgent\Icon-60%402x.png" />
+    <BundleResource Include="Icons\SuperAgent\Icon-72.png" />
+    <BundleResource Include="Icons\SuperAgent\Icon-76.png" />
+    <BundleResource Include="Icons\SuperAgent\Icon.png" />
+    <BundleResource Include="Icons\SuperAgent\IconSuperAgent.png" />
+    <BundleResource Include="Icons\BitMobile\76x76.png" />
+    <BundleResource Include="Icons\BitMobile\72x72.png" />
+    <BundleResource Include="Icons\BitMobile\57x57.png" />
+    <BundleResource Include="Icons\BitMobile\120x120.png" />
+    <BundleResource Include="Icons\SuperService\icon120.png" />
+    <BundleResource Include="Icons\SuperService\icon57.png" />
+    <BundleResource Include="Icons\SuperService\icon72.png" />
+    <BundleResource Include="Icons\SuperService\icon76.png" />
+    <BundleResource Include="Resources\LandLogo.png" />
+    <BundleResource Include="Resources\LandSuperServiceLogo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Core\BusinessProcess\BusinessProcess.MT.csproj">
+      <Project>{B85CC02A-B684-45A2-B1ED-8C96F54D6210}</Project>
+      <Name>BusinessProcess.MT</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Core\ValueStack\ValueStack.MT.csproj">
+      <Project>{B762BEA2-EC23-4778-91EA-674DBB35E424}</Project>
+      <Name>ValueStack.MT</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Core\Controls\Controls.MT.csproj">
+      <Project>{C1D88325-4E90-41B9-91E3-CDE6E31F8C21}</Project>
+      <Name>Controls.MT</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Core\DAL\DAL.MT.csproj">
+      <Project>{E7C6DE02-78AA-4D2E-ADCB-119208C21234}</Project>
+      <Name>DAL.MT</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Core\StyleSheet\StyleSheet.MT.csproj">
+      <Project>{0BA68CF9-8AFB-49FA-96D8-D5A9FF38F91A}</Project>
+      <Name>StyleSheet.MT</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Core\SyncLibrary\SyncLibrary.MT.csproj">
+      <Project>{CEF0751A-9DB4-43E2-93B4-C72F9C3698ED}</Project>
+      <Name>SyncLibrary.MT</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Core\Utilities\Utilities.MT.csproj">
+      <Project>{A464059D-A4E2-4176-BE0D-A1087DF218D2}</Project>
+      <Name>Utilities.MT</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Core\Common\Common.csproj">
+      <Project>{1765FE35-1DA7-40D7-B7D6-5705441B395D}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Core\Debujjer\Debujjer.csproj">
+      <Project>{524C9016-AAAF-4EF8-B9C0-DD9929A493B9}</Project>
+      <Name>Debujjer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Core\DbEngine\DbEngine.MT.csproj">
+      <Project>{7979A2EF-8878-476F-991A-FFE8AC7500DF}</Project>
+      <Name>DbEngine.MT</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Resources\" />
+    <Folder Include="Settings.bundle\ru.lproj\" />
+    <Folder Include="Settings.bundle\en.lproj\" />
+    <Folder Include="en.lproj\" />
+    <Folder Include="UI\" />
+    <Folder Include="NsUrlSession\" />
+    <Folder Include="Icons\" />
+    <Folder Include="Icons\BitMobile\" />
+    <Folder Include="Icons\SuperAgent\" />
+    <Folder Include="Icons\SuperService\" />
+    <Folder Include="Providers\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="en.lproj\InfoPlist.strings" />
+    <Content Include="ru.lproj\InfoPlist.strings" />
+  </ItemGroup>
+  <ItemGroup>
+    <XamarinComponentReference Include="zxing.net.mobile">
+      <Version>1.4.5</Version>
+      <Visible>False</Visible>
+    </XamarinComponentReference>
+  </ItemGroup>
+</Project>

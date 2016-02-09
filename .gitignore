@@ -1,0 +1,68 @@
+# Java
+.metadata/
+bin/
+**/WEB-INF/lib/
+*.class
+
+#ignore thumbnails created by windows
+Thumbs.db
+#Ignore files build by Visual Studio
+*.obj
+*.exe
+*.pdb
+*.user
+*.aps
+*.pch
+*.vspscc
+*_i.c
+*_p.c
+*.ncb
+*.suo
+*.tlb
+*.tlh
+*.bak
+*.cache
+*.ilk
+*.log
+[Bb]in
+[Dd]ebug/
+*.lib
+*.sbr
+obj/
+[Rr]elease*/
+_ReSharper*/
+[Tt]est[Rr]esult*
+SyncService/SyncService/Solutions/*
+SyncService/SyncService/solutions/
+.DS_Store
+*.orig
+*.userprefs
+Resource.Designer.cs
+
+*.userprefs
+BitMobileServer/UpgradeLog2.htm
+BitMobileServer/UpgradeLog2.XML
+
+*.userprefs
+
+Mobile/Core/DAL/ClientConstants.cs
+Mobile/Core/DAL/Client.cs
+Mobile/Core/DAL/ClientMetadata.cs
+
+/.DS_Store
+BitMobileServer/Utils/Tests/test.js
+
+Mobile/IOS/MobileClient/MobileClient.userprefs
+Mobile/Android/MobileClient/BitBrowser/Resources/Resource.Designer.cs
+BitMobileServer/packages
+MobileClient/Components
+.vs/
+Mobile/Android/MobileClient/BitBrowser/Resources/Resource.Designer.cs
+# NuGet Packages
+*.nupkg
+# The packages folder can be ignored because of Package Restore
+**/packages/*
+# except build/, which is used as an MSBuild target.
+!**/packages/build/
+# Uncomment if necessary however generally it will be regenerated when needed
+#!**/packages/repositories.config

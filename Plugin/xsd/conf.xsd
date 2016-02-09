@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:c="BitMobile.Configuration" targetNamespace="BitMobile.Configuration" elementFormDefault="qualified">
+
+	<xs:element name="BusinessProcess">
+		<xs:complexType>
+			<xs:attribute name="File" type="xs:string" use="required"/>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="DefaultStyle">
+		<xs:complexType>
+			<xs:attribute name="File" type="xs:string" use="required"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="GlobalEvents">
+		<xs:complexType>
+			<xs:attribute name="File" type="xs:string" use="required"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Mixin">
+		<xs:complexType>
+			<xs:attribute name="File" type="xs:string" use="required"/>
+			<xs:attribute name="Target" type="xs:string" use="required"/>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="Module">
+		<xs:complexType>
+			<xs:attribute name="File" type="xs:string" use="required"/>
+			<xs:attribute name="Name" type="xs:string" use="required"/>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="WarmupAction">
+		<xs:complexType>
+			<xs:attribute name="Controller" type="xs:string" use="required"/>
+			<xs:attribute name="Function" type="xs:string" use="required"/>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="Configuration">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:any namespace="##any" minOccurs="0" maxOccurs="unbounded"></xs:any>
+			</xs:sequence>				
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="DefaultStyles">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:any namespace="##any" minOccurs="0" maxOccurs="unbounded"></xs:any>
+			</xs:sequence>				
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="Script">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:any namespace="##any" minOccurs="0" maxOccurs="unbounded"></xs:any>
+			</xs:sequence>				
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="Mixins">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:any namespace="##any" minOccurs="0" maxOccurs="unbounded"></xs:any>
+			</xs:sequence>				
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="GlobalModules">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:any namespace="##any" minOccurs="0" maxOccurs="unbounded"></xs:any>
+			</xs:sequence>				
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="WarmupActions">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:any namespace="##any" minOccurs="0" maxOccurs="unbounded"></xs:any>
+			</xs:sequence>				
+		</xs:complexType>
+	</xs:element>
+
+
+</xs:schema>
+

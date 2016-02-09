@@ -1,0 +1,20 @@
+﻿/* ReSharper disable All */
+button {
+    font: 90% arial;
+}
+
+hl button {
+    font: 50% arial;
+}
+
+.small {
+    font: 10% arial;
+}
+
+.small button {
+    font: 70% arial;
+}
+
+hl small {
+    font: 30% arial;
+}

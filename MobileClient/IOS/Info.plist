@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleIconFiles</key>
+	<array>
+		<string>Icons/BitMobile/57x57</string>
+		<string>Icons/BitMobile/120x120</string>
+		<string>Icons/BitMobile/72x72</string>
+		<string>Icons/BitMobile/76x76</string>
+	</array>
+	<key>UIDeviceFamily</key>
+	<array>
+		<integer>1</integer>
+		<integer>2</integer>
+	</array>
+	<key>UISupportedInterfaceOrientations</key>
+	<array>
+		<string>UIInterfaceOrientationPortrait</string>
+	</array>
+	<key>MinimumOSVersion</key>
+	<string>8.1</string>
+	<key>UIStatusBarStyle</key>
+	<string>UIStatusBarStyleBlackOpaque</string>
+	<key>LSHasLocalizedDisplayName</key>
+	<true/>
+	<key>CFBundleDisplayName</key>
+	<string>BitMobile</string>
+	<key>CFBundleShortVersionString</key>
+	<string>2.4.10</string>
+	<key>CFBundleResourceSpecification</key>
+	<string>ResourceRules.plist</string>
+	<key>CFBundleIdentifier</key>
+	<string>ru.firstbit.bitmobile</string>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>location</string>
+		<string>remote-notification</string>
+	</array>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>Allow location to be used in the background</string>
+	<key>CFBundleVersion</key>
+	<string></string>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+	</dict>
+</dict>
+</plist>

@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<WixLocalization Culture="ru-ru" xmlns="http://schemas.microsoft.com/wix/2006/localization">
+  <String Id="ChooseDatabaseTitle" Overridable="yes">Подключение к серверу баз данных</String>
+  <String Id="ChooseDatabaseDescription" Overridable="yes">Укажите настройки подключения к серверу БД</String>
+  <String Id="ChooseDatabase" Overridable="yes">Выберите сервер БД</String>
+  <String Id="DatabaseServerAddress" Overridable="yes">Сервер (IP-адрес или имя):</String>
+  <String Id="DatabaseIntegratedAuthTitle" Overridable="yes">Доверенные (проверка подлинности Windows)</String>
+  <String Id="DatabaseAccountTitle" Overridable="yes">Задать имя пользователя и пароль (проверка подлинности SQL)</String>
+  <String Id="UsernameTitle" Overridable="yes">Имя пользователя:</String>
+  <String Id="PasswordTitle" Overridable="yes">Пароль:</String>
+  <String Id="SqlConnectTitle" Overridable="yes">Проверить подключение</String>
+  <String Id="SqlConnectFailedTitel" Overridable="yes">Ошибка подключения</String>
+</WixLocalization>

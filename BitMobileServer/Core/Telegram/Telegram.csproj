@@ -1,0 +1,115 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{5561CD72-536A-4F6F-B7CE-F50E5D9F0C90}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Telegram</RootNamespace>
+    <AssemblyName>Telegram</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Api\Authorize\AuthKeyCreator.cs" />
+    <Compile Include="Api\DecodeException.cs" />
+    <Compile Include="Api\Authorize\EncryptedData.cs" />
+    <Compile Include="Api\Authorize\EncryptedMessage.cs" />
+    <Compile Include="Api\Authorize\PlainMessage.cs" />
+    <Compile Include="Api\Provider.cs" />
+    <Compile Include="Api\Combinator.cs" />
+    <Compile Include="Api\Cryptography\Aes256IgeManaged.cs" />
+    <Compile Include="Api\Cryptography\Crc32.cs" />
+    <Compile Include="Api\Cryptography\DHKeyGeneration.cs" />
+    <Compile Include="Api\Cryptography\DHParameters.cs" />
+    <Compile Include="Api\Cryptography\DiffieHellman.cs" />
+    <Compile Include="Api\Cryptography\DiffieHellmanManaged.cs" />
+    <Compile Include="Api\Math\BigInteger.cs" />
+    <Compile Include="Api\Math\ConfidenceFactor.cs" />
+    <Compile Include="Api\Math\MiniParser.cs" />
+    <Compile Include="Api\Math\NextPrimeFinder.cs" />
+    <Compile Include="Api\Math\Pem.cs" />
+    <Compile Include="Api\Math\PrimalityTests.cs" />
+    <Compile Include="Api\Math\PrimeGeneratorBase.cs" />
+    <Compile Include="Api\Math\SecurityParser.cs" />
+    <Compile Include="Api\Math\SequentialSearchPrimeGeneratorBase.cs" />
+    <Compile Include="Api\Helpers\BinaryExtensionMethods.cs" />
+    <Compile Include="Api\Helpers\BinaryHelper.cs" />
+    <Compile Include="ITelegramPersist.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Api\Schema\Constructor.cs" />
+    <Compile Include="Api\Schema\Method.cs" />
+    <Compile Include="Api\Schema\Param.cs" />
+    <Compile Include="Api\Schema\SchemaCombinator.cs" />
+    <Compile Include="Api\Service\RpcAnswer.cs" />
+    <Compile Include="Api\Service\RpcError.cs" />
+    <Compile Include="Api\SessionContainer.cs" />
+    <Compile Include="Api\Sessions\EncryptedMtProtoSession.cs" />
+    <Compile Include="Api\Sessions\PlainMTProtoSession.cs" />
+    <Compile Include="Api\Settings.cs" />
+    <Compile Include="Schema\Shemas.cs" />
+    <Compile Include="TelegramClient.cs" />
+    <Compile Include="TelegramFactory.cs" />
+    <Compile Include="TlException.cs" />
+    <Compile Include="Api\Translation\Formatter.cs" />
+    <Compile Include="Api\Translation\IFormatter.cs" />
+    <Compile Include="Api\Translation\Lexer.cs" />
+    <Compile Include="Api\Schema\ApiSchema.cs" />
+    <Compile Include="Api\TransportLayer\TcpConnection.cs" />
+    <Compile Include="Api\TransportLayer\TcpTransport.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ScriptEngine\ScriptEngine.csproj">
+      <Project>{75662e4f-457e-46a1-890a-98f3406b7ea7}</Project>
+      <Name>ScriptEngine</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

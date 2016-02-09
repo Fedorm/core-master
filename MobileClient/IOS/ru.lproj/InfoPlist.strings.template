@@ -1,0 +1,3 @@
+﻿// Label of application for russian language. Required. Depends of solution type. Values: "БИТ.Мобайл", "БИТ.СуперАгент", "БИТ.СуперСервис"
+CFBundleDisplayName = %label%; 
+CFBundleName = %label%;

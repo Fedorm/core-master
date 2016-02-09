@@ -1,0 +1,85 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{A464059D-A4E2-4176-BE0D-A1087DF218D2}</ProjectGuid>
+    <ProjectTypeGuids>{6BC8ED88-2882-458C-8E55-DFD12B67127B};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <RootNamespace>Utilities</RootNamespace>
+    <IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
+    <AssemblyName>Utilities</AssemblyName>
+    <ReleaseVersion>1.5.8.42</ReleaseVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>True</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>False</Optimize>
+    <OutputPath>bin\iPhone\Debug</OutputPath>
+    <DefineConstants>DEBUG</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>False</ConsolePause>
+    <MtouchDebug>True</MtouchDebug>
+    <CodesignKey>iPhone Developer</CodesignKey>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>none</DebugType>
+    <Optimize>True</Optimize>
+    <OutputPath>bin\iPhone\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>False</ConsolePause>
+    <CodesignKey>iPhone Developer</CodesignKey>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Develop\Debug.cs" />
+    <Compile Include="Develop\TimeStamp.cs" />
+    <Compile Include="Develop\TimeCollector.cs" />
+    <Compile Include="Exceptions\AutorizationException.cs" />
+    <Compile Include="Exceptions\ConnectionException.cs" />
+    <Compile Include="Exceptions\CustomException.cs" />
+    <Compile Include="Exceptions\InternalServerException.cs" />
+    <Compile Include="Exceptions\ResourceNotFoundException.cs" />
+    <Compile Include="Exceptions\JSException.cs" />
+    <Compile Include="LogManager\JSONParser.cs" />
+    <Compile Include="LogManager\Log.cs" />
+    <Compile Include="LogManager\LogSerializer.cs" />
+    <Compile Include="LogManager\NonLogAttribute.cs" />
+    <Compile Include="Translator\Translator.cs" />
+    <Compile Include="Translator\D.cs" />
+    <Compile Include="Exceptions\InvalidVersionException.cs" />
+    <Compile Include="Exceptions\LicenseException.cs" />
+    <Compile Include="Exceptions\Handler\CustomExceptionHandler.cs" />
+    <Compile Include="Exceptions\NonFatalException.cs" />
+    <Compile Include="Exceptions\InputOutputException.cs" />
+    <Compile Include="IO\FileSystemProvider.cs" />
+    <Compile Include="IO\FtpProvider.cs" />
+    <Compile Include="IO\Item.cs" />
+    <Compile Include="IO\Provider.cs" />
+    <Compile Include="IO\IRemoteProvider.cs" />
+    
+    <Compile Include="IO\WebDAVProvider.cs" />
+    <Compile Include="StringHelperExtension.cs" />
+	<Compile Include="DateTimeExtension.cs" />
+    <Compile Include="Exceptions\JsGlobalException.cs" />
+    <Compile Include="LogManager\Zendesk.cs" />
+  </ItemGroup>
+  <ItemGroup>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core" />
+    <Reference Include="monotouch" />
+    <Reference Include="System.Web.Services" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.MonoTouch.CSharp.targets" />
+  <ItemGroup>
+    <Folder Include="Exceptions\" />
+    <Folder Include="Exceptions\Handler\" />
+    <Folder Include="IO\" />
+  </ItemGroup>
+</Project>

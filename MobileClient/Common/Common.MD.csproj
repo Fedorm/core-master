@@ -1,0 +1,209 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{774597B4-F92C-4C09-AFD8-C78E654813EB}</ProjectGuid>
+    <ProjectTypeGuids>{EFBA0AD7-5A72-4C68-AF49-83D382785DCF};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>BitMobile.Common</RootNamespace>
+    <AssemblyName>Common</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+    <AndroidResgenFile>Resources\Resource.Designer.cs</AndroidResgenFile>
+    <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="mscorlib" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Application\Exceptions\IExceptionHandler.cs" />
+    <Compile Include="Application\IApplicationContext.cs" />
+    <Compile Include="Application\IApplicationSettings.cs" />
+    <Compile Include="Application\SolutionType.cs" />
+    <Compile Include="Application\Tracking\ITracker.cs" />
+    <Compile Include="BusinessProcess\Controllers\IController.cs" />
+    <Compile Include="BusinessProcess\Controllers\IGlobalEventsController.cs" />
+    <Compile Include="BusinessProcess\Controllers\IScreenController.cs" />
+    <Compile Include="BusinessProcess\Factory\IBusinessProcessFactory.cs" />
+    <Compile Include="BusinessProcess\Factory\IConfigurationFactory.cs" />
+    <Compile Include="BusinessProcess\Factory\IControllerFactory.cs" />
+    <Compile Include="BusinessProcess\Factory\IObjectFactory.cs" />
+    <Compile Include="BusinessProcess\Factory\IScreenFactory.cs" />
+    <Compile Include="BusinessProcess\IBusinessProcessContext.cs" />
+    <Compile Include="Controls\DataBindAttribute.cs" />
+    <Compile Include="Controls\IActionHandler.cs" />
+    <Compile Include="Controls\IActionHandlerEx.cs" />
+    <Compile Include="Controls\IComponent.cs" />
+    <Compile Include="Controls\ILayoutableContainerBehaviour.cs" />
+    <Compile Include="Controls\IControlsContext.cs" />
+    <Compile Include="Controls\IDataBinder.cs" />
+    <Compile Include="Controls\IInputValidator.cs" />
+    <Compile Include="Controls\ILayoutable.cs" />
+    <Compile Include="Controls\ILayoutableContainer.cs" />
+    <Compile Include="Controls\ILayoutBehaviour.cs" />
+    <Compile Include="Controls\ILocker.cs" />
+    <Compile Include="Controls\ISwipeBehaviour.cs" />
+    <Compile Include="Controls\IWebMapBehavior.cs" />
+    <Compile Include="Controls\MarkupElement.cs" />
+    <Compile Include="CoreInformation.cs" />
+    <Compile Include="DataAccessLayer\IDalContext.cs" />
+    <Compile Include="DataAccessLayer\ITranslator.cs" />
+    <Compile Include="DbEngine\IDbContext.cs" />
+    <Compile Include="DbEngine\IDbRefFactory.cs" />
+    <Compile Include="DbEngine\ProcessMode.cs" />
+    <Compile Include="Debugger\IDebugContext.cs" />
+    <Compile Include="Develop\Assert.cs" />
+    <Compile Include="Develop\TimeCollector.cs" />
+    <Compile Include="Develop\TimeStamp.cs" />
+    <Compile Include="Device\Providers\IClipboardProvider.cs" />
+    <Compile Include="BusinessProcess\WorkingProcess\IAction.cs" />
+    <Compile Include="BusinessProcess\WorkingProcess\IBusinessProcess.cs" />
+    <Compile Include="BusinessProcess\WorkingProcess\IStep.cs" />
+    <Compile Include="BusinessProcess\WorkingProcess\IWorkflow.cs" />
+    <Compile Include="BusinessProcess\SolutionConfiguration\IBusinessProcess.cs" />
+    <Compile Include="BusinessProcess\SolutionConfiguration\IConfiguration.cs" />
+    <Compile Include="BusinessProcess\SolutionConfiguration\IDefaultStyles.cs" />
+    <Compile Include="BusinessProcess\SolutionConfiguration\IGlobalEvents.cs" />
+    <Compile Include="BusinessProcess\SolutionConfiguration\IGlobalModules.cs" />
+    <Compile Include="BusinessProcess\SolutionConfiguration\IMixins.cs" />
+    <Compile Include="BusinessProcess\SolutionConfiguration\IScript.cs" />
+    <Compile Include="BusinessProcess\SolutionConfiguration\IStyle.cs" />
+    <Compile Include="BusinessProcess\SolutionConfiguration\IWarmupActions.cs" />
+    <Compile Include="Controls\IApplicationContextAware.cs" />
+    <Compile Include="Controls\IContainer.cs" />
+    <Compile Include="Controls\IControl.cs" />
+    <Compile Include="Controls\IDataBind.cs" />
+    <Compile Include="Controls\IFocusable.cs" />
+    <Compile Include="Controls\IPersistable.cs" />
+    <Compile Include="Controls\IRectangle.cs" />
+    <Compile Include="Controls\IScreen.cs" />
+    <Compile Include="Controls\IScreenData.cs" />
+    <Compile Include="Controls\IValidatable.cs" />
+    <Compile Include="DataAccessLayer\IDal.cs" />
+    <Compile Include="DataAccessLayer\ISyncEventArgs.cs" />
+    <Compile Include="DataAccessLayer\SyncEventHandler.cs" />
+    <Compile Include="DbEngine\IDatabase.cs" />
+    <Compile Include="DbEngine\IDatabaseAware.cs" />
+    <Compile Include="DbEngine\IDbCache.cs" />
+    <Compile Include="DbEngine\IDbRecordset.cs" />
+    <Compile Include="DbEngine\IDbRecordsetEx.cs" />
+    <Compile Include="DbEngine\IDbRef.cs" />
+    <Compile Include="DbEngine\IDbTransaction.cs" />
+    <Compile Include="DbEngine\ISqliteEntity.cs" />
+    <Compile Include="Debugger\IDebugger.cs" />
+    <Compile Include="Debugger\IDebuggerAware.cs" />
+    <Compile Include="Device\Providers\ICameraProvider.cs" />
+    <Compile Include="Device\Providers\IDialogButton.cs" />
+    <Compile Include="Device\Providers\IDialogProvider.cs" />
+    <Compile Include="Device\Providers\IDisplayProvider.cs" />
+    <Compile Include="Device\Providers\IEmailProvider.cs" />
+    <Compile Include="Device\Providers\IGalleryProvider.cs" />
+    <Compile Include="Device\Providers\IGpsCoordinate.cs" />
+    <Compile Include="Device\Providers\ILocalNotificationProvider.cs" />
+    <Compile Include="Device\Providers\ILocationProvider.cs" />
+    <Compile Include="Device\Providers\IWebProvider.cs" />
+    <Compile Include="Entites\IEntityField.cs" />
+    <Compile Include="Entites\IEntityType.cs" />
+    <Compile Include="ExpressionEvaluator\IEvaluator.cs" />
+    <Compile Include="ExpressionEvaluator\IExpressionContext.cs" />
+    <Compile Include="ExpressionEvaluator\IExpressionFactory.cs" />
+    <Compile Include="IO\FileSystemItem.cs" />
+    <Compile Include="IO\IIOContext.cs" />
+    <Compile Include="IO\ILocalProvider.cs" />
+    <Compile Include="IO\IFile.cs" />
+    <Compile Include="IO\IRemoteProvider.cs" />
+    <Compile Include="Log\IFileSystemReport.cs" />
+    <Compile Include="Log\ILog.cs" />
+    <Compile Include="Log\ILoggable.cs" />
+    <Compile Include="Log\ILogger.cs" />
+    <Compile Include="Log\IReport.cs" />
+    <Compile Include="Log\IReporter.cs" />
+    <Compile Include="Log\IReportSender.cs" />
+    <Compile Include="Log\NonLogAttribute.cs" />
+    <Compile Include="Log\ReportType.cs" />
+    <Compile Include="ScriptEngine\IDebugInformation.cs" />
+    <Compile Include="ScriptEngine\IGlobalModule.cs" />
+    <Compile Include="ScriptEngine\IJsExecutable.cs" />
+    <Compile Include="ScriptEngine\Injection.cs" />
+    <Compile Include="ScriptEngine\IScriptEngine.cs" />
+    <Compile Include="ScriptEngine\IScriptEngineAware.cs" />
+    <Compile Include="ScriptEngine\IScriptEngineContext.cs" />
+    <Compile Include="StyleSheet\BorderStyleValues.cs" />
+    <Compile Include="StyleSheet\IBound.cs" />
+    <Compile Include="StyleSheet\IColorInfo.cs" />
+    <Compile Include="StyleSheet\IStyleKey.cs" />
+    <Compile Include="StyleSheet\IStyleKeyPart.cs" />
+    <Compile Include="StyleSheet\IStyleHelper.cs" />
+    <Compile Include="StyleSheet\IStyleSheetContext.cs" />
+    <Compile Include="StyleSheet\Styles.cs" />
+    <Compile Include="StyleSheet\SynonymAttribute.cs" />
+    <Compile Include="StyleSheet\TextFormatValues.cs" />
+    <Compile Include="StyleSheet\WhiteSpaceKind.cs" />
+    <Compile Include="StyleSheet\TextAlignValues.cs" />
+    <Compile Include="StyleSheet\DockAlignValues.cs" />
+    <Compile Include="StyleSheet\HorizontalAlignValues.cs" />
+    <Compile Include="StyleSheet\ICustomStyleSheet.cs" />
+    <Compile Include="StyleSheet\IStyle.cs" />
+    <Compile Include="StyleSheet\IStyledObject.cs" />
+    <Compile Include="StyleSheet\IStyleSheet.cs" />
+    <Compile Include="StyleSheet\IStyleSheetHelper.cs" />
+    <Compile Include="StyleSheet\VerticalAlignValues.cs" />
+    <Compile Include="SyncLibrary\CacheControllerWebException.cs" />
+    <Compile Include="SyncLibrary\ICacheController.cs" />
+    <Compile Include="SyncLibrary\ICacheControllerBehavior.cs" />
+    <Compile Include="SyncLibrary\IOfflineContext.cs" />
+    <Compile Include="SyncLibrary\ISyncContext.cs" />
+    <Compile Include="Utils\WebHelper.cs" />
+    <Compile Include="ValueStack\ICommonData.cs" />
+    <Compile Include="ValueStack\ICustomDictionary.cs" />
+    <Compile Include="ValueStack\IElse.cs" />
+    <Compile Include="ValueStack\IExternalFunction.cs" />
+    <Compile Include="ValueStack\IIf.cs" />
+    <Compile Include="ValueStack\IInclude.cs" />
+    <Compile Include="ValueStack\IIndexedProperty.cs" />
+    <Compile Include="ValueStack\IEntity.cs" />
+    <Compile Include="ValueStack\IIterator.cs" />
+    <Compile Include="ValueStack\IIteratorStatus.cs" />
+    <Compile Include="ValueStack\IPush.cs" />
+    <Compile Include="ValueStack\IValueStack.cs" />
+    <Compile Include="ValueStack\IValueStackContext.cs" />
+    <Compile Include="ValueStack\IValueStackTag.cs" />
+    <Compile Include="ValueStack\ValueStackConst.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Properties\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

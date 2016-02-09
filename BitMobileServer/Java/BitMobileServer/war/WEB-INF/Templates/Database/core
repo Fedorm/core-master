@@ -1,0 +1,40 @@
+USE `$cfg.databaseName$`;
+###
+
+CREATE TABLE `admin_AsyncUploadSession`(
+	`Id` VARCHAR(36) NOT NULL,
+	`StartTime` DATETIME NOT NULL,
+	`EndTime` DATETIME NULL,
+	`Status` LONGTEXT NULL
+);
+###
+ALTER TABLE `admin_AsyncUploadSession` ADD CONSTRAINT PK_admin_AsyncUploadSession PRIMARY KEY NONCLUSTERED(Id); 
+###
+
+CREATE PROCEDURE `admin_BeginAsyncUploadSession`(pSessionId VARCHAR(36))
+BEGIN
+	INSERT INTO `admin_AsyncUploadSession`(`Id`, `StartTime`, `EndTime`, `Status`) VALUES(pSessionId,NOW(),NULL,NULL);
+END
+###
+
+CREATE PROCEDURE `admin_CommitAsyncUploadSession`(pSessionId VARCHAR(36), pStatus LONGTEXT)
+BEGIN
+	UPDATE `admin_AsyncUploadSession` SET `EndTime` = NOW(), `Status` = pStatus WHERE `Id` = pSessionId;
+END
+###
+
+CREATE PROCEDURE `admin_CheckAsyncUploadSession`(pSessionId VARCHAR(36))
+BEGIN
+	SELECT IFNULL(`Status`,'') FROM `admin_AsyncUploadSession` WHERE `Id` = pSessionId;
+END
+###
+
+CREATE TABLE `admin_DeletedObjects`(
+	`Id` VARCHAR(36) NOT NULL,
+	`Entity` VARCHAR(250) NOT NULL,
+	`CreationDate` DATETIME NOT NULL,
+	`DeletionDate` DATETIME NULL
+);
+###
+ALTER TABLE `admin_DeletedObjects` ADD CONSTRAINT PK_admin_DeletedObjects PRIMARY KEY NONCLUSTERED(Id);
+###

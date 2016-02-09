@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:c="BitMobile.Controls" targetNamespace="BitMobile.Controls"
+	elementFormDefault="qualified">
+	<xs:element name="Button">
+		<xs:complexType>
+			<xs:attribute name="Visible" type="xs:boolean" />
+			<xs:attribute name="CssClass" type="xs:string" />
+			<xs:attribute name="Id" type="xs:string" />
+			<xs:attribute name="OnClick" type="xs:string" />
+			<xs:attribute name="OnClickAction" type="xs:string" />
+			<xs:attribute name="Text" type="xs:string" />
+			<xs:attribute name="OnEvent" type="xs:string" />
+			<xs:attribute name="SubmitScope" type="xs:string" />
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="CheckBox">
+		<xs:complexType>
+			<xs:attribute name="Visible" type="xs:boolean" />
+			<xs:attribute name="CssClass" type="xs:string" />
+			<xs:attribute name="Id" type="xs:string" />
+			<xs:attribute name="Checked" type="xs:boolean" />
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Component">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:any namespace="##any" minOccurs="0" maxOccurs="unbounded"></xs:any>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="DockLayout">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:any namespace="##any" minOccurs="0" maxOccurs="unbounded"></xs:any>
+			</xs:sequence>
+			<xs:attribute name="Visible" type="xs:boolean" />
+			<xs:attribute name="CssClass" type="xs:string" />
+			<xs:attribute name="Id" type="xs:string" />
+			<xs:attribute name="OnClick" type="xs:string" />
+			<xs:attribute name="OnClickAction" type="xs:string" />
+			<xs:attribute name="OnEvent" type="xs:string" />
+			<xs:attribute name="SubmitScope" type="xs:string" />
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="EditText">
+		<xs:complexType>
+			<xs:attribute name="Visible" type="xs:boolean" />
+			<xs:attribute name="CssClass" type="xs:string" />
+			<xs:attribute name="Id" type="xs:string" />
+			<xs:attribute name="Text" type="xs:string" />
+			<xs:attribute name="Value" type="xs:string" />
+			<xs:attribute name="OnChange" type="xs:string" />
+			<xs:attribute name="OnGetFocus" type="xs:string" />
+			<xs:attribute name="OnLostFocus" type="xs:string" />
+			<xs:attribute name="Length" type="xs:int" />
+			<xs:attribute name="Required" type="xs:boolean" />
+			<xs:attribute name="Mask" type="xs:string" />
+			<xs:attribute name="AutoFocus" type="xs:boolean" />
+			<xs:attribute name="Keyboard" type="xs:string" />
+			<xs:attribute name="Placeholder" type="xs:string" />
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="HorizontalLayout">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:any namespace="##any" minOccurs="0" maxOccurs="unbounded"></xs:any>
+			</xs:sequence>
+			<xs:attribute name="Visible" type="xs:boolean" />
+			<xs:attribute name="CssClass" type="xs:string" />
+			<xs:attribute name="Id" type="xs:string" />
+			<xs:attribute name="OnClick" type="xs:string" />
+			<xs:attribute name="OnClickAction" type="xs:string" />
+			<xs:attribute name="OnEvent" type="xs:string" />
+			<xs:attribute name="SubmitScope" type="xs:string" />
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="HorizontalLine">
+		<xs:complexType>
+			<xs:attribute name="Visible" type="xs:boolean" />
+			<xs:attribute name="CssClass" type="xs:string" />
+			<xs:attribute name="Id" type="xs:string" />
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Image">
+		<xs:complexType>
+			<xs:attribute name="Visible" type="xs:boolean" />
+			<xs:attribute name="CssClass" type="xs:string" />
+			<xs:attribute name="Id" type="xs:string" />
+			<xs:attribute name="Source" type="xs:string" />
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Indicator">
+		<xs:complexType>
+			<xs:attribute name="Visible" type="xs:boolean" />
+			<xs:attribute name="CssClass" type="xs:string" />
+			<xs:attribute name="Id" type="xs:string" />
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="MemoEdit">
+		<xs:complexType>
+			<xs:attribute name="Visible" type="xs:boolean" />
+			<xs:attribute name="CssClass" type="xs:string" />
+			<xs:attribute name="Id" type="xs:string" />
+			<xs:attribute name="Text" type="xs:string" />
+			<xs:attribute name="Value" type="xs:string" />
+			<xs:attribute name="OnChange" type="xs:string" />
+			<xs:attribute name="OnGetFocus" type="xs:string" />
+			<xs:attribute name="OnLostFocus" type="xs:string" />
+			<xs:attribute name="Length" type="xs:int" />
+			<xs:attribute name="Required" type="xs:boolean" />
+			<xs:attribute name="Mask" type="xs:string" />
+			<xs:attribute name="AutoFocus" type="xs:boolean" />
+			<xs:attribute name="Keyboard" type="xs:string" />
+			<xs:attribute name="Placeholder" type="xs:string" />
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Screen">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:any namespace="##any" minOccurs="0" maxOccurs="unbounded"></xs:any>
+			</xs:sequence>
+			<xs:attribute name="Visible" type="xs:boolean" />
+			<xs:attribute name="CssClass" type="xs:string" />
+			<xs:attribute name="Id" type="xs:string" />
+			<xs:attribute name="StyleSheet" type="xs:string" />
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ScrollView">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:any namespace="##any" minOccurs="0" maxOccurs="unbounded"></xs:any>
+			</xs:sequence>
+			<xs:attribute name="Visible" type="xs:boolean" />
+			<xs:attribute name="CssClass" type="xs:string" />
+			<xs:attribute name="Id" type="xs:string" />
+			<xs:attribute name="Index" type="xs:int" />
+			<xs:attribute name="OnScroll" type="xs:string" />
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="SwipeHorizontalLayout">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:any namespace="##any" minOccurs="0" maxOccurs="unbounded"></xs:any>
+			</xs:sequence>
+			<xs:attribute name="Visible" type="xs:boolean" />
+			<xs:attribute name="CssClass" type="xs:string" />
+			<xs:attribute name="Id" type="xs:string" />
+			<xs:attribute name="Index" type="xs:int" />
+			<xs:attribute name="Percent" type="xs:int" />
+			<xs:attribute name="Alignment" type="xs:string" />
+			<xs:attribute name="Scrollable" type="xs:boolean" />
+			<xs:attribute name="OnSwipe" type="xs:string" />
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="SwipeVerticalLayout">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:any namespace="##any" minOccurs="0" maxOccurs="unbounded"></xs:any>
+			</xs:sequence>
+			<xs:attribute name="Visible" type="xs:boolean" />
+			<xs:attribute name="CssClass" type="xs:string" />
+			<xs:attribute name="Id" type="xs:string" />
+			<xs:attribute name="Index" type="xs:int" />
+			<xs:attribute name="Percent" type="xs:int" />
+			<xs:attribute name="Alignment" type="xs:string" />
+			<xs:attribute name="Scrollable" type="xs:boolean" />
+			<xs:attribute name="OnSwipe" type="xs:string" />
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="TextView">
+		<xs:complexType>
+			<xs:attribute name="Visible" type="xs:boolean" />
+			<xs:attribute name="CssClass" type="xs:string" />
+			<xs:attribute name="Id" type="xs:string" />
+			<xs:attribute name="Text" type="xs:string" use="required" />
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="VerticalLayout">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:any namespace="##any" minOccurs="0" maxOccurs="unbounded"></xs:any>
+			</xs:sequence>
+			<xs:attribute name="Visible" type="xs:boolean" />
+			<xs:attribute name="CssClass" type="xs:string" />
+			<xs:attribute name="Id" type="xs:string" />
+			<xs:attribute name="OnClick" type="xs:string" />
+			<xs:attribute name="OnClickAction" type="xs:string" />
+			<xs:attribute name="OnEvent" type="xs:string" />
+			<xs:attribute name="SubmitScope" type="xs:string" />
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="WebImage">
+		<xs:complexType>			
+			<xs:attribute name="Visible" type="xs:boolean" />
+			<xs:attribute name="CssClass" type="xs:string" />
+			<xs:attribute name="Id" type="xs:string" />
+			<xs:attribute name="Url" type="xs:string" use="required"/>
+			<xs:attribute name="UrlType" type="xs:string" />
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="WebMapGoogle">
+		<xs:complexType>
+			<xs:attribute name="Visible" type="xs:boolean" />
+			<xs:attribute name="Id" type="xs:string" />
+			<xs:attribute name="CssClass" type="xs:string" />
+		</xs:complexType>
+	</xs:element>
+</xs:schema>
+

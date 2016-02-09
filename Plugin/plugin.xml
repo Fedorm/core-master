@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.propertyPages">
+      <page
+            name="Bitmobile settings"
+            class="BitMobilePropertyPage"
+            id="Bitmobile.PropertyPage">
+         <enabledWhen>
+            <instanceof
+                  value="org.eclipse.core.resources.IProject">
+            </instanceof>
+         </enabledWhen>
+      </page>
+   </extension>
+
+   
+   <extension
+         point="org.eclipse.debug.core.launchConfigurationTypes">
+      <launchConfigurationType
+            delegate="DebugDelegate"
+            id="Bitmobile.launchType"
+            modes="run, debug"
+            name="Bitmobile"
+            sourceLocatorId="BitMobile.sourceLocator"
+            sourcePathComputerId="BitMobile.sourcePathComputer"/>
+   </extension>
+
+   <extension
+         point="org.eclipse.debug.ui.launchShortcuts">
+      <shortcut
+            label="Bitmobile run/debug"
+            class="DebugShortcut"
+            modes="run, debug"
+            id="Bitmobile.launchShortcut">
+         <contextualLaunch>
+            <enablement>
+               <with variable="selection">
+                  <count value="1"/>
+                  <iterate
+                        operator="or">
+                     <instanceof value="org.eclipse.core.resources.IProject"/>
+                  </iterate>
+               </with>
+            </enablement>
+         </contextualLaunch>
+         <configurationType
+               id="Bitmobile.launchType">
+         </configurationType>
+      </shortcut>
+	</extension>
+   <extension
+         point="org.eclipse.wst.xml.core.catalogContributions">
+      <catalogContribution id="default">
+         <uri
+               name="BitMobile.Controls"
+               uri="xsd/c.xsd">
+         </uri>
+         <uri
+               name="BitMobile.ValueStack"
+               uri="xsd/s.xsd">
+         </uri>
+         <uri
+               name="BitMobile.Configuration"
+               uri="xsd/conf.xsd">
+         </uri>
+         <uri
+               name="BitMobile.BusinessProcess"
+               uri="xsd/bp.xsd">
+         </uri>
+      </catalogContribution>
+   </extension>
+   <extension
+         point="org.eclipse.core.runtime.adapters">
+      <factory
+            adaptableType="org.eclipse.wst.jsdt.internal.ui.javaeditor.CompilationUnitEditor"
+            class="BPAdapterFactory">
+         <adapter
+               type="org.eclipse.debug.ui.actions.IToggleBreakpointsTarget">
+         </adapter>
+      </factory>
+   </extension>
+   <extension
+         point="org.eclipse.debug.ui.debugModelPresentations">
+      <debugModelPresentation
+            class="BMDebugModelPresentation"
+            id="BitMobile.debugModel">
+      </debugModelPresentation>
+   </extension>
+   <extension
+         point="org.eclipse.debug.core.sourceLocators">
+      <sourceLocator
+            class="BMSourceLocator"
+            id="BitMobile.sourceLocator"
+            name="BitMobile.sourceLocator">
+      </sourceLocator>
+   </extension>
+   <extension
+         point="org.eclipse.debug.core.sourcePathComputers">
+      <sourcePathComputer
+            class="BMSourcePathComputerDelegate"
+            id="BitMobile.sourcePathComputer">
+      </sourcePathComputer>
+   </extension>   
+   <extension
+         point="org.eclipse.debug.core.breakpoints">
+      <breakpoint
+            class="BMLineBreakpoint"
+            name="BitMobile.lineBreakpoint"
+            markerType="BitMobile.markerType.lineBreakpoint"
+            id="BitMobile.lineBreakpoint"/>
+   </extension>
+   <extension
+         point="org.eclipse.core.resources.markers"
+         id="BitMobile.markerType.lineBreakpoint"
+         name="BitMobile.markerType.lineBreakpoint">
+      <super type="org.eclipse.debug.core.lineBreakpointMarker"/>
+      <persistent value="true"/>
+   </extension>
+   <extension
+         point="org.eclipse.debug.ui.launchConfigurationTabGroups">
+      <launchConfigurationTabGroup
+            class="BMLaunchConfigurationTabGroup"
+            id="BitMobile.launchConfigurationTabGroup"
+            type="Bitmobile.launchType">
+      </launchConfigurationTabGroup>
+   </extension>
+   <extension
+         point="org.eclipse.core.runtime.adapters">
+      <factory
+            adaptableType="BMStackFrame"
+            class="SFAdapterFactory">
+         <adapter
+               type="org.eclipse.debug.internal.ui.viewers.model.provisional.IViewActionProvider">
+         </adapter>
+      </factory>
+      <factory
+            adaptableType="BMDebugTarget"
+            class="SFAdapterFactory">
+         <adapter
+               type="org.eclipse.debug.internal.ui.viewers.model.provisional.IElementContentProvider">
+         </adapter>
+         <adapter
+               type="org.eclipse.debug.internal.ui.viewers.model.provisional.IModelProxyFactory">
+         </adapter>
+      </factory>
+   </extension>
+   <extension
+         point="org.eclipse.debug.core.watchExpressionDelegates">
+      <watchExpressionDelegate
+            debugModel="BitMobile.debugModel"
+            delegateClass="BMWatchExpressionDelegate">
+      </watchExpressionDelegate>
+   </extension>
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+            categoryId="org.eclipse.ui.category.window"
+            id="BitMobile.evaluateCommand"
+            name="Evaluate">
+      </command>
+   </extension>
+   <extension
+         point="org.eclipse.ui.bindings">
+      <key
+            commandId="BitMobile.evaluateCommand"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            sequence="CTRL+SHIFT+F9">
+      </key>
+   </extension>
+   <extension
+         point="org.eclipse.ui.handlers">
+      <handler
+            class="BMEvaluateHandler"
+            commandId="BitMobile.evaluateCommand">
+      </handler>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            allPopups="false"
+            locationURI="popup:org.eclipse.ui.popup.any?after=additions">
+         <command
+               commandId="BitMobile.evaluateCommand"
+               label="Evaluate"
+               style="push">
+         </command>
+      </menuContribution>
+   </extension>
+<extension
+      point="org.eclipse.wst.jsdt.ui.javaEditorTextHovers">
+   <hover
+         activate="true"
+         class="BMEvalHover"
+         id="BitMobile.evalHover">
+   </hover>
+</extension>
+<extension
+      point="org.eclipse.ui.views">
+   <view
+         class="BMDataView"
+         id="BitMobile.dataView"
+         name="BitMobile.dataView"
+         restorable="true">
+   </view>
+</extension>
+
+</plugin>

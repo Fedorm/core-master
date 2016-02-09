@@ -1,0 +1,56 @@
+﻿<#@ template language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<?xml version="1.0" encoding="utf-8" ?>
+<configuration>
+  <configSections>
+    <section name="SyncConfiguration" type="Microsoft.Synchronization.ClientServices.Configuration.SyncConfigurationSection, CodeFactory, Version=1.0.0.0, Culture=neutral" allowDefinition="Everywhere" allowExeDefinition="MachineToApplication" restartOnExternalChanges="true" />
+  </configSections>
+
+  <SyncConfiguration>
+    <SyncScopes>
+      <SyncScope Name="<#= config.ServerScope #>" IsTemplateScope="true">
+        <SyncTables>		  
+		  <# foreach(var entity in config.Entities){ #>	
+	          <SyncTable Name="<#= entity.Schema #>.<#= entity.Name #>" GlobalName="<#= entity.Schema #>_<#= entity.Name #>" IncludeAllColumns="true" FilterClause="<#= entity.SyncFilter #>">			  
+			  <FilterColumns>
+			  <# foreach(var filterColumn in entity.SyncFilterColumns){ #>
+				<FilterColumn Name="<#= filterColumn #>"/>	
+			  <#}#>
+			  </FilterColumns>
+			  <FilterParameters>
+			  <# foreach(var filterParameter in entity.SyncFilterParameters){ #>
+				<FilterParameter Name="@<#= filterParameter.Name #>" SqlType="<#= filterParameter.SqlTypeShort #>"/>	
+			  <#}#>
+			  </FilterParameters>
+		  </SyncTable>	
+		  <#}#>	  	  
+
+		  <# foreach(var entity in config.Entities){ #>	
+
+		  <# foreach(var tabularSection in entity.TabularSections){ #>	
+			<SyncTable Name="<#= entity.Schema #>.<#= entity.Name #>_<#= tabularSection.Name #>" GlobalName="<#= entity.Schema #>_<#= entity.Name #>_<#= tabularSection.Name #>" IncludeAllColumns="true" FilterClause="<#= tabularSection.SyncFilter #>">	
+		  	<FilterColumns>
+			<# foreach(var filterColumn in tabularSection.SyncFilterColumns){ #>
+				<FilterColumn Name="<#= filterColumn #>"/>	
+			<#}#>
+			</FilterColumns>
+			<FilterParameters>
+			<# foreach(var filterParameter in tabularSection.SyncFilterParameters){ #>
+				<FilterParameter Name="@<#= filterParameter.Name #>" SqlType="<#= filterParameter.SqlTypeShort #>"/>	
+			<#}#>
+			</FilterParameters>
+			</SyncTable>
+
+		  <#}#>	  	  
+		  <#}#>	   	  
+        </SyncTables>
+      </SyncScope>
+    </SyncScopes>
+    <Databases>
+      <TargetDatabase Name="<#= connection.InitialCatalog #>" DbServer="<#= connection.DataSource #>" DbName="<#= connection.InitialCatalog #>" UserName="<#= connection.UserID #>" Password="<#= connection.Password #>" UseIntegratedAuth="<#= connection.IntegratedSecurity #>" />
+    </Databases>
+  </SyncConfiguration>
+</configuration>

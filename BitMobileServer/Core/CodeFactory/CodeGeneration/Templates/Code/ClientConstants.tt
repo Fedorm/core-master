@@ -1,0 +1,61 @@
+﻿<#@ template language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+using System;
+
+namespace DefaultScope
+{
+	namespace Constants
+	{
+		public class Constants
+		{
+			<# foreach(var kvp in config.Constants){ #> 
+			private <#= kvp.Key #> _<#= kvp.Key #>;
+			public <#= kvp.Key #> <#= kvp.Key #>
+			{
+				get
+				{
+					return _<#= kvp.Key #>;
+				}
+			}
+			<#}#>
+
+			public Constants()
+			{
+				<# foreach(var kvp in config.Constants){ #> 
+				_<#= kvp.Key #> = new <#= kvp.Key #>();
+				<#}#>
+			}
+		}
+
+		<# foreach(var kvp in config.Constants){ #> 
+		public class <#= kvp.Key #>
+		{
+			<# foreach(var c in kvp.Value){ #>		
+			public BitMobile.DbEngine.DbRef <#= c.Name #>
+			{
+				get
+				{
+					//return new Guid("<#= c.Id.ToString() #>");
+					return BitMobile.DbEngine.DbRef.CreateInstance("Enum_<#= kvp.Key #>", new Guid("<#= c.Id.ToString() #>"));
+				}
+			}		 
+			<#}#>
+		} 
+		<#}#>
+	}
+
+	public partial class OfflineContext
+	{
+		private Constants.Constants _Constants = new Constants.Constants();
+		public Constants.Constants Constant
+		{
+			get
+			{
+				return _Constants;
+			}
+		} 
+	}
+}

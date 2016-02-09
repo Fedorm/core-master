@@ -1,0 +1,117 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{1B85BCC2-47B7-48F0-9081-10DF18AF0438}</ProjectGuid>
+    <ProjectTypeGuids>{6BC8ED88-2882-458C-8E55-DFD12B67127B};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <RootNamespace>SyncLibrary.@new</RootNamespace>
+    <IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
+    <AssemblyName>SyncLibrary.@new</AssemblyName>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\iPhone\Debug</OutputPath>
+    <DefineConstants>DEBUG;CLIENT; MONOTOUCH;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+    <MtouchDebug>true</MtouchDebug>
+    <CodesignKey>iPhone Developer</CodesignKey>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>none</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\iPhone\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+    <CodesignKey>iPhone Developer</CodesignKey>
+    <DefineConstants>CLIENT</DefineConstants>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Json" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="monotouch" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BitMobile\Entity.cs" />
+    <Compile Include="BitMobile\OfflineContext.cs" />
+    <Compile Include="BitMobile\OnStatus.cs" />
+    <Compile Include="BitMobile\ProgressStream.cs" />
+    <Compile Include="Formatters\BMEntryInfoWrapper.cs" />
+    <Compile Include="Formatters\BMFormatterConstants.cs" />
+    <Compile Include="Formatters\BMReader.cs" />
+    <Compile Include="Formatters\BMWriter.cs" />
+    <Compile Include="IsolatedStorage\SQLiteCacheData.cs" />
+    <Compile Include="IsolatedStorage\SQLiteStorageHandler.cs" />
+    <Compile Include="Properties\Annotations.cs" />
+    <Compile Include="ClientCommon\AsyncWorkerManager.cs" />
+    <Compile Include="ClientCommon\AsyncWorkManagerException.cs" />
+    <Compile Include="ClientCommon\AsyncWorkRequest.cs" />
+    <Compile Include="ClientCommon\CacheController.cs" />
+    <Compile Include="ClientCommon\CacheControllerBehavior.cs" />
+    <Compile Include="ClientCommon\CacheControllerException.cs" />
+    <Compile Include="ClientCommon\CacheRefreshStatistics.cs" />
+    <Compile Include="ClientCommon\CacheRequest.cs" />
+    <Compile Include="ClientCommon\CacheRequestHandler.cs" />
+    <Compile Include="ClientCommon\CacheRequestType.cs" />
+    <Compile Include="ClientCommon\ChangeSet.cs" />
+    <Compile Include="ClientCommon\ChangeSetResponse.cs" />
+    <Compile Include="ClientCommon\HttpCacheRequestHandler.cs" />
+    <Compile Include="ClientCommon\OfflineSyncProvider.cs" />
+    <Compile Include="ClientCommon\ProcessCacheRequestCompletedEventArgs.cs" />
+    <Compile Include="ClientCommon\RefreshCompletedEventArgs.cs" />
+    <Compile Include="ClientCommon\SerializationFormat.cs" />
+    <Compile Include="Client\ExceptionUtility.cs" />
+    <Compile Include="Common\Conflict.cs" />
+    <Compile Include="Common\IOfflineEntity.cs" />
+    <Compile Include="Common\OfflineEntityMetadata.cs" />
+    <Compile Include="Common\SyncConflict.cs" />
+    <Compile Include="Common\SyncConflictResolution.cs" />
+    <Compile Include="Common\SyncError.cs" />
+    <Compile Include="DataAnnotations\DisplayAttribute.cs" />
+    <Compile Include="DataAnnotations\KeyAttribute.cs" />
+    <Compile Include="Formatters\AtomEntryInfoWrapper.cs" />
+    <Compile Include="Formatters\AtomHelper.cs" />
+    <Compile Include="Formatters\EntryInfoWrapper.cs" />
+    <Compile Include="Formatters\FormatterConstants.cs" />
+    <Compile Include="Formatters\FormatterUtilities.cs" />
+    <Compile Include="Formatters\ODataAtomReader.cs" />
+    <Compile Include="Formatters\ODataAtomWriter.cs" />
+    <Compile Include="Formatters\ReaderItemType.cs" />
+    <Compile Include="Formatters\SyncReader.cs" />
+    <Compile Include="Formatters\SyncWriter.cs" />
+    <Compile Include="IsolatedStorage\AutoResetLock.cs" />
+    <Compile Include="IsolatedStorage\IsolatedStorageOfflineContext.cs" />
+    <Compile Include="IsolatedStorage\IsolatedStorageOfflineEntity.cs" />
+    <Compile Include="IsolatedStorage\IsolatedStorageSchema.cs" />
+    <Compile Include="IsolatedStorage\LoadCompletedEventArgs.cs" />
+    <Compile Include="IsolatedStorage\OfflineEntityState.cs" />
+    <Compile Include="SessionInfo.cs" />
+    <Compile Include="SyncContext.cs" />
+    <Compile Include="NsUrlSession\NSUrlCacheRequestHandler.cs" />
+    <Compile Include="NsUrlSession\NSUrlDownloadDelegate.cs" />
+    <Compile Include="NsUrlSession\NSUrlEventArgs.cs" />
+    <Compile Include="NsUrlSession\NSUrlUploadDelegate.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Application\Application.MT.csproj">
+      <Project>{32CCD428-607B-4F93-ADD7-3F5986A74769}</Project>
+      <Name>Application.MT</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Common\Common.MT.csproj">
+      <Project>{3FF1102C-B767-4E1A-8D0C-14BB5BEA302E}</Project>
+      <Name>Common.MT</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.MonoTouch.CSharp.targets" />
+</Project>

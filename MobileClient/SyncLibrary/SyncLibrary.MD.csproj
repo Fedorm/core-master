@@ -1,0 +1,137 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{87D04775-A468-483F-8022-7DDC7D8CEA7F}</ProjectGuid>
+    <ProjectTypeGuids>{EFBA0AD7-5A72-4C68-AF49-83D382785DCF};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>BitMobile.SyncLibrary</RootNamespace>
+    <AssemblyName>SyncLibrary</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+    <AndroidResgenFile>Resources\Resource.Designer.cs</AndroidResgenFile>
+    <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;CLIENT</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DefineConstants>CLIENT</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Develop|AnyCPU'">
+    <OutputPath>bin\Develop\</OutputPath>
+    <DefineConstants>CLIENT</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="mscorlib" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Json" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Application\Application.MD.csproj">
+      <Project>{6b05cf5b-79d7-4d43-9dda-0849a6259f61}</Project>
+      <Name>Application.MD</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Common\Common.MD.csproj">
+      <Project>{774597b4-f92c-4c09-afd8-c78e654813eb}</Project>
+      <Name>Common.MD</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BitMobile\Entity.cs" />
+    <Compile Include="BitMobile\OfflineContext.cs" />
+    <Compile Include="BitMobile\OnStatus.cs" />
+    <Compile Include="BitMobile\ProgressStream.cs" />
+    <Compile Include="Formatters\BMFormatterConstants.cs" />
+    <Compile Include="Formatters\BMReader.cs" />
+    <Compile Include="Formatters\BMWriter.cs" />
+    <Compile Include="Formatters\BMEntryInfoWrapper.cs" />
+    <Compile Include="IsolatedStorage\SQLiteCacheData.cs" />
+    <Compile Include="IsolatedStorage\SQLiteStorageHandler.cs" />
+    <Compile Include="Properties\Annotations.cs" />
+    <Compile Include="ClientCommon\AsyncWorkerManager.cs" />
+    <Compile Include="ClientCommon\AsyncWorkManagerException.cs" />
+    <Compile Include="ClientCommon\AsyncWorkRequest.cs" />
+    <Compile Include="ClientCommon\CacheController.cs" />
+    <Compile Include="ClientCommon\CacheControllerBehavior.cs" />
+    <Compile Include="ClientCommon\CacheControllerException.cs" />
+    <Compile Include="ClientCommon\CacheRefreshStatistics.cs" />
+    <Compile Include="ClientCommon\CacheRequest.cs" />
+    <Compile Include="ClientCommon\CacheRequestHandler.cs" />
+    <Compile Include="ClientCommon\CacheRequestType.cs" />
+    <Compile Include="ClientCommon\ChangeSet.cs" />
+    <Compile Include="ClientCommon\ChangeSetResponse.cs" />
+    <Compile Include="ClientCommon\HttpCacheRequestHandler.cs" />
+    <Compile Include="ClientCommon\OfflineSyncProvider.cs" />
+    <Compile Include="ClientCommon\ProcessCacheRequestCompletedEventArgs.cs" />
+    <Compile Include="ClientCommon\RefreshCompletedEventArgs.cs" />
+    <Compile Include="ClientCommon\SerializationFormat.cs" />
+    <Compile Include="Client\ExceptionUtility.cs" />
+    <Compile Include="Common\Conflict.cs" />
+    <Compile Include="Common\IOfflineEntity.cs" />
+    <Compile Include="Common\OfflineEntityMetadata.cs" />
+    <Compile Include="Common\SyncConflict.cs" />
+    <Compile Include="Common\SyncConflictResolution.cs" />
+    <Compile Include="Common\SyncError.cs" />
+    <Compile Include="DataAnnotations\DisplayAttribute.cs" />
+    <Compile Include="DataAnnotations\KeyAttribute.cs" />
+    <Compile Include="Formatters\AtomEntryInfoWrapper.cs" />
+    <Compile Include="Formatters\AtomHelper.cs" />
+    <Compile Include="Formatters\EntryInfoWrapper.cs" />
+    <Compile Include="Formatters\FormatterConstants.cs" />
+    <Compile Include="Formatters\FormatterUtilities.cs" />
+    <Compile Include="Formatters\ODataAtomReader.cs" />
+    <Compile Include="Formatters\ODataAtomWriter.cs" />
+    <Compile Include="Formatters\ReaderItemType.cs" />
+    <Compile Include="Formatters\SyncReader.cs" />
+    <Compile Include="Formatters\SyncWriter.cs" />
+    <Compile Include="IsolatedStorage\AutoResetLock.cs" />
+    <Compile Include="IsolatedStorage\IsolatedStorageOfflineContext.cs" />
+    <Compile Include="IsolatedStorage\IsolatedStorageOfflineEntity.cs" />
+    <Compile Include="IsolatedStorage\IsolatedStorageSchema.cs" />
+    <Compile Include="IsolatedStorage\LoadCompletedEventArgs.cs" />
+    <Compile Include="IsolatedStorage\OfflineEntityState.cs" />
+    <Compile Include="SessionInfo.cs" />
+    <Compile Include="SyncContext.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties ProjectLinkReference="ddf4ca99-2f5f-490d-9993-907ad060f354" ProjectLinkerExcludeFilter="\\?desktop(\\.*)?$;\\?silverlight(\\.*)?$;\.desktop;\.silverlight;\.xaml;^service references(\\.*)?$;\.clientconfig;^web references(\\.*)?$" />
+    </VisualStudio>
+  </ProjectExtensions>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

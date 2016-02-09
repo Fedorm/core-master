@@ -1,0 +1,176 @@
+﻿<#@ template language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+using System;
+using Common;
+
+namespace <#= config.ServerScope #>
+{
+	public class OfflineEntityBase : object, Microsoft.Synchronization.Services.IOfflineEntity {
+        
+		private Microsoft.Synchronization.Services.OfflineEntityMetadata _serviceMetadata;
+        
+		public OfflineEntityBase() {
+			ServiceMetadata = new Microsoft.Synchronization.Services.OfflineEntityMetadata();
+		}
+        
+		public virtual Microsoft.Synchronization.Services.OfflineEntityMetadata ServiceMetadata {
+			get {
+				return _serviceMetadata;
+			}
+			set {
+				if ((value == null)) {
+					throw new System.ArgumentNullException("value");
+				}
+				_serviceMetadata = value;
+			}
+		}
+	}
+
+	<# foreach(var kvp in config.EntitiesBySchema){ #> 
+
+	namespace <#= kvp.Key #>
+	{
+		<# foreach(var entity in kvp.Value){ #> 
+
+		[Microsoft.Synchronization.Services.SyncEntityTypeAttribute(TableGlobalName="<#= entity.Schema #>_<#= entity.Name #>", TableLocalName="<#= entity.Schema #>.<#= entity.Name #>", KeyFields="__<#= entity.KeyField #>")]
+		public partial class <#= entity.Name #> : OfflineEntityBase 
+		{
+			<# foreach(var field in entity.Fields){ #>
+
+			private <#= field.DataType #> _<#= field.Name #>;
+
+			<# if(field.AllowNull){ #>
+			[Microsoft.Synchronization.Services.SyncEntityPropertyIsNullableAttribute()]
+			<#}#>	
+			<# if(!field.SimpleType || field.KeyField){ #>
+			[Microsoft.Synchronization.Services.SyncEntityPropertyMappingAttribute(LocalName="<#= field.Name #>")]
+			<#}#>
+			public <#= field.DataType #> <# if(!field.SimpleType || field.KeyField){ #>__<#}#><#= field.Name #> 
+			{
+				get 
+				{
+					return _<#= field.Name #>;
+				}
+				set 
+				{
+					_<#= field.Name #> = value;
+				}
+			}
+
+			<#}#>
+		}
+
+		<# foreach(var tabularSection in entity.TabularSections){ #>	
+
+		[Microsoft.Synchronization.Services.SyncEntityTypeAttribute(TableGlobalName="<#= entity.Schema #>_<#= entity.Name #>_<#= tabularSection.Name #>", TableLocalName="<#= entity.Schema #>.<#= entity.Name #>_<#= tabularSection.Name #>", KeyFields="__<#= tabularSection.KeyField #>")]
+		public partial class <#= entity.Name #>_<#= tabularSection.Name #> : OfflineEntityBase 
+		{
+			<# foreach(var field in tabularSection.Fields){ #>
+
+			private <#= field.DataType #> _<#= field.Name #>;
+
+			<# if(field.AllowNull){ #>
+			[Microsoft.Synchronization.Services.SyncEntityPropertyIsNullableAttribute()]
+			<#}#>
+			<# if(!field.SimpleType || field.KeyField || field.RefField){ #>
+			[Microsoft.Synchronization.Services.SyncEntityPropertyMappingAttribute(LocalName="<#= field.Name #>")]
+			<#}#>
+			public <#= field.DataType #> <# if(!field.SimpleType || field.KeyField || field.RefField){ #>__<#}#><#= field.Name #> 
+			{
+				get 
+				{
+					return _<#= field.Name #>;
+				}
+				set 
+				{
+					_<#= field.Name #> = value;
+				}
+			}
+
+			<#}#>
+		}
+
+		<#}#>
+
+
+		<#}#>
+	}
+
+	<#}#>
+
+
+	[Microsoft.Synchronization.Services.SyncScopeAttribute()]
+    public class OfflineEntities 
+	{
+		<# foreach(var entity in config.Entities){ #>  
+		  
+        private System.Collections.Generic.ICollection<<#= entity.Schema #>.<#= entity.Name #>> _<#= entity.Name #>;
+
+		<# foreach(var tabularSection in entity.TabularSections){ #>
+
+        private System.Collections.Generic.ICollection<<#= entity.Schema #>.<#= entity.Name #>_<#= tabularSection.Name #>> _<#= entity.Name #>_<#= tabularSection.Name #>;
+
+		<#}#>
+
+		<#}#>
+    }
+
+	
+	public static class Helper
+    {
+        public static void AddFilters(Microsoft.Synchronization.Services.ISyncServiceConfiguration config)
+        {
+			<# foreach(var entity in config.Entities){ #>  	  
+				<# foreach(var parameter in entity.SyncFilterParameters){ #> 		
+				config.AddFilterParameterConfiguration("<#= parameter.Name #>", "<#= entity.Schema #>_<#= entity.Name #>", "@<#= parameter.Name #>", typeof(<#= parameter.DataType #>));
+				<#}#>
+				<# foreach(var tabularSection in entity.TabularSections){ #>
+					<# foreach(var parameter in tabularSection.SyncFilterParameters){ #> 		
+					config.AddFilterParameterConfiguration("<#= parameter.Name #>", "<#= entity.Schema #>_<#= entity.Name #>_<#= tabularSection.Name #>", "@<#= parameter.Name #>", typeof(<#= parameter.DataType #>));
+					<#}#>
+				<#}#>
+			<#}#>
+        }
+    }
+
+	public class DeviceSyncService : Microsoft.Synchronization.Services.SyncService<OfflineEntities>
+    {
+		private String scope;
+
+		public String Scope
+		{
+			get
+			{
+				return scope;
+			}
+		}
+
+		public DeviceSyncService()
+		{
+		}
+
+		public DeviceSyncService(String scope)
+		{
+			this.scope = scope;
+		}
+
+        public static void InitializeService(Microsoft.Synchronization.Services.ISyncServiceConfiguration config, string dataBaseName)
+        {
+			config.ServerConnectionString = Common.Solution.CreateFromContext(dataBaseName).ConnectionString;
+            config.SetEnableScope("<#= config.ServerScope #>");
+			config.EnableDiagnosticPage = true;
+            config.UseVerboseErrors = true;
+			config.SetConflictResolutionPolicy(Microsoft.Synchronization.Services.ConflictResolutionPolicy.ServerWins);
+            Helper.AddFilters(config);
+        }
+
+		public static Guid Logon(string dataBaseName, System.Net.NetworkCredential credential, String configName, String configVersion)
+        {
+			return Common.Logon.GetUserId(dataBaseName, credential, configName, configVersion);
+        }
+
+    }
+}

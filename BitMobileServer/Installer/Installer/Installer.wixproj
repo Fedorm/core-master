@@ -1,0 +1,105 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>3.7</ProductVersion>
+    <ProjectGuid>822bcd32-2983-4aab-9b91-33065448e011</ProjectGuid>
+    <SchemaVersion>2.0</SchemaVersion>
+    <OutputName>BIT Mobile Server</OutputName>
+    <OutputType>Package</OutputType>
+    <WixTargetsPath Condition=" '$(WixTargetsPath)' == '' AND '$(MSBuildExtensionsPath32)' != '' ">$(MSBuildExtensionsPath32)\Microsoft\WiX\v3.x\Wix.targets</WixTargetsPath>
+    <WixTargetsPath Condition=" '$(WixTargetsPath)' == '' ">$(MSBuildExtensionsPath)\Microsoft\WiX\v3.x\Wix.targets</WixTargetsPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <OutputPath>bin\$(Configuration)\</OutputPath>
+    <IntermediateOutputPath>obj\$(Configuration)\</IntermediateOutputPath>
+    <DefineConstants>Debug</DefineConstants>
+    <Cultures>ru-ru</Cultures>
+    <SuppressValidation>False</SuppressValidation>
+    <SuppressIces>ICE17</SuppressIces>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <OutputPath>bin\$(Configuration)\</OutputPath>
+    <IntermediateOutputPath>obj\$(Configuration)\</IntermediateOutputPath>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Product.wxs" />
+  </ItemGroup>
+  <ItemGroup>
+    <WixExtension Include="WixIIsExtension">
+      <HintPath>$(WixExtDir)\WixIIsExtension.dll</HintPath>
+      <Name>WixIIsExtension</Name>
+    </WixExtension>
+    <WixExtension Include="WixUtilExtension">
+      <HintPath>$(WixExtDir)\WixUtilExtension.dll</HintPath>
+      <Name>WixUtilExtension</Name>
+    </WixExtension>
+    <WixExtension Include="WixNetFxExtension">
+      <HintPath>$(WixExtDir)\WixNetFxExtension.dll</HintPath>
+      <Name>WixNetFxExtension</Name>
+    </WixExtension>
+    <WixExtension Include="WixUIExtension">
+      <HintPath>$(WixExtDir)\WixUIExtension.dll</HintPath>
+      <Name>WixUIExtension</Name>
+    </WixExtension>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="bmp\Banner.bmp" />
+    <Content Include="bmp\DialogEN.bmp" />
+    <Content Include="bmp\DialogRU.bmp" />
+    <Content Include="bmp\Error.bmp" />
+    <Content Include="bmp\IconBIT.ico" />
+    <Content Include="bmp\Success.bmp" />
+    <Content Include="DatabaseUI.wxi" />
+    <Content Include="ServerAndIISSettingsUI.wxi" />
+    <Content Include="ServerSettingsUI.wxi" />
+    <Content Include="SqlActionLibrary.CA.dll" />
+    <Content Include="utils\RunUtils.cmd" />
+    <Content Include="utils\Synchronization21.dll" />
+    <Content Include="WebAppInstallCustomActions.CA.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Database.ru-ru.wxl" />
+    <EmbeddedResource Include="IIS.ru-ru.wxl" />
+    <EmbeddedResource Include="Main.ru-ru.wxl" />
+    <EmbeddedResource Include="ServerSettings.ru-ru.wxl" />
+    <EmbeddedResource Include="Database.en-us.wxl" />
+    <EmbeddedResource Include="IIS.en-us.wxl" />
+    <EmbeddedResource Include="Main.en-us.wxl" />
+    <EmbeddedResource Include="ServerSettings.en-us.wxl" />
+    <EmbeddedResource Include="XML.en-us.wxl" />
+    <EmbeddedResource Include="XML.ru-ru.wxl" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\OnPremises\OnPremises\SyncOnPremises.csproj">
+      <Name>SyncOnPremises</Name>
+      <Project>{ec95ef17-6ace-49db-a9c9-ddd0bfdec4a6}</Project>
+      <Private>True</Private>
+      <DoNotHarvest>True</DoNotHarvest>
+      <RefProjectOutputGroups>Binaries;Content;Satellites</RefProjectOutputGroups>
+      <RefTargetDir>INSTALLFOLDER</RefTargetDir>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Utils\Utils\Utils.csproj">
+      <Name>Utils</Name>
+      <Project>{ec3da413-8033-4a1b-a5be-a7e32c297fe5}</Project>
+      <Private>True</Private>
+      <DoNotHarvest>True</DoNotHarvest>
+      <RefProjectOutputGroups>Binaries;Content;Satellites</RefProjectOutputGroups>
+      <RefTargetDir>INSTALLFOLDER</RefTargetDir>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="bmp\" />
+    <Folder Include="utils\" />
+  </ItemGroup>
+  <Import Project="$(WixTargetsPath)" />
+  <!--
+	To modify your build process, add your task inside one of the targets below and uncomment it.
+	Other similar extension points exist, see Wix.targets.
+	<Target Name="BeforeBuild">
+	</Target>
+	<Target Name="AfterBuild">
+	</Target>
+	-->
+</Project>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WixLocalization Culture="ru-ru" xmlns="http://schemas.microsoft.com/wix/2006/localization">
+  <String Id="ServerSettingsTitle" Overridable="yes">Настройки [ProductName]</String>
+  <String Id="ServerSettingsDescription" Overridable="yes">Укажите настройки [ProductName]</String>
+  <String Id="ServerSettingsSolutionsLocation" Overridable="yes">Укажите каталог с решениями:</String>
+  <String Id="ServerSettingsEnterPassword" Overridable="yes">Укажите пароль для доступа к [ProductName]:</String>
+  <String Id="ServerSettingsCheckPassword" Overridable="yes">Повторите пароль:</String>
+  <String Id="ServerSettingsInvalidPassword" Overridable="yes">Не указан пароль для доступа к [ProductName].</String>
+  <String Id="ServerSettingsInvalidCheckPassword" Overridable="yes">Пароли не совпадают.</String>
+  <String Id="ServerSettingsError" Overridable="yes">Ошибка</String>
+</WixLocalization>

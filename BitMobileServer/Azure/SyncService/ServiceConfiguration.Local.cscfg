@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ServiceConfiguration serviceName="BitMobileAzureSerivce" xmlns="http://schemas.microsoft.com/ServiceHosting/2008/10/ServiceConfiguration" osFamily="2" osVersion="*" schemaVersion="2015-04.2.6">
+  <Role name="SyncRole">
+    <Instances count="1" />
+    <ConfigurationSettings>
+      <Setting name="DatabaseServer" value="Server=tcp:n0nypsopcq.database.windows.net,1433;Database=master;User ID=user@n0nypsopcq;Password=J3qq42013;Trusted_Connection=False;Encrypt=True;Connection Timeout=30;" />
+      <Setting name="RootPassword" value="" />
+      <Setting name="BlobStorage" value="" />
+    </ConfigurationSettings>
+  </Role>
+</ServiceConfiguration>

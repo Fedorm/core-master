@@ -1,0 +1,10 @@
+using System;
+
+namespace BitMobile.Common
+{
+    public static class CoreInformation
+    {   
+		// Version of application. Gets from git tags. Example: "2.4.6.126"
+		public static readonly Version CoreVersion = new Version(%version%);
+    }
+} 

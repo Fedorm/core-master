@@ -1,0 +1,11 @@
+<?
+require($_SERVER["DOCUMENT_ROOT"]."/bitrix/header.php");
+$APPLICATION->SetTitle("Установить %package_name%");
+?>
+
+   <a style="%plist_style%" href="itms-services://?action=download-manifest&url=%plist_url%?<? echo date("U"); ?>" class="button ios">Скачать для iOS</a>
+   <a style="%apk_style%" href="%apk_url%" class="button android">Скачать для Android</a>
+
+<?
+require($_SERVER["DOCUMENT_ROOT"]."/bitrix/footer.php");
+?>

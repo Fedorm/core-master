@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi"
+     xmlns:util="http://schemas.microsoft.com/wix/UtilExtension"
+     xmlns:iis="http://schemas.microsoft.com/wix/IIsExtension">
+
+  <?define UtilsFileDir="$(var.Utils.TargetDir)"?>
+  <?define BinaryFileDir="$(var.SyncOnPremises.TargetDir)"?>
+  <?define SourceFileDir="$(var.ProjectDir)"?>
+  <?define DefaultAppName="bitmobile"?>   
+  
+  <!--Для версии на английском-->
+  <!--<?define DialogBMP="$(var.SourceFileDir)bmp\DialogEN.bmp"?>
+  <Product Id="F5980D2A-6743-4C65-803B-7C2411E3BFF2" Name="BITMobile Server" Language="1033" Version="1.0.0.0" Manufacturer="FirstBIT" UpgradeCode="261BAAAE-9A18-4CBD-A14C-677E0F97CFF5">--> 
+  
+  <!--Для версии на русском (не забудь сменить Culture to build в настройках-->
+  <?define DialogBMP="$(var.SourceFileDir)bmp\DialogRU.bmp"?>
+  <Product Id="F5980D2A-6743-4C65-803B-7C2411E3BFF2"
+           Name="BITMobile Server" 
+           Language="1049"
+           Version="1.0.0.0"
+           Manufacturer="FirstBIT"
+           UpgradeCode="261BAAAE-9A18-4CBD-A14C-677E0F97CFF5"
+           Codepage="1251">
+    
+    <Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
+
+		<MajorUpgrade
+      AllowDowngrades="no"
+      DowngradeErrorMessage="A newer version of [ProductName] is already installed." 
+      AllowSameVersionUpgrades="no"   
+      />  
+    
+    <Media Id="1" Cabinet="Data.cab" EmbedCab="yes" />
+    <Binary Id="success_bmp" SourceFile="$(var.SourceFileDir)bmp\Success.bmp" />
+    <Binary Id="error_bmp" SourceFile="$(var.SourceFileDir)bmp\Error.bmp" />
+    
+    <Icon Id="MyProduct.ico" SourceFile="$(var.SourceFileDir)bmp\IconBIT.ico" />
+    
+    <Feature Id="FullInstall" Title="BITMobile Server" Level="1" ConfigurableDirectory="INSTALLFOLDER" >
+      <ComponentRef Id="ROOTFiles"/>
+      <ComponentRef Id="BINFiles"/> 
+      <ComponentRef Id="UtilsFiles"/>
+      <ComponentRef Id="CreateSoliutionsFolder"/> 
+      <ComponentRef Id="ConfigWebApp"/>
+      <ComponentRef Id="CreateShotcut"/>
+      <ComponentRef Id="DelFolder"/>
+    </Feature>
+
+    <!--Структура каталогов-->
+    <Directory Id="TARGETDIR" Name="SourceDir">
+
+      <Directory Id="ProgramMenuFolder">
+        <Directory Id="BITMobileMenu" Name="BITMobile Server"/>
+      </Directory>
+      
+      <Directory Id="IISMain" Name="inetpub">
+        <Directory Id="WWWMain" Name="wwwroot" ComponentGuidGenerationSeed="399E8CA3-1FE0-4ACD-ACBD-84798474AF4C">
+          <Directory Id="INSTALLFOLDER" Name="bitmobile">
+            <Directory Id="BINFolder" Name="Bin"/>
+            <Directory Id="UtilsFolder" Name="Utils"/>
+            <Directory Id="SolutionsDir" Name="Solutions"/>
+          </Directory>
+        </Directory>
+      </Directory> 
+      
+    </Directory>
+
+    <!--Корректировка для установки в системный раздел-->
+    <SetDirectory Id='IISMain' Value='[WindowsVolume]inetpub' />
+    
+    <!--Используемый сайт-->
+    <iis:WebSite Id="WebSite" Description='[WEBSITE_NAME]' >
+      <iis:WebAddress Id="_80" Port="80" IP="*" />
+    </iis:WebSite>
+
+    <!--Используемый пул приложений-->
+    <iis:WebAppPool Id="AppPool" Name="[APP_POOL_NAME]" />
+    
+    <!--Содержимое каталогов-->
+    <DirectoryRef Id="INSTALLFOLDER">
+
+      <Component Id="ROOTFiles" Guid="144CE528-D70B-4F69-AF82-719BCBEFBFC8">
+
+        <File Id="WebConfig" Source="$(var.SourceFileDir)Web.config" DiskId="1"/>
+        <File Id="GlobalAsax" Source="$(var.SourceFileDir)Global.asax" DiskId="1"/>
+        <File Id="GlobalAsaxCs" Source="$(var.SourceFileDir)Global.asax.cs" DiskId="1"/>
+        <File Id="RegisterCmd" Source="$(var.SourceFileDir)Register.cmd" DiskId="1"/>
+        
+        <util:XmlFile Id="SetSolutionsFolder" File="[INSTALLFOLDER]Web.Config" Action="setValue" ElementPath="//appSettings/add[\[]@key='SolutionsFolder'[\]]/@value" Value="[SolutionsDir]" Sequence="1" />
+        <util:XmlFile Id="SetDataBaseServer" File="[INSTALLFOLDER]Web.Config" Action="setValue" ElementPath="//appSettings/add[\[]@key='DataBaseServer'[\]]/@value" Value="[CONNECTIONSTRING]" Sequence="1" />
+        <util:XmlFile Id="SetRootPassword" File="[INSTALLFOLDER]Web.Config" Action="setValue" ElementPath="//appSettings/add[\[]@key='RootPassword'[\]]/@value" Value="[ROOTPASSWORD]" Sequence="1" />
+               
+      </Component>
+
+      <Component Id="ConfigWebApp" Guid="99E65BF7-37C9-4C5C-8FEE-58E0419E46E4">
+
+        <CreateFolder Directory="INSTALLFOLDER">
+
+          <util:PermissionEx User="IIS_IUSRS" GenericAll="yes"/>
+          
+        </CreateFolder>
+        
+        <iis:WebVirtualDir Id="VirtualDir" Alias="[WEB_APP_NAME]" Directory="INSTALLFOLDER" WebSite="WebSite" >
+          <iis:WebApplication Id="MyWebAppApplication" WebAppPool="AppPool" Name="$(var.DefaultAppName)" />
+          <iis:WebDirProperties Id="MyWebSite_Properties" AnonymousAccess="yes" WindowsAuthentication="no" DefaultDocuments="Default.aspx" />
+        </iis:WebVirtualDir>
+
+      </Component>
+
+    </DirectoryRef>
+
+    <DirectoryRef Id="BINFolder">
+
+      <Component Id="BINFiles" Guid="4FACCDDA-D312-41B2-8B97-8DA0B1FEFD44">
+
+        <File Id="AdminService" Source="$(var.BinaryFileDir)AdminService.dll" DiskId="1"/>
+        <File Id="BMWebDAV" Source="$(var.BinaryFileDir)BMWebDAV.dll" DiskId="1"/>
+        <File Id="CodeFactory" Source="$(var.BinaryFileDir)CodeFactory.dll" DiskId="1"/>
+        <File Id="Common" Source="$(var.BinaryFileDir)Common.dll" DiskId="1"/>
+        <File Id="FtpService" Source="$(var.BinaryFileDir)FtpService.dll" DiskId="1"/>
+        <File Id="GPSService" Source="$(var.BinaryFileDir)GPSService.dll" DiskId="1"/>
+        <File Id="ScriptEngine" Source="$(var.BinaryFileDir)ScriptEngine.dll" DiskId="1"/>
+        <File Id="ScriptService" Source="$(var.BinaryFileDir)ScriptService.dll" DiskId="1"/>
+        <File Id="SyncLibrary" Source="$(var.BinaryFileDir)SyncLibrary.dll" DiskId="1"/>
+        <File Id="SyncOnPremises" Source="$(var.BinaryFileDir)SyncOnPremises.dll" DiskId="1"/>
+        <File Id="SystemService" Source="$(var.BinaryFileDir)SystemService.dll" DiskId="1"/>
+        <File Id="ZipHelper" Source="$(var.BinaryFileDir)ZipHelper.dll" DiskId="1"/>
+
+        <File Id="RemObjects.InternetPack" Source="$(var.BinaryFileDir)RemObjects.InternetPack.dll" DiskId="1"/>
+        <File Id="RemObjects.InternetPack.VirtualFTP" Source="$(var.BinaryFileDir)RemObjects.InternetPack.VirtualFTP.dll" DiskId="1"/>
+        <File Id="Sphorium.WebDAV.Server.Framework" Source="$(var.BinaryFileDir)Sphorium.WebDAV.Server.Framework.dll" DiskId="1"/>
+
+        <File Id="MicrosoftSynchronizationData" Source="$(var.BinaryFileDir)Microsoft.Synchronization.Data.dll" DiskId="1"/>
+        <File Id="MicrosoftSynchronizationDataServer" Source="$(var.BinaryFileDir)Microsoft.Synchronization.Data.Server.dll" DiskId="1"/>
+        <File Id="MicrosoftSynchronizationDataSqlServer" Source="$(var.BinaryFileDir)Microsoft.Synchronization.Data.SqlServer.dll" DiskId="1"/>
+        <File Id="MicrosoftSynchronization" Source="$(var.BinaryFileDir)Microsoft.Synchronization.dll" DiskId="1"/>
+        <File Id="Synchronization21" Source="$(var.SourceFileDir)Utils\Synchronization21.dll" DiskId="1" SelfRegCost="1" />
+
+      </Component>
+
+    </DirectoryRef>
+
+    <DirectoryRef Id="UtilsFolder">
+
+      <Component Id="UtilsFiles" Guid="9B84D89B-F83D-4E2E-B8C4-41AFEA2BB3DF">
+
+        <File Id="UtilsExe" Source="$(var.UtilsFileDir)Utils.exe" DiskId="1" />
+
+      </Component>
+
+      <Component Id="CreateShotcut" Guid="3740D47F-5E77-4852-AF26-7BC7AF19BF87">
+
+        <CreateFolder Directory="BITMobileMenu" />
+
+        <File Id="RunCmd" Source="$(var.SourceFileDir)Utils\RunUtils.cmd" DiskId="1" />
+        
+        <Shortcut Id="UtilsShortcut" Name="!(loc.ShortcutName)" Description="!(loc.ShortcutName)" WorkingDirectory="UtilsFolder" Directory="BITMobileMenu" Advertise="yes" Icon="MyProduct.ico"></Shortcut>
+
+      </Component>
+
+    </DirectoryRef>
+
+    <DirectoryRef Id="BITMobileMenu">
+
+      <Component Id="DelFolder" Guid="1B5F5305-DC37-4E99-A577-A87B8E2D7D43">
+
+        <RegistryValue Root="HKMU" Key="Software\[Manufacturer]\[ProductName]" Name="bitmobile_installed" Type="integer" Value="1" KeyPath="yes"/> 
+        
+        <RemoveFolder Id="BITMobileMenu" On="uninstall"/> 
+        
+      </Component>
+        
+    </DirectoryRef>
+
+    <DirectoryRef Id="SolutionsDir">
+
+      <Component Id="CreateSoliutionsFolder" Guid="AC12C3DF-F0D2-4D1A-B739-B02DDC70979B">
+        
+        <CreateFolder Directory="SolutionsDir" />
+      
+      </Component>
+      
+    </DirectoryRef>
+    
+    <!--Описание свойств необходимых для установки-->
+    <Property Id="WIXUI_INSTALLDIR" Value="INSTALLFOLDER" />
+    <Property Id="WIXUI_SOLUTIONSDIR" Value="SolutionsDir" />
+    <Property Id="CONNECTIONSTRING" Value="NotSet" />
+    <Property Id="WEB_APP_NAME" Value="$(var.DefaultAppName)" />
+    <Property Id="WEBSITE_NAME" Value="!(loc.DefaultWebSiteName)" /> 
+    <Property Id="APP_POOL_NAME" Value="!(loc.DefaultAppPoolName)" />
+    <Property Id="ARPPRODUCTICON" Value="MyProduct.ico" />
+
+    <Property Id="DISABLEADVTSHORTCUTS" Value="1" />
+
+    <WixVariable Id="WixUIDialogBmp" Value="$(var.DialogBMP)" /> 
+    <WixVariable Id="WixUIBannerBmp" Value="$(var.SourceFileDir)bmp\Banner.bmp" />  
+    
+    <PropertyRef Id="NETFRAMEWORK45"/>
+    <PropertyRef Id="IISMAJORVERSION"/>
+    
+    <!--Условия возможности установки-->
+      <Condition Message='!(loc.IIS7NotFound)'><![CDATA[Installed OR (IISMAJORVERSION AND (IISMAJORVERSION = "#6" OR IISMAJORVERSION = "#7"  OR IISMAJORVERSION = "#8"  OR IISMAJORVERSION = "#9"  OR IISMAJORVERSION = "#10"))]]>
+</Condition>
+    <Condition Message='!(loc.DotNetNotFound)'><![CDATA[NETFRAMEWORK45]]></Condition>
+    
+    <!--Интерфейс пользователя-->
+    <UI Id="MyWixUI_InstallDir"> 
+
+      <UIRef Id="WixUI_InstallDir"/>
+      
+      <UIRef Id="WixUI_ErrorProgressText"/>
+
+      <Publish Dialog="WelcomeDlg" Control="Next" Event="NewDialog" Value="ServerAndIISSettingsDlg" Order="10">1</Publish>
+      
+      <Publish Dialog="ServerAndIISSettingsDlg" Control="Back" Event="NewDialog" Value="WelcomeDlg" Order="10">1</Publish>
+      <Publish Dialog="ServerAndIISSettingsDlg" Control="Next" Event="SpawnDialog" Value="InvalidWebAliasAliasDlg" Order="5">APP_POOL_NAME=""</Publish>
+      <Publish Dialog="ServerAndIISSettingsDlg" Control="Next" Event="SpawnDialog" Value="InvalidWebAliasAliasDlg" Order="6">WEB_APP_NAME=""</Publish>
+      <Publish Dialog="ServerAndIISSettingsDlg" Control="Next" Event="SpawnDialog" Value="InvalidWebAliasAliasDlg" Order="7">WEBSITE_NAME=""</Publish>
+      <Publish Dialog="ServerAndIISSettingsDlg" Control="Next" Event="SetTargetPath" Value="[WIXUI_INSTALLDIR]" Order="1">1</Publish>
+      <Publish Dialog="ServerAndIISSettingsDlg" Control="Next" Event="DoAction" Value="WixUIValidatePath" Order="2">NOT WIXUI_DONTVALIDATEPATH</Publish>
+      <Publish Dialog="ServerAndIISSettingsDlg" Control="Next" Event="SpawnDialog" Value="InvalidDirDlg" Order="3"><![CDATA[NOT WIXUI_DONTVALIDATEPATH AND WIXUI_INSTALLDIR_VALID<>"1"]]></Publish>
+      <Publish Dialog="ServerAndIISSettingsDlg" Control="Next" Event="NewDialog" Value="ServerSettingsDlg" Order="4">WIXUI_DONTVALIDATEPATH OR WIXUI_INSTALLDIR_VALID="1"</Publish>
+      <Publish Dialog="ServerAndIISSettingsDlg" Control="ChangeFolder" Property="_BrowseProperty" Value="[WIXUI_INSTALLDIR]" Order="1">1</Publish>
+      <Publish Dialog="ServerAndIISSettingsDlg" Control="ChangeFolder" Event="SpawnDialog" Value="BrowseDlg" Order="2">1</Publish>
+      
+      <Publish Dialog="ServerSettingsDlg" Control="Back" Event="NewDialog" Value="ServerAndIISSettingsDlg" Order="10">1</Publish>
+      <Publish Dialog="ServerSettingsDlg" Control="Next" Event="NewDialog" Value="DatabaseDlg" Order="1"><![CDATA[ROOTPASSWORD = CHECKROOTPASSWORD AND NOT ROOTPASSWORD = ""]]></Publish>
+      <Publish Dialog="ServerSettingsDlg" Control="ChangeFolder" Property="_BrowseProperty" Value="[WIXUI_SOLUTIONSDIR]" Order="1">1</Publish>
+      <Publish Dialog="ServerSettingsDlg" Control="ChangeFolder" Event="SpawnDialog" Value="BrowseDlg" Order="2">1</Publish>
+      
+      <Publish Dialog="DatabaseDlg" Control="Back" Event="NewDialog" Value="ServerSettingsDlg" Order="10">1</Publish>
+      <Publish Dialog="DatabaseDlg" Control="Next" Event="NewDialog" Value="VerifyReadyDlg" Order="10"><![CDATA[LOGON_VALID = 1]]></Publish>
+      
+      <Publish Dialog="VerifyReadyDlg" Control="Back" Event="NewDialog" Value="DatabaseDlg" Order="10">1</Publish>
+
+    </UI>
+    
+  </Product>
+
+  <?include DatabaseUI.wxi ?>
+  <?include ServerSettingsUI.wxi ?>
+  <?include ServerAndIISSettingsUI.wxi ?>
+  
+</Wix>

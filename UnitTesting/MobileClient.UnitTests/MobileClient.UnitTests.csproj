@@ -1,0 +1,145 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{AD65F8B8-1024-413A-9C08-D02995CC7B2F}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>MobileClient.UnitTests</RootNamespace>
+    <AssemblyName>MobileClient.UnitTests</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+    <ReferencePath>$(ProgramFiles)\Common Files\microsoft shared\VSTT\$(VisualStudioVersion)\UITestExtensionPackages</ReferencePath>
+    <IsCodedUITest>False</IsCodedUITest>
+    <TestProjectType>UnitTest</TestProjectType>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+  </ItemGroup>
+  <Choose>
+    <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
+      <ItemGroup>
+        <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+      </ItemGroup>
+    </When>
+    <Otherwise>
+      <ItemGroup>
+        <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework" />
+      </ItemGroup>
+    </Otherwise>
+  </Choose>
+  <ItemGroup>
+    <Compile Include="BusinessProcess\ApplicationSettingsTests.cs" />
+    <Compile Include="Controls\LayoutBehaviourTests.cs" />
+    <Compile Include="DbEngine\DbFunctionsTests.cs" />
+    <Compile Include="ExpressionEvaluator\ExpressionFactoryTests.cs" />
+    <Compile Include="ScriptEngine\JsGlobalTests.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Mobile\Android\MobileClient\BitBrowser\BitBrowser.csproj">
+      <Project>{86d37a0c-96fa-4126-ba3c-aa30160c035a}</Project>
+      <Name>BitBrowser</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Mobile\Android\MobileClient\Common\Common.csproj">
+      <Project>{774597b4-f92c-4c09-afd8-c78e654813eb}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Mobile\Android\MobileClient\Debujjer\Debujjer.csproj">
+      <Project>{4cac2998-a665-4709-a755-18d6d28a9dc4}</Project>
+      <Name>Debujjer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Mobile\Core\BusinessProcess\BusinessProcess.MD.csproj">
+      <Project>{96ec2c3a-3590-4805-a291-8deff5022c46}</Project>
+      <Name>BusinessProcess.MD</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Mobile\Core\Controls\Controls.MD.csproj">
+      <Project>{608b4270-36f6-4c47-bc94-f737c42b2c9b}</Project>
+      <Name>Controls.MD</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Mobile\Core\DAL\DAL.MD.csproj">
+      <Project>{2afeb1d5-e05e-4bc9-b6b0-36da61382871}</Project>
+      <Name>DAL.MD</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Mobile\Core\DbEngine\DbEngine.MD.csproj">
+      <Project>{e9fc2739-c234-465b-85dc-4b9d6ae3cffc}</Project>
+      <Name>DbEngine.MD</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Mobile\Core\ExpressionEvaluator\ExpressionEvaluator.MD.csproj">
+      <Project>{687f4061-c571-45b1-8e35-bbe55d3b5e19}</Project>
+      <Name>ExpressionEvaluator.MD</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Mobile\Core\ScriptEngine\ScriptEngine.MD.csproj">
+      <Project>{c37b70f2-c2f5-4dbd-8948-fdcb2629ba4a}</Project>
+      <Name>ScriptEngine.MD</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Mobile\Core\StyleSheet\StyleSheet.MD.csproj">
+      <Project>{dba3da4e-6f7c-40e4-b000-eb27364f8791}</Project>
+      <Name>StyleSheet.MD</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Mobile\Core\SyncLibrary\SyncLibrary.MD.csproj">
+      <Project>{87d04775-a468-483f-8022-7ddc7d8cea7f}</Project>
+      <Name>SyncLibrary.MD</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Mobile\Core\TestsAgent\TestsAgent.MD.csproj">
+      <Project>{cde38425-9ff8-475c-b542-6262306fcda3}</Project>
+      <Name>TestsAgent.MD</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Mobile\Core\Utilities\Utilities.MD.csproj">
+      <Project>{a12e30fb-a666-49bd-8891-8a239691c39a}</Project>
+      <Name>Utilities.MD</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Mobile\Core\ValueStack\ValueStack.MD.csproj">
+      <Project>{00be6271-320d-4527-adb9-b1f9dc6649de}</Project>
+      <Name>ValueStack.MD</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Choose>
+    <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
+      <ItemGroup>
+        <Reference Include="Microsoft.VisualStudio.QualityTools.CodedUITestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+          <Private>False</Private>
+        </Reference>
+        <Reference Include="Microsoft.VisualStudio.TestTools.UITest.Common, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+          <Private>False</Private>
+        </Reference>
+        <Reference Include="Microsoft.VisualStudio.TestTools.UITest.Extension, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+          <Private>False</Private>
+        </Reference>
+        <Reference Include="Microsoft.VisualStudio.TestTools.UITesting, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+          <Private>False</Private>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

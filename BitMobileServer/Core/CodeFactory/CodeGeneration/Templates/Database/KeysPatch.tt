@@ -1,0 +1,13 @@
+﻿<#@ template language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+
+<# foreach(var key in config.ClusteredPrimaryKeys){ #>
+ALTER TABLE [<#= key.SchemaName #>].[<#= key.TableName #>] DROP CONSTRAINT [<#= key.Name #>]
+GO
+ALTER TABLE [<#= key.SchemaName #>].[<#= key.TableName #>] ADD CONSTRAINT [<#= key.Name #>] PRIMARY KEY NONCLUSTERED([Id]) 
+GO
+<#}#>
+

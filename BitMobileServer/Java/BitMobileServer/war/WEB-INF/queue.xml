@@ -1,0 +1,24 @@
+<?xml version="1.0" ?>
+<queue-entries>   
+
+	  <queue>
+	    <name>upload-admin</name>
+	    <rate>10/m</rate>
+	    <bucket-size>1</bucket-size>
+	    <max-concurrent-requests>1</max-concurrent-requests>
+	    <retry-parameters>
+	      <task-retry-limit>0</task-retry-limit>
+	    </retry-parameters>	    
+	  </queue>
+	  
+	  <queue>
+	    <name>upload-metadata</name>
+	    <rate>1/m</rate>
+	    <bucket-size>1</bucket-size>
+	    <max-concurrent-requests>1</max-concurrent-requests>
+	    <retry-parameters>
+	      <task-retry-limit>0</task-retry-limit>
+	    </retry-parameters>	    
+	  </queue>	  
+
+</queue-entries>

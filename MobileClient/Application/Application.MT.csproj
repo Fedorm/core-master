@@ -1,0 +1,86 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{32CCD428-607B-4F93-ADD7-3F5986A74769}</ProjectGuid>
+    <ProjectTypeGuids>{6BC8ED88-2882-458C-8E55-DFD12B67127B};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <RootNamespace>BitMobile.Application</RootNamespace>
+    <IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
+    <AssemblyName>Application</AssemblyName>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>full</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ApplicationContext.cs" />
+    <Compile Include="ApplicationSettings.cs" />
+    <Compile Include="ApplicationSettingsConsts.cs" />
+    <Compile Include="Archivation\Zip.cs" />
+    <Compile Include="BusinessProcess\BusinessProcessContext.cs" />
+    <Compile Include="Controls\ControlsContext.cs" />
+    <Compile Include="CustomControl.cs" />
+    <Compile Include="DataAccessLayer\DalContext.cs" />
+    <Compile Include="DbEngine\DbContext.cs" />
+    <Compile Include="Debugger\DebugContext.cs" />
+    <Compile Include="Entites\EntityFactory.cs" />
+    <Compile Include="Entites\EntityField.cs" />
+    <Compile Include="Entites\EntityType.cs" />
+    <Compile Include="Exceptions\AutorizationException.cs" />
+    <Compile Include="Exceptions\ConnectionException.cs" />
+    <Compile Include="Exceptions\CustomException.cs" />
+    <Compile Include="ExpressionEvaluator\ExpressionContext.cs" />
+    <Compile Include="Exceptions\InputOutputException.cs" />
+    <Compile Include="Exceptions\InternalServerException.cs" />
+    <Compile Include="Exceptions\InvalidVersionException.cs" />
+    <Compile Include="Exceptions\JSException.cs" />
+    <Compile Include="Exceptions\JsGlobalException.cs" />
+    <Compile Include="Exceptions\LicenseException.cs" />
+    <Compile Include="Exceptions\NonFatalException.cs" />
+    <Compile Include="Exceptions\ResourceNotFoundException.cs" />
+    <Compile Include="Extensions\DateTimeExtension.cs" />
+    <Compile Include="Extensions\StringHelperExtension.cs" />
+    <Compile Include="IO\IOContext.cs" />
+    <Compile Include="Log\CustomExceptionHandler.cs" />
+    <Compile Include="Log\LogManager.cs" />
+    <Compile Include="ScriptEngine\ScriptEngineContext.cs" />
+    <Compile Include="StyleSheet\StyleSheetContext.cs" />
+    <Compile Include="SyncLibrary\SyncContext.cs" />
+    <Compile Include="TestsAgent\TestAgent.cs" />
+    <Compile Include="TestsAgent\ViewProxy.cs" />
+    <Compile Include="Tracking\GPSCoordinate.cs" />
+    <Compile Include="Tracking\Tracker.cs" />
+    <Compile Include="Translator\D.cs" />
+    <Compile Include="Translator\Translator.cs" />
+    <Compile Include="ValueStack\ValueStackContext.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.MonoTouch.CSharp.targets" />
+  <ItemGroup>
+    <ProjectReference Include="..\Common\Common.MT.csproj">
+      <Project>{3FF1102C-B767-4E1A-8D0C-14BB5BEA302E}</Project>
+      <Name>Common.MT</Name>
+    </ProjectReference>
+  </ItemGroup>
+</Project>

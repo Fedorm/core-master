@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WixLocalization Culture="en-us" xmlns="http://schemas.microsoft.com/wix/2006/localization">
+  <String Id="ChooseDatabaseTitle" Overridable="yes">Connecting to database server</String>
+  <String Id="ChooseDatabaseDescription" Overridable="yes">Specify connection to database server</String>
+  <String Id="ChooseDatabase" Overridable="yes">Select database server</String>
+  <String Id="DatabaseServerAddress" Overridable="yes">Server (IP-address or name):</String>
+  <String Id="DatabaseIntegratedAuthTitle" Overridable="yes">Trusted (Windows authentication)</String>
+  <String Id="DatabaseAccountTitle" Overridable="yes">Specify user name and password (SQL authentication)</String>
+  <String Id="UsernameTitle" Overridable="yes">Username:</String>
+  <String Id="PasswordTitle" Overridable="yes">Password:</String>
+  <String Id="SqlConnectTitle" Overridable="yes">Check connection</String>
+  <String Id="SqlConnectFailedTitel" Overridable="yes">Connection error</String>
+</WixLocalization>

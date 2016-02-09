@@ -1,0 +1,123 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>10.0.0</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{CEF0751A-9DB4-43E2-93B4-C72F9C3698ED}</ProjectGuid>
+    <ProjectTypeGuids>{6BC8ED88-2882-458C-8E55-DFD12B67127B};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <RootNamespace>SyncLibrary</RootNamespace>
+    <IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
+    <AssemblyName>SyncLibrary</AssemblyName>
+    <ReleaseVersion>1.5.8.42</ReleaseVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>True</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>False</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;CLIENT</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>False</ConsolePause>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>none</DebugType>
+    <Optimize>True</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>False</ConsolePause>
+    <DefineConstants>CLIENT</DefineConstants>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core" />
+    <Reference Include="monotouch" />
+    <Reference Include="System.Json" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.ServiceModel.Web" />
+    <Reference Include="Mono.Data.Sqlite" />
+    <Reference Include="System.Data" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.MonoTouch.CSharp.targets" />
+  <ItemGroup>
+    <Compile Include="Client\ExceptionUtility.cs" />
+    <Compile Include="ClientCommon\AsyncWorkManagerException.cs" />
+    <Compile Include="ClientCommon\AsyncWorkRequest.cs" />
+    <Compile Include="ClientCommon\AsyncWorkerManager.cs" />
+    <Compile Include="ClientCommon\CacheController.cs" />
+    <Compile Include="ClientCommon\CacheControllerBehavior.cs" />
+    <Compile Include="ClientCommon\CacheControllerException.cs" />
+    <Compile Include="ClientCommon\CacheRefreshStatistics.cs" />
+    <Compile Include="ClientCommon\CacheRequest.cs" />
+    <Compile Include="ClientCommon\CacheRequestHandler.cs" />
+    <Compile Include="ClientCommon\CacheRequestType.cs" />
+    <Compile Include="ClientCommon\ChangeSet.cs" />
+    <Compile Include="ClientCommon\ChangeSetResponse.cs" />
+    <Compile Include="ClientCommon\HttpCacheRequestHandler.cs" />
+    <Compile Include="ClientCommon\OfflineSyncProvider.cs" />
+    <Compile Include="ClientCommon\ProcessCacheRequestCompletedEventArgs.cs" />
+    <Compile Include="ClientCommon\RefreshCompletedEventArgs.cs" />
+    <Compile Include="ClientCommon\SerializationFormat.cs" />
+    <Compile Include="Common\Conflict.cs" />
+    <Compile Include="Common\IOfflineEntity.cs" />
+    <Compile Include="Common\OfflineEntityMetadata.cs" />
+    <Compile Include="Common\SyncConflict.cs" />
+    <Compile Include="Common\SyncConflictResolution.cs" />
+    <Compile Include="Common\SyncError.cs" />
+    <Compile Include="DataAnnotations\DisplayAttribute.cs" />
+    <Compile Include="DataAnnotations\KeyAttribute.cs" />
+    <Compile Include="Formatters\AtomEntryInfoWrapper.cs" />
+    <Compile Include="Formatters\AtomHelper.cs" />
+    <Compile Include="Formatters\EntryInfoWrapper.cs" />
+    <Compile Include="Formatters\FormatterConstants.cs" />
+    <Compile Include="Formatters\FormatterUtilities.cs" />
+    <Compile Include="Formatters\ODataAtomReader.cs" />
+    <Compile Include="Formatters\ODataAtomWriter.cs" />
+    <Compile Include="Formatters\ReaderItemType.cs" />
+    <Compile Include="Formatters\SyncReader.cs" />
+    <Compile Include="Formatters\SyncWriter.cs" />
+    <Compile Include="IsolatedStorage\AutoResetLock.cs" />
+    <Compile Include="IsolatedStorage\IsolatedStorageOfflineContext.cs" />
+    <Compile Include="IsolatedStorage\IsolatedStorageOfflineEntity.cs" />
+    <Compile Include="IsolatedStorage\IsolatedStorageSchema.cs" />
+    <Compile Include="IsolatedStorage\LoadCompletedEventArgs.cs" />
+    <Compile Include="IsolatedStorage\OfflineEntityState.cs" />
+    <Compile Include="ProxyCollection.cs" />
+    <Compile Include="BitMobile\OnStatus.cs" />
+    <Compile Include="BitMobile\ProgressStream.cs" />
+    <Compile Include="SessionInfo.cs" />
+    <Compile Include="IsolatedStorage\SQLiteCacheData.cs" />
+    <Compile Include="IsolatedStorage\SQLiteStorageHandler.cs" />
+    <Compile Include="BitMobile\Entity.cs" />
+    <Compile Include="BitMobile\OfflineContext.cs" />
+  </ItemGroup>
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties ProjectLinkReference="ddf4ca99-2f5f-490d-9993-907ad060f354" ProjectLinkerExcludeFilter="\\?desktop(\\.*)?$;\\?silverlight(\\.*)?$;\.desktop;\.silverlight;\.xaml;^service references(\\.*)?$;\.clientconfig;^web references(\\.*)?$" />
+    </VisualStudio>
+  </ProjectExtensions>
+  <ItemGroup>
+    <ProjectReference Include="..\ExpressionEvaluator\ExpressionEvaluator.MT.csproj">
+      <Project>{BC668DC7-F76D-4FC7-B66B-FBA4D08BB0DC}</Project>
+      <Name>ExpressionEvaluator.MT</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Utilities\Utilities.MT.csproj">
+      <Project>{A464059D-A4E2-4176-BE0D-A1087DF218D2}</Project>
+      <Name>Utilities.MT</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Project>{1765FE35-1DA7-40D7-B7D6-5705441B395D}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DbEngine\DbEngine.MT.csproj">
+      <Project>{7979A2EF-8878-476F-991A-FFE8AC7500DF}</Project>
+      <Name>DbEngine.MT</Name>
+    </ProjectReference>
+  </ItemGroup>
+</Project>

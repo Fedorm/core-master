@@ -1,0 +1,307 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">iPhoneSimulator</Platform>
+    <ProjectGuid>{577ABD7F-51E4-4C96-A363-4392DDEFE2B6}</ProjectGuid>
+    <ProjectTypeGuids>{6BC8ED88-2882-458C-8E55-DFD12B67127B};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>BitMobile.IOS</RootNamespace>
+    <IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
+    <AssemblyName>BitBrowser</AssemblyName>
+    <SynchReleaseVersion>false</SynchReleaseVersion>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <MtouchSdkVersion>8.4</MtouchSdkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhoneSimulator' ">
+    <DebugSymbols>True</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>False</Optimize>
+    <OutputPath>bin\iPhoneSimulator\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>False</ConsolePause>
+    <MtouchDebug>True</MtouchDebug>
+    <MtouchI18n>
+    </MtouchI18n>
+    <MtouchArch>i386</MtouchArch>
+    <MtouchProfiling>true</MtouchProfiling>
+    <MtouchUseSGen>true</MtouchUseSGen>
+    <MtouchLink>None</MtouchLink>
+    <BuildIpa>True</BuildIpa>
+    <CodesignProvision>b3d92999-ba95-4941-91b2-476bc695e9ce</CodesignProvision>
+    <CodesignKey>iPhone Developer: D Z (GTPX44C798)</CodesignKey>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhoneSimulator' ">
+    <DebugType>none</DebugType>
+    <Optimize>True</Optimize>
+    <OutputPath>bin\iPhoneSimulator\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>False</ConsolePause>
+    <MtouchLink>None</MtouchLink>
+    <CodesignKey>iPhone Distribution</CodesignKey>
+    <CodesignProvision>
+    </CodesignProvision>
+    <CodesignExtraArgs>
+    </CodesignExtraArgs>
+    <MtouchI18n>
+    </MtouchI18n>
+    <MtouchArch>i386</MtouchArch>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhone' ">
+    <DebugSymbols>True</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>False</Optimize>
+    <OutputPath>bin\iPhone\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>False</ConsolePause>
+    <CodesignKey>iPhone Developer: D Z (GTPX44C798)</CodesignKey>
+    <MtouchDebug>True</MtouchDebug>
+    <MtouchArch>ARMv7</MtouchArch>
+    <MtouchI18n>
+    </MtouchI18n>
+    <IpaPackageName>
+    </IpaPackageName>
+    <MtouchProfiling>true</MtouchProfiling>
+    <MtouchUseSGen>true</MtouchUseSGen>
+    <CodesignProvision>
+    </CodesignProvision>
+    <MtouchLink>None</MtouchLink>
+    <BuildIpa>true</BuildIpa>
+    <IpaIncludeArtwork>true</IpaIncludeArtwork>
+    <CodesignResourceRules>ResourceRules.plist</CodesignResourceRules>
+    <CodesignEntitlements />
+    <CodesignExtraArgs />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhone' ">
+    <DebugType>none</DebugType>
+    <Optimize>True</Optimize>
+    <OutputPath>bin\iPhone\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>False</ConsolePause>
+    <CodesignKey>iPhone Distribution</CodesignKey>
+    <MtouchI18n>
+    </MtouchI18n>
+    <MtouchArch>ARMv7</MtouchArch>
+    <IpaPackageName>
+    </IpaPackageName>
+    <BuildIpa>true</BuildIpa>
+    <IpaIncludeArtwork>true</IpaIncludeArtwork>
+    <IpaMetadata>iTunesMetadata.plist</IpaMetadata>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Ad-Hoc|iPhone' ">
+    <DebugType>none</DebugType>
+    <Optimize>True</Optimize>
+    <OutputPath>bin\iPhone\Ad-Hoc</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>False</ConsolePause>
+    <BuildIpa>True</BuildIpa>
+    <CodesignKey>iPhone Distribution</CodesignKey>
+    <IpaPackageName>
+    </IpaPackageName>
+    <MtouchI18n>
+    </MtouchI18n>
+    <MtouchArch>ARMv7</MtouchArch>
+    <IpaIncludeArtwork>true</IpaIncludeArtwork>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'AppStore|iPhone' ">
+    <DebugType>none</DebugType>
+    <Optimize>True</Optimize>
+    <OutputPath>bin\iPhone\AppStore</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>False</ConsolePause>
+    <CodesignKey>iPhone Distribution</CodesignKey>
+    <IpaPackageName>
+    </IpaPackageName>
+    <MtouchI18n>
+    </MtouchI18n>
+    <MtouchArch>ARMv7</MtouchArch>
+    <BuildIpa>true</BuildIpa>
+    <IpaIncludeArtwork>true</IpaIncludeArtwork>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core" />
+    <Reference Include="monotouch" />
+    <Reference Include="System.Json" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="ZXing.Net.Mobile">
+      <HintPath>..\Components\zxing.net.mobile-1.4.7.2\lib\ios\ZXing.Net.Mobile.dll</HintPath>
+    </Reference>
+    <Reference Include="zxing.monotouch">
+      <HintPath>..\Components\zxing.net.mobile-1.4.7.2\lib\ios\zxing.monotouch.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Info.plist">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="iTunesMetadata.plist" />
+    <None Include="ResourceRules.plist" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Controls\MediaPlayer.cs" />
+    <Compile Include="Main.cs" />
+    <Compile Include="AppDelegate.cs" />
+    <Compile Include="Controllers\NavigationController.cs" />
+    <Compile Include="Controllers\ScreenController.cs" />
+    <Compile Include="Controllers\ProgressController.cs" />
+    <Compile Include="Controllers\LogonController.cs" />
+    <Compile Include="MailSender.cs" />
+    <Compile Include="Providers\EmailProvider.cs" />
+    <Compile Include="Providers\LocalNotificationProvider.cs" />
+    <Compile Include="Providers\WebProvider.cs" />
+    <Compile Include="PushNotificationManager.cs" />
+    <Compile Include="StyleSheet\DeviceHardware.cs" />
+    <Compile Include="ExceptionHandler.cs" />
+    <Compile Include="Controls\Button.cs" />
+    <Compile Include="Controls\CheckBox.cs" />
+    <Compile Include="Controls\DockLayout.cs" />
+    <Compile Include="Controls\EditText.cs" />
+    <Compile Include="Controls\HorizontalLayout.cs" />
+    <Compile Include="Controls\HorizontalLine.cs" />
+    <Compile Include="Controls\Image.cs" />
+    <Compile Include="Controls\Indicator.cs" />
+    <Compile Include="Controls\MemoEdit.cs" />
+    <Compile Include="Controls\Screen.cs" />
+    <Compile Include="Controls\ScrollView.cs" />
+    <Compile Include="Controls\TextView.cs" />
+    <Compile Include="Controls\VerticalLayout.cs" />
+    <Compile Include="Controls\WebImage.cs" />
+    <Compile Include="Controls\WebMapGoogle.cs" />
+    <Compile Include="Controls\WebView.cs" />
+    <Compile Include="Controls\CustomLayout.cs" />
+    <Compile Include="Controls\CustomSwipeLayout.cs" />
+    <Compile Include="Controls\SwipeVerticalLayout.cs" />
+    <Compile Include="Controls\SwipeHorizontalLayout.cs" />
+    <Compile Include="Controllers\StartScreenController.cs" />
+    <Compile Include="UI\Control%27.cs" />
+    <Compile Include="UI\Control.cs" />
+    <Compile Include="Providers\GPSTracker.cs" />
+    <Compile Include="Providers\GPSProvider.cs" />
+    <Compile Include="Providers\GalleryProvider.cs" />
+    <Compile Include="Providers\CameraProvider.cs" />
+    <Compile Include="Providers\ImagePickerProvider.cs" />
+    <Compile Include="Providers\DialogProvider.cs" />
+    <Compile Include="UI\TabOrderManager.cs" />
+    <Compile Include="StyleSheet\StyleSheetExtensions.cs" />
+    <Compile Include="Providers\DisplayProvider.cs" />
+    <Compile Include="Application\IOSApplicationContext.cs" />
+    <Compile Include="Application\Settings.cs" />
+    <Compile Include="Application\DatePicker.cs" />
+    <Compile Include="Providers\ClipboardProvider.cs" />
+    <Compile Include="Reachability.cs" />
+    <Compile Include="Controls\CustomEdit.cs" />
+    <Compile Include="Providers\JokeProvider.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.MonoTouch.CSharp.targets" />
+  <ItemGroup>
+    <BundleResource Include="Settings.bundle\Root.plist" />
+    <BundleResource Include="Settings.bundle\ru.lproj\Root.strings" />
+    <BundleResource Include="Settings.bundle\en.lproj\Root.strings" />
+    <BundleResource Include="Resources\Default-568h%402x.png" />
+    <BundleResource Include="Resources\Default%402x.png" />
+    <BundleResource Include="Resources\Icon-72.png" />
+    <BundleResource Include="Resources\warning.png" />
+    <BundleResource Include="Resources\Icon-60%402x.png" />
+    <BundleResource Include="Resources\Icon-76.png" />
+    <BundleResource Include="Resources\BitMobileBottom.png" />
+    <BundleResource Include="Resources\BitMobileTop.png" />
+    <BundleResource Include="Resources\Lock.png" />
+    <BundleResource Include="Resources\Password.png" />
+    <BundleResource Include="Resources\UserName.png" />
+    <BundleResource Include="Resources\SuperAgentBottom.png" />
+    <BundleResource Include="Resources\SuperAgentLogo.png" />
+    <BundleResource Include="Resources\SuperAgentTop.png" />
+    <BundleResource Include="Resources\SuperServiceBottom.png" />
+    <BundleResource Include="Resources\SuperServiceLogo.png" />
+    <BundleResource Include="Resources\SuperServiceTop.png" />
+    <BundleResource Include="Icons\SuperAgent\120x120.png" />
+    <BundleResource Include="Icons\SuperAgent\72x72.png" />
+    <BundleResource Include="Icons\SuperAgent\76x76.png" />
+    <BundleResource Include="Icons\SuperAgent\57x57.png" />
+    <BundleResource Include="Icons\BitMobile\76x76.png" />
+    <BundleResource Include="Icons\BitMobile\72x72.png" />
+    <BundleResource Include="Icons\BitMobile\57x57.png" />
+    <BundleResource Include="Icons\BitMobile\120x120.png" />
+    <BundleResource Include="Icons\SuperService\120x120.png" />
+    <BundleResource Include="Icons\SuperService\57x57.png" />
+    <BundleResource Include="Icons\SuperService\72x72.png" />
+    <BundleResource Include="Icons\SuperService\76x76.png" />
+    <BundleResource Include="Resources\LandLogo.png" />
+    <BundleResource Include="Resources\LandSuperServiceLogo.png" />
+    <BundleResource Include="Resources\Cartoon_sound_effects_boing.wav" />
+    <BundleResource Include="Resources\Cartoon_sound_effects_bong_4.wav" />
+    <BundleResource Include="Resources\Cartoon_sound_effects_bongs_1.wav" />
+    <BundleResource Include="Resources\Cartoon_sound_effects_zip_4.wav" />
+    <BundleResource Include="Resources\Comedy_effect_kiss.wav" />
+    <BundleResource Include="Resources\Comedy_effect_spring_3.wav" />
+    <BundleResource Include="Resources\Comedy_effect_squeak_and_pop.wav" />
+    <BundleResource Include="Resources\Comical_sound_series_boing_spring_2.wav" />
+    <BundleResource Include="Resources\Comical_sound_series_bongs_1.wav" />
+    <BundleResource Include="Resources\Comical_sounds_1.wav" />
+    <BundleResource Include="Resources\Comical_sounds_2.wav" />
+    <BundleResource Include="Resources\Whip_and_bonk.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="en.lproj\InfoPlist.strings" />
+    <Content Include="ru.lproj\InfoPlist.strings" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Application\Application.MT.csproj">
+      <Project>{32CCD428-607B-4F93-ADD7-3F5986A74769}</Project>
+      <Name>Application.MT</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Bulder\Bulder.MT.csproj">
+      <Project>{9064AA04-AA56-4FED-8C47-AAD855E41AD2}</Project>
+      <Name>Bulder.MT</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Common\Common.MT.csproj">
+      <Project>{3FF1102C-B767-4E1A-8D0C-14BB5BEA302E}</Project>
+      <Name>Common.MT</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <XamarinComponentReference Include="zxing.net.mobile">
+      <Version>1.4.7.2</Version>
+      <Visible>False</Visible>
+    </XamarinComponentReference>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,107 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{608B4270-36F6-4C47-BC94-F737C42B2C9B}</ProjectGuid>
+    <ProjectTypeGuids>{EFBA0AD7-5A72-4C68-AF49-83D382785DCF};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>BitMobile.Controls</RootNamespace>
+    <AssemblyName>Controls</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+    <AndroidResgenFile>Resources\Resource.Designer.cs</AndroidResgenFile>
+    <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Develop|AnyCPU'">
+    <OutputPath>bin\Develop\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="mscorlib" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ActionHandlerEx.cs" />
+    <Compile Include="Component.cs" />
+    <Compile Include="IControl.cs" />
+    <Compile Include="DataBindAttribute.cs" />
+    <Compile Include="DataBinder.cs" />
+    <Compile Include="ActionHandler.cs" />
+    <Compile Include="DialogButton.cs" />
+    <Compile Include="GoogleMapBehavior.cs" />
+    <Compile Include="IApplicationContextAware.cs" />
+    <Compile Include="IContainer.cs" />
+    <Compile Include="IDataBind.cs" />
+    <Compile Include="IFocusable.cs" />
+    <Compile Include="IImageContainer.cs" />
+    <Compile Include="IScreen.cs" />
+    <Compile Include="IValidatable.cs" />
+    <Compile Include="LayoutBehaviour.cs" />
+    <Compile Include="Rectangle.cs" />
+    <Compile Include="ScreenData.cs" />
+    <Compile Include="SwipeBehaviour.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Android\MobileClient\Common\Common.csproj">
+      <Project>{774597b4-f92c-4c09-afd8-c78e654813eb}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\StyleSheet\StyleSheet.MD.csproj">
+      <Project>{dba3da4e-6f7c-40e4-b000-eb27364f8791}</Project>
+      <Name>StyleSheet.MD</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Utilities\Utilities.MD.csproj">
+      <Project>{a12e30fb-a666-49bd-8891-8a239691c39a}</Project>
+      <Name>Utilities.MD</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ValueStack\ValueStack.MD.csproj">
+      <Project>{00be6271-320d-4527-adb9-b1f9dc6649de}</Project>
+      <Name>ValueStack.MD</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties ProjectLinkerExcludeFilter="\\?desktop(\\.*)?$;\\?silverlight(\\.*)?$;\.desktop;\.silverlight;\.xaml;^service references(\\.*)?$;\.clientconfig;^web references(\\.*)?$" ProjectLinkReference="3c71e970-82c2-4176-8537-1cc260f4c1c1" />
+    </VisualStudio>
+  </ProjectExtensions>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,0 +1,35 @@
+using BitMobile.Common.Application;
+
+namespace BitMobile.Application
+{
+    public abstract partial class ApplicationSettings
+    {
+		// Client url. Example: "http://bitmobile2.cloudapp.net/demorutest"
+        public const string DefaultUrl = @%url%; // Required
+		
+		// Interface of solution initial screens. Enum: BitMobile, SuperAgent, SuperService, LandSuperService
+        public const SolutionType DefaultSolutionType = SolutionType.%solution_type%; // Required
+		
+		// Enable "Demo" button. If demo_enabled is true, demo_username and demo_password have to be set
+        public const bool DemoEnabled = %demo_enabled%; // Boolean: true or false. Default: false;
+        public const string DemoUserName = %demo_username%; // Default: "demo"
+        public const string DemoPassword = %demo_password%; // Default: "demo"
+		
+		// Default user name and password. Useful to developers. For demo applications use demo settings.
+		public const string DefaultUserName = %username%; // Default: ""
+        public const string DefaultPassword = %password%; // Default: ""
+		
+		// Application name with keys. Examples: "app -nowebdav -re:kvponomareva@1cbit.ru"
+        public const string DefaultApplication = %application%; // Default: "app"
+
+		// Enable creating infobase from settings. Useful to developers
+        public const bool EnableDefaultInfobases = %enable_default_infobases%; // Boolean: true or false. Default: true
+		
+		// Enable set special name for default infobase.
+        public const bool UseSpecialInfobaseName = %use_special_infobase_name%; // Boolean: true or false. Default: false
+        public const string SpecialInfobaseName = %special_infobase_name%; // Required if use_special_infobase_name is set
+		
+		// Ftp port. Obsolete. Useful for old clients like Land
+        public const string DefaultFtpPort = %ftp_port%; // Default: "21"
+    }
+}

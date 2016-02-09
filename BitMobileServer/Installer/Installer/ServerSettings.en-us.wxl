@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WixLocalization Culture="en-us" xmlns="http://schemas.microsoft.com/wix/2006/localization">
+  <String Id="ServerSettingsTitle" Overridable="yes">Settings [ProductName]</String>
+  <String Id="ServerSettingsDescription" Overridable="yes">Specify settings [ProductName]</String>
+  <String Id="ServerSettingsSolutionsLocation" Overridable="yes">Specify directory with solutions:</String>
+  <String Id="ServerSettingsEnterPassword" Overridable="yes">Enter password for access to [ProductName]:</String>
+  <String Id="ServerSettingsCheckPassword" Overridable="yes">Confirm password:</String>
+  <String Id="ServerSettingsInvalidPassword" Overridable="yes">Empty password.</String>
+  <String Id="ServerSettingsInvalidCheckPassword" Overridable="yes">Passwords do not match.</String>
+  <String Id="ServerSettingsError" Overridable="yes">Error</String>
+</WixLocalization>

@@ -1,0 +1,104 @@
+﻿<#@ template language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+using System;
+
+namespace <#= config.ServerScope #> 
+{
+	public class Metadata
+	{
+		private String type;
+		private String name;
+
+		public Metadata(String Type, String Name)
+		{
+			this.type = Type;
+			this.name = Name;
+		}
+
+		public String Type
+		{
+			get
+			{
+				return type;
+			}
+		}
+
+		public String Name
+		{
+			get
+			{
+				return name;
+			}
+		}
+
+	}
+
+
+	<# foreach(var kvp in config.EntitiesBySchema){ #> 
+	namespace <#= kvp.Key #> 
+	{
+		<# foreach(var entity in kvp.Value){ #> 
+
+		public partial class <#= entity.Name #> : Microsoft.Synchronization.ClientServices.IsolatedStorage.IsolatedStorageOfflineEntity 
+		{
+			private static <#= entity.Name #>Metadata metadata;
+
+			public static <#= entity.Name #>Metadata Metadata
+			{
+				get
+				{
+					return metadata;
+				}
+			}
+
+			static <#= entity.Name #>()
+			{
+				metadata = new <#= entity.Name #>Metadata();
+			}
+		}
+
+
+		public class <#= entity.Name #>Metadata
+		{
+			<# foreach(var field in entity.Fields){ #>
+
+			<# if(!field.SimpleType){ #>
+
+			private Metadata _<#= field.Name #>;
+			public Metadata <#= field.Name #>
+			{
+				get
+				{
+					return _<#= field.Name #>;
+				}
+			}
+			 
+			<#}#>
+
+			<#}#>
+
+			public <#= entity.Name #>Metadata()
+			{
+
+			<# foreach(var field in entity.Fields){ #>
+
+			<# if(!field.SimpleType){ #>
+
+				_<#= field.Name #> = new Metadata("<#= field.SqlLinkedSchema #>","<#= field.SqlLinkedTable #>");
+			 
+			<#}#>
+
+			<#}#>
+
+			}
+		}
+        
+		<#}#>
+	}
+
+	<#}#>
+
+}

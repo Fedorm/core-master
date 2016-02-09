@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="bitMobile">БИТ.Мобайл</string>
+  <string name="superAgent">БИТ.СуперАгент</string>
+  <string name="superService">БИТ.СуперСервис</string>
+  <string name="settings">Настройки</string>
+</resources>

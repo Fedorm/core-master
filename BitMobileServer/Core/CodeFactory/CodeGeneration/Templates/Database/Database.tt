@@ -1,0 +1,80 @@
+﻿<#@ template language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+
+<# foreach(var kvp in config.EntitiesBySchema){ #>
+
+CREATE SCHEMA [<#= kvp.Key #>]
+GO
+
+<#}#>
+
+<# foreach(var entity in config.Entities){ #>
+
+CREATE TABLE [<#= entity.Schema #>].[<#= entity.Name #>](
+	<# foreach(var field in entity.Fields){ #>
+	[<#= field.Name #>] <#= field.SqlType #>,
+	<#}#>
+)
+GO
+ALTER TABLE [<#= entity.Schema #>].[<#= entity.Name #>] ADD CONSTRAINT PK_<#= entity.Schema #>_<#= entity.Name #> PRIMARY KEY NONCLUSTERED([<#= entity.KeyField #>]) 
+GO
+
+<# foreach(var tabularSection in entity.TabularSections){ #>
+
+CREATE TABLE [<#= entity.Schema #>].[<#= entity.Name #>_<#= tabularSection.Name #>](
+	<# foreach(var field in tabularSection.Fields){ #>
+	[<#= field.Name #>] <#= field.SqlType #>,
+	<#}#>
+)
+GO
+ALTER TABLE [<#= entity.Schema #>].[<#= entity.Name #>_<#= tabularSection.Name #>] ADD CONSTRAINT PK_<#= entity.Schema #>_<#= entity.Name #>_<#= tabularSection.Name #> PRIMARY KEY NONCLUSTERED([<#= tabularSection.KeyField #>]) 
+ALTER TABLE [<#= entity.Schema #>].[<#= entity.Name #>_<#= tabularSection.Name #>] ADD CONSTRAINT FK_<#= entity.Schema #>_<#= entity.Name #>_<#= tabularSection.Name #>_<#= entity.Schema #>_<#= entity.Name #>_EntityId FOREIGN KEY ([Ref]) REFERENCES [<#= entity.Schema #>].[<#= entity.Name #>]([Id]) ON DELETE CASCADE
+<# if(tabularSection.HasTabularSectionKey){ #>
+ALTER TABLE [<#= entity.Schema #>].[<#= entity.Name #>_<#= tabularSection.Name #>] ADD CONSTRAINT UQ_<#= entity.Schema #>_<#= entity.Name #>_<#= tabularSection.Name #>_Key UNIQUE ([Ref]<# foreach(var field in tabularSection.TabularSectionKeys){ #>,[<#= field.Name #>]<#}#>)
+<#}#>
+GO
+
+CREATE TYPE [<#= entity.Schema #>].[T_<#= entity.Name #>_<#= tabularSection.Name #>] AS TABLE
+(
+<# foreach(var field in tabularSection.TabularFieldsExceptRefAndKey){ #>
+[<#= field.Name #>] <#= field.SqlTypeShort #><# if(!tabularSection.LastField(field.Name)){ #>,<#}#>
+<#}#>
+<# if(tabularSection.HasTabularSectionKey){ #>
+ 
+UNIQUE(<# foreach(var field in tabularSection.TabularSectionKeys){ #>[<#= field.Name #>]<# if(!tabularSection.LastTabularSectionKey(field.Name)){ #>,<#}#><#}#>)
+<#}#>
+)
+GO
+
+<#}#>
+
+<#}#>
+
+<# foreach(var entity in config.Entities){ #>
+<# foreach(var field in entity.Fields){ #>
+<# if(!field.SimpleType){ #>
+ALTER TABLE [<#= entity.Schema #>].[<#= entity.Name #>] ADD CONSTRAINT FK_<#= entity.Schema #>_<#= entity.Name #>_<#= field.SqlLinkedSchema #>_<#= field.SqlLinkedTable #>_<#= field.Name #> FOREIGN KEY ([<#= field.Name #>]) REFERENCES [<#= field.SqlLinkedSchema #>].[<#= field.SqlLinkedTable #>]([Id])
+<#}#>
+<# if(field.Unique){ #>
+ALTER TABLE [<#= entity.Schema #>].[<#= entity.Name #>] ADD CONSTRAINT UQ_<#= entity.Schema #>_<#= entity.Name #>_<#= field.Name #> UNIQUE ([<#= field.Name #>])
+<#}#>
+<#}#>
+GO
+
+<# foreach(var tabularSection in entity.TabularSections){ #>
+
+<# foreach(var field in tabularSection.Fields){ #>
+<# if(!field.SimpleType){ #>
+ALTER TABLE [<#= entity.Schema #>].[<#= entity.Name #>_<#= tabularSection.Name #>] ADD CONSTRAINT FK_<#= entity.Schema #>_<#= entity.Name #>__<#= tabularSection.Name #>_<#= field.SqlLinkedSchema #>_<#= field.SqlLinkedTable #>_<#= field.Name #> FOREIGN KEY ([<#= field.Name #>]) REFERENCES [<#= field.SqlLinkedSchema #>].[<#= field.SqlLinkedTable #>]([Id])
+<#}#>
+<#}#>
+GO
+
+<#}#>
+
+<#}#>
+
+

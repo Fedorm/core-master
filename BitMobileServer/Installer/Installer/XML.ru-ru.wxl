@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WixLocalization Culture="ru-ru" xmlns="http://schemas.microsoft.com/wix/2006/localization">
+	<String Id="msierrXmlFileFailedRead">Ошибка чтения файла XML</String>
+  <String Id="msierrXmlFileFailedOpen">Ошибка открытия файла XML</String>
+  <String Id="msierrXmlFileFailedSelect">Ошибка работы с файлом XML</String>
+  <String Id="msierrXmlFileFailedSave">Ошибка при сохранении файла XML</String>
+</WixLocalization>

@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!-- package_name: name of package. Required. Depends of solution type. Values: "ru.firstbit.bitmobile", "ru.firstbit.supa", "ru.firstbit.superservice" -->
+<!-- version_name: major, minor and hotfix. Required. Gets from git tags. Example: "2.4.6" -->
+<!-- version_code: integer value. Required. You must increment value for each release of hotfix. Example: "38" -->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" 
+	android:installLocation="auto" 
+	package=%package_name% 
+	android:versionName=%version_name%
+	android:versionCode=%version_code%>  
+  <!--label: label of application. Required. Depends of solution type. Values: "@string/bitMobile", "@string/superAgent", "@string/superService"-->
+  <!--icon: icon of application. Required. Depends of solution type. Values: "@drawable/Icon_BitMobile.png", "@drawable/Icon_SuperAgent.png", "@drawable/Icon_SuperService.png"-->
+  <application android:label=%label% android:icon=%icon%></application>
+  
+  <!--block-->
+  <uses-sdk android:minSdkVersion="10" android:targetSdkVersion="21" />
+  <uses-permission android:name="android.permission.CALL_PHONE" />
+  <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+  <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+  <uses-permission android:name="android.permission.CAMERA" />
+  <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+  <supports-screens android:smallScreens="true" android:normalScreens="true" android:largeScreens="true" android:xlargeScreens="true" />
+  <uses-feature android:name="android.hardware.telephony" android:required="false" />
+  <uses-feature android:name="android.hardware.location.gps" android:required="false" />
+  <uses-feature android:name="android.hardware.location" android:required="false" />
+  <uses-feature android:name="android.hardware.camera" android:required="false" />
+  <uses-feature android:name="android.hardware.camera.autofocus" android:required="false" />
+  <uses-feature android:name="android.hardware.wifi" android:required="false" />
+</manifest>

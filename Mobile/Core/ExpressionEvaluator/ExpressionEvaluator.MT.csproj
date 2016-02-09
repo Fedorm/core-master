@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>10.0.0</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{BC668DC7-F76D-4FC7-B66B-FBA4D08BB0DC}</ProjectGuid>
+    <ProjectTypeGuids>{6BC8ED88-2882-458C-8E55-DFD12B67127B};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <RootNamespace>ExpressionEvaluator</RootNamespace>
+    <IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
+    <AssemblyName>ExpressionEvaluator</AssemblyName>
+    <ReleaseVersion>1.5.8.42</ReleaseVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>True</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>False</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>False</ConsolePause>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>none</DebugType>
+    <Optimize>True</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>False</ConsolePause>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core" />
+    <Reference Include="monotouch" />
+    <Reference Include="System.Data" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.MonoTouch.CSharp.targets" />
+  <ItemGroup>
+    <Compile Include="Expressions\ArithmeticExpressionQueue.cs" />
+    <Compile Include="Builder.cs" />
+    <Compile Include="Expressions\ExpressionItem.cs" />
+    <Compile Include="Expressions\LogicalExpressionQueue.cs" />
+    <Compile Include="ExpressionFactory.cs" />
+    <Compile Include="Expressions\ExpressionQueue.cs" />
+    <Compile Include="Expressions\IExpression.cs" />
+    <Compile Include="Expressions\MemberExpression\HelperMember.cs" />
+    <Compile Include="Expressions\MemberExpression\MethodMember.cs" />
+    <Compile Include="Expressions\MemberExpression\ValueMember.cs" />
+    <Compile Include="Expressions\MemberExpression\PropertyMember.cs" />
+    <Compile Include="Expressions\MemberExpression\MemberExpression.cs" />
+    <Compile Include="Expressions\MemberExpression\IMember.cs" />
+    <Compile Include="Expressions\BooleanExpression.cs" />
+    <Compile Include="Expressions\ObjectExpression.cs" />
+    <Compile Include="Helper.cs" />
+    <Compile Include="Expressions\MemberExpression\DataReaderMember.cs" />
+    <Compile Include="Expressions\MemberExpression\DbRefMember.cs" />
+    <Compile Include="Expressions\MemberExpression\EntityMember.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DbEngine\DbEngine.MT.csproj">
+      <Project>{7979A2EF-8878-476F-991A-FFE8AC7500DF}</Project>
+      <Name>DbEngine.MT</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Project>{1765FE35-1DA7-40D7-B7D6-5705441B395D}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
+  </ItemGroup>
+</Project>

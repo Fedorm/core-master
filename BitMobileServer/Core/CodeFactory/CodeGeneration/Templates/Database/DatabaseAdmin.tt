@@ -1,0 +1,760 @@
+﻿<#@ template language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+
+CREATE TABLE [admin].DeviceLog(
+	[StartTime] DATETIME NOT NULL,
+	[EndTime] DATETIME NOT NULL,
+	[FirstSync] BIT NOT NULL,
+	[Direction] INT NOT NULL,
+	[DeviceId] VARCHAR(150) NOT NULL,
+	[Login] VARCHAR(50) NOT NULL,
+	[UserId] UNIQUEIDENTIFIER NULL,
+	[UserEMail] VARCHAR(100) NULL,
+	[ContentLength] INT NOT NULL,
+	[ContentType] VARCHAR(100) NOT NULL,
+	[Accept] VARCHAR(100) NULL,
+	[AcceptEncoding] VARCHAR(100) NULL,
+	[Host] VARCHAR(250) NULL,
+	[ConfigName] VARCHAR(250) NOT NULL,
+	[ConfigVersion] VARCHAR(50) NOT NULL,
+	[CoreVersion] VARCHAR(50) NOT NULL,
+	[ResourceVersion] VARCHAR(50) NULL,
+	[OutputContentLength] INT NOT NULL,
+	[StatusCode] INT NOT NULL,			
+	[StatusDescription] VARCHAR(MAX) NULL			
+)
+GO
+ALTER TABLE [admin].DeviceLog ADD CONSTRAINT UQ_DeviceLog UNIQUE([StartTime],[Login],[DeviceId])
+GO
+
+CREATE PROCEDURE [admin].WriteLog 
+	@StartTime DATETIME,
+	@EndTime DATETIME,
+	@FirstSync BIT,
+	@Direction INT,
+	@DeviceId VARCHAR(150),
+	@Login VARCHAR(50),
+	@UserId UNIQUEIDENTIFIER,
+	@UserEMail VARCHAR(100),
+	@ContentLength INT,
+	@ContentType VARCHAR(100),
+	@Accept VARCHAR(100),
+	@AcceptEncoding VARCHAR(100),
+	@Host VARCHAR(250),
+	@ConfigName VARCHAR(250),
+	@ConfigVersion VARCHAR(50),
+	@CoreVersion VARCHAR(50),
+	@ResourceVersion VARCHAR(50),
+	@OutputContentLength INT,
+	@StatusCode INT,			
+	@StatusDescription VARCHAR(MAX)	
+AS
+SET NOCOUNT ON
+INSERT INTO [admin].DeviceLog(
+	[StartTime],
+	[EndTime],
+	[FirstSync],
+	[Direction],
+	[DeviceId],
+	[Login],
+	[UserId],
+	[UserEMail],
+	[ContentLength],
+	[ContentType],
+	[Accept],
+	[AcceptEncoding],
+	[Host],
+	[ConfigName],
+	[ConfigVersion],
+	[CoreVersion],
+	[ResourceVersion],
+	[OutputContentLength],
+	[StatusCode],			
+	[StatusDescription]
+)
+VALUES(
+	@StartTime,
+	@EndTime,
+	@FirstSync,
+	@Direction,
+	@DeviceId,
+	@Login,
+	@UserId,
+	@UserEMail,
+	@ContentLength,
+	@ContentType,
+	@Accept,
+	@AcceptEncoding,
+	@Host,
+	@ConfigName,
+	@ConfigVersion,
+	@CoreVersion,
+	@ResourceVersion,
+	@OutputContentLength,
+	@StatusCode,			
+	@StatusDescription	
+)	
+GO
+
+CREATE TABLE [admin].AsyncUploadSession(
+	[Id] UNIQUEIDENTIFIER PRIMARY KEY NONCLUSTERED,
+	[StartTime] DATETIME NOT NULL,
+	[EndTime] DATETIME NULL,
+	[Status] VARCHAR(MAX) NULL
+)
+GO
+
+CREATE TABLE [admin].FileSystem(
+	[Date] DATETIME PRIMARY KEY NONCLUSTERED,
+	[Data] VARBINARY(MAX) NOT NULL,
+	[CRC] VARCHAR(20) NOT NULL
+)
+GO
+
+CREATE TABLE [admin].LastSyncTime(
+	LastTime DATETIME NOT NULL PRIMARY KEY NONCLUSTERED
+)
+GO
+
+CREATE TABLE [admin].SyncSession(
+	[Id] UNIQUEIDENTIFIER PRIMARY KEY NONCLUSTERED,
+	StartTime DATETIME NOT NULL,
+	EndTime DATETIME NULL
+)
+GO
+
+CREATE TABLE [admin].DeletedObjects(
+	[Id] UNIQUEIDENTIFIER PRIMARY KEY NONCLUSTERED,
+	[Entity] VARCHAR(250) NOT NULL,
+	[CreationDate] DATETIME NOT NULL,
+	[DeletionDate] DATETIME NULL
+)
+GO
+
+------------------------------------------------------------ Telegram ------------------------------------------------------
+
+
+CREATE TABLE [admin].Telegram(	
+	[Phone] VARCHAR(20) PRIMARY KEY NONCLUSTERED,
+	[AuthKey] VARCHAR(4000) NOT NULL,
+	[ServerSalt] BIGINT NULL
+)
+GO
+
+CREATE PROCEDURE [admin].SaveTelegramSettings @Phone VARCHAR(20), @AuthKey VARCHAR(4000), @ServerSalt BIGINT AS
+	SET NOCOUNT ON
+	
+	IF EXISTS (SELECT * FROM [admin].Telegram WHERE [Phone] = @Phone)
+		UPDATE [admin].Telegram SET AuthKey = @AuthKey, ServerSalt = @ServerSalt WHERE Phone = @Phone
+	ELSE
+		INSERT INTO [admin].Telegram(Phone, AuthKey, ServerSalt) VALUES(@Phone, @AuthKey, @ServerSalt)
+GO
+
+------------------------------------------------------------ WebDav Log ----------------------------------------------------
+CREATE TABLE [admin].[DeviceLogWebDAV](
+	[UserId] UNIQUEIDENTIFIER NOT NULL,
+	[DeviceId] VARCHAR(250) NOT NULL,
+	[StartTime] DATETIME NOT NULL,
+	[EndTime] DATETIME NOT NULL,
+	[State] BIT NOT NULL,
+	[Error] VARCHAR(MAX),
+	[Directory] VARCHAR(250),
+	[LoadedSize] INT NOT NULL,
+	[LoadedCount] SMALLINT NOT NULL,
+	[DeletedSize] INT NOT NULL,
+	[DeletedCount] SMALLINT NOT NULL,
+	[ResourceVersion] VARCHAR(50) NOT NULL,
+	[CoreVersion] VARCHAR(50) NOT NULL,
+	[ConfigName] VARCHAR(250) NOT NULL,
+	[ConfigVersion] VARCHAR(50) NOT NULL
+)
+GO
+ALTER TABLE [admin].[DeviceLogWebDAV] ADD CONSTRAINT UQ_DeviceLogWebDAV UNIQUE([UserId], [DeviceId], [StartTime])
+GO
+CREATE PROCEDURE [admin].[WriteWebDavLog]
+		@UserId UNIQUEIDENTIFIER,
+		@DeviceId VARCHAR(250),
+		@StartTime DATETIME,
+		@EndTime DATETIME,
+		@State BIT,
+		@Error VARCHAR(MAX),
+		@Directory VARCHAR(250),
+		@LoadedSize INT,
+		@LoadedCount SMALLINT,
+		@DeletedSize INT,
+		@DeletedCount SMALLINT,
+		@ResourceVersion VARCHAR(50),
+		@CoreVersion VARCHAR(50),
+		@ConfigName VARCHAR(250),
+		@ConfigVersion VARCHAR(50)
+AS
+SET NOCOUNT ON
+INSERT INTO [admin].[DeviceLogWebDAV]
+           ([UserId]
+           ,[DeviceId]
+           ,[StartTime]
+           ,[EndTime]
+           ,[State]
+           ,[Error]
+           ,[Directory]
+		   ,[LoadedSize]
+           ,[LoadedCount]
+           ,[DeletedSize]
+           ,[DeletedCount]
+           ,[ResourceVersion]
+           ,[CoreVersion]
+           ,[ConfigName]
+           ,[ConfigVersion])
+     VALUES
+           (@UserId
+           ,@DeviceId
+           ,@StartTime
+           ,@EndTime
+           ,@State
+           ,@Error
+           ,@Directory
+		   ,@LoadedSize
+           ,@LoadedCount     
+           ,@DeletedSize
+           ,@DeletedCount
+           ,@ResourceVersion
+           ,@CoreVersion
+           ,@ConfigName
+           ,@ConfigVersion)
+GO
+
+------------------------------------------------------------ Sessions ------------------------------------------------------
+
+CREATE PROCEDURE [admin].BeginAsyncUploadSession @SessionId UNIQUEIDENTIFIER AS
+	SET NOCOUNT ON
+	DECLARE @D DATETIME
+	SET @D = GETDATE()
+	INSERT INTO [admin].AsyncUploadSession([Id], [StartTime], [EndTime], [Status]) VALUES(@SessionId,@D,NULL,NULL)
+GO
+
+CREATE PROCEDURE [admin].CommitAsyncUploadSession @SessionId UNIQUEIDENTIFIER, @Status VARCHAR(MAX) AS
+	SET NOCOUNT ON
+	UPDATE [admin].AsyncUploadSession SET [EndTime] = GETDATE(), [Status] = @Status WHERE [Id] = @SessionId
+GO
+
+CREATE PROCEDURE [admin].CheckAsyncUploadSession @SessionId UNIQUEIDENTIFIER AS
+	SET NOCOUNT ON
+	SELECT ISNULL([Status],'') FROM [admin].AsyncUploadSession WHERE [Id] = @SessionId
+GO
+
+CREATE PROCEDURE [admin].BeginSyncSession @SessionId UNIQUEIDENTIFIER AS
+	SET NOCOUNT ON
+	DECLARE @D DATETIME
+	SET @D = GETDATE()
+	INSERT INTO [admin].SyncSession([Id], [StartTime], [EndTime]) VALUES(@SessionId,@D,NULL)
+GO
+
+CREATE PROCEDURE [admin].CommitSyncSession @SessionId UNIQUEIDENTIFIER AS
+	SET NOCOUNT ON
+	DECLARE @D DATETIME
+	SELECT @D = StartTime FROM [admin].SyncSession WHERE [Id] = @SessionId
+	IF @D IS NULL
+	  RAISERROR('Session is not found', 16, 1)
+	ELSE
+	BEGIN
+		UPDATE [admin].LastSyncTime SET LastTime = @D
+		UPDATE [admin].SyncSession SET EndTime = GETDATE() WHERE [Id] = @SessionId
+	END
+GO
+
+CREATE PROCEDURE [admin].GetDeleted AS
+	SET NOCOUNT ON
+
+	SELECT 
+	1 AS Tag, 
+	NULL AS Parent,
+	'' AS [Root!1],
+	NULL AS [Entity!2!Name],
+	NULL AS [Row!3!Id]
+
+	UNION ALL
+
+	SELECT 
+		2 AS Tag, 
+		1 AS Parent,
+		NULL AS [Root!1],
+		T.[Name] AS [Entity!2!Name],
+		NULL AS [Row!3!Id]
+	FROM
+	(
+		SELECT DISTINCT [Entity] AS [Name]
+		FROM [admin].[DeletedObjects] WHERE [DeletionDate] IS NULL
+	) T
+
+	UNION ALL
+
+	SELECT 
+		3 AS Tag, 
+		2 AS Parent,
+		NULL AS [Root!1],
+		T.[Name] AS [Entity!2!Name],
+		T.[Id] AS [Row!3!Id]
+	FROM
+	(
+		SELECT [Entity] AS [Name], [Id]
+		FROM [admin].[DeletedObjects] WHERE [DeletionDate] IS NULL
+	) T
+
+	ORDER BY 4,2,1
+
+	FOR XML EXPLICIT
+GO
+
+CREATE PROCEDURE [admin].[GetDeviceLog] AS
+	SET NOCOUNT ON
+
+	SELECT 
+	1 AS Tag, 
+	NULL AS Parent,
+	'' AS [Root!1],
+	NULL AS [Row!2!StartTime],
+	NULL AS [Row!2!EndTime],
+	NULL AS [Row!2!FirstSync],
+	NULL AS [Row!2!Direction],
+	NULL AS [Row!2!DeviceId],
+	NULL AS [Row!2!Login],
+	NULL AS [Row!2!UserId],
+	NULL AS [Row!2!UserEMail],
+	NULL AS [Row!2!ContentLength],
+	NULL AS [Row!2!OutputContentLength],
+	NULL AS [Row!2!ConfigName],
+	NULL AS [Row!2!ConfigVersion],
+	NULL AS [Row!2!CoreVersion],
+	NULL AS [Row!2!ResourceVersion],
+	NULL AS [Row!2!StatusCode],
+	NULL AS [Row!2!StatusDescription]
+
+	UNION ALL
+
+	SELECT 
+		2 AS Tag, 
+		1 AS Parent,
+		NULL AS [Root!1],
+		[StartTime] AS [Row!2!StartTime],
+		[EndTime] AS [Row!2!EndTime],
+		[FirstSync] AS [Row!2!FirstSync],
+		[Direction] AS [Row!2!Direction],
+		[DeviceId] AS [Row!2!DeviceId],
+		[Login] AS [Row!2!Login],
+		[UserId] AS [Row!2!UserId],
+		[UserEMail] AS [Row!2!UserEMail],
+		[ContentLength] AS [Row!2!ContentLength],
+		[OutputContentLength] AS [Row!2!OutputContentLength],
+		[ConfigName] AS [Row!2!ConfigName],
+		[ConfigVersion] AS [Row!2!ConfigVersion],
+		[CoreVersion] AS [Row!2!CoreVersion],
+		[ResourceVersion] AS [Row!2!ResourceVersion],
+		[StatusCode] AS [Row!2!StatusCode],
+		[StatusDescription] AS [Row!2!StatusDescription]
+	FROM [admin].DeviceLog
+
+	ORDER BY 4,2,1
+
+	FOR XML EXPLICIT
+GO
+
+CREATE PROCEDURE [admin].Logon @UserName VARCHAR(100), @UserPassword VARCHAR(100), @ConfigName VARCHAR(100), @ConfigVersion VARCHAR(100) AS
+	SET NOCOUNT ON
+	DECLARE @SConfigName VARCHAR(100), @SConfigVersion VARCHAR(100), @SConfigVersionMasked VARCHAR(100)
+	SET @SConfigName = '<#= config.ConfigVersion.Name #>'
+	SET @SConfigVersion = '<#= config.ConfigVersion.Version #>'
+	SET @SConfigVersionMasked = '<#= config.ConfigVersion.VersionMasked #>'
+
+	IF @SConfigName <> @ConfigName OR NOT @ConfigVersion LIKE @SConfigVersionMasked
+		RAISERROR('Invalid client version. The server configuration is "%s ver.%s"', 16, 1, @SConfigName, @SConfigVersion)
+	ELSE
+		SELECT TOP 1 Id,EMail FROM [Catalog].[User] WHERE UserName=@UserName AND Password=@UserPassword AND Role='SR'
+GO
+
+CREATE PROCEDURE [admin].CheckUser @UserId UNIQUEIDENTIFIER, @UserPassword VARCHAR(100) AS
+	SET NOCOUNT ON
+	SELECT TOP 1 Id FROM [Catalog].[User] WHERE [Id]=@UserId AND Password=@UserPassword
+GO
+
+ALTER TABLE [Catalog].[User] ADD CONSTRAINT UQ_Catalog_User_UserName UNIQUE([UserName])
+GO
+
+------------------------------------------------------------ Push ----------------------------------------------------------
+
+CREATE TABLE [admin].UserPushTokens(
+	[UserId] UNIQUEIDENTIFIER NOT NULL,
+	[DeviceId] VARCHAR(250) NOT NULL,
+	[OS] VARCHAR(10) NOT NULL,
+	[Package] VARCHAR(250) NOT NULL,
+	[Token] VARCHAR(250) NOT NULL
+)
+GO
+
+ALTER TABLE [admin].UserPushTokens ADD CONSTRAINT UQ_UserPushTokens UNIQUE([UserId],[DeviceId],[Token])
+GO
+
+CREATE PROCEDURE [admin].[GetUserPushTokens] @UserId UNIQUEIDENTIFIER
+AS
+SELECT [Token], [OS] FROM [admin].UserPushTokens WHERE [UserId] = @UserId
+GO
+
+CREATE PROCEDURE [admin].[RegisterPushToken] @UserId UNIQUEIDENTIFIER, @DeviceId VARCHAR(250), @OS VARCHAR(10), @Package VARCHAR(250), @Token VARCHAR(250)
+AS
+IF NOT EXISTS(SELECT * FROM [admin].[UserPushTokens] WHERE [UserId] = @UserId AND [DeviceId] = @DeviceId AND [OS] = @OS AND [Package] = @Package)
+	INSERT INTO [admin].UserPushTokens([UserId],[DeviceId],[OS],[Package],[Token]) VALUES(@UserId, @DeviceId, @OS, @Package, @Token)
+ELSE
+	UPDATE [admin].UserPushTokens SET [Token] = @Token WHERE [UserId] = @UserId AND [DeviceId] = @DeviceId AND [OS] = @OS AND [Package] = @Package
+GO
+
+------------------------------------------------------------ GPS ----------------------------------------------------------
+
+CREATE TABLE [admin].GPS(
+	[UserId] UNIQUEIDENTIFIER NOT NULL,
+	[ServerTime] DATETIME NOT NULL,
+	[BeginTime] DATETIME NOT NULL,
+	[EndTime] DATETIME NOT NULL,
+	[Latitude] DECIMAL(12,9) NOT NULL,
+	[Longitude] DECIMAL(12,9) NOT NULL,
+	[Speed] DECIMAL(6,2),
+	[Direction] INT, 
+	[SatellitesCount] INT,
+	[Altitude] DECIMAL(12,9)
+)
+GO
+
+ALTER TABLE [admin].GPS ADD CONSTRAINT FK_ADMIN_GPS_CATALOG_USER FOREIGN KEY([UserId]) REFERENCES [Catalog].[User]([Id])
+GO
+
+---------------------------------------------------------CRUD OPERATIONS ----------------------------------------------------------
+GO
+
+<# foreach(var entity in config.Entities){ #>
+
+CREATE PROCEDURE [<#= entity.Schema #>].[<#= entity.Name #>_adm_insert]
+	<# foreach(var field in entity.Fields){ #>
+	@<#= field.Name #> <#= field.SqlTypeShort #><# if(!entity.LastField(field.Name)){ #>,<#}#>
+	<#}#>
+AS
+	SET NOCOUNT ON
+	INSERT INTO [<#= entity.Schema #>].[<#= entity.Name #>](
+		<# foreach(var field in entity.Fields){ #>
+		[<#= field.Name #>]<# if(!entity.LastField(field.Name)){ #>,<#}#>
+		<#}#>
+	) 
+	VALUES
+	(
+		<# foreach(var field in entity.Fields){ #>
+		@<#= field.Name #><# if(!entity.LastField(field.Name)){ #>,<#}#>
+		<#}#>
+	)
+GO
+
+CREATE PROCEDURE [<#= entity.Schema #>].[<#= entity.Name #>_adm_update]
+	<# foreach(var field in entity.Fields){ #>
+	@<#= field.Name #> <#= field.SqlTypeShort #><# if(!entity.LastField(field.Name)){ #>,<#}#>
+	<#}#>
+AS
+	SET NOCOUNT ON
+	UPDATE [<#= entity.Schema #>].[<#= entity.Name #>] SET
+		<# foreach(var field in entity.Fields){ #>
+		[<#= field.Name #>] = @<#= field.Name #><# if(!entity.LastField(field.Name)){ #>,<#}#>
+		<#}#>
+	WHERE <#= entity.KeyField #> = @<#= entity.KeyField #> AND
+	( 1=0<# foreach(var field in entity.FieldsExceptKey){ if(!field.SqlTypeShort.Equals("NTEXT")) { #> OR [<#= field.Name #>] <> @<#= field.Name #> OR ([<#= field.Name #>] IS NULL AND NOT @<#= field.Name #> IS NULL) OR (NOT [<#= field.Name #>] IS NULL AND @<#= field.Name #> IS NULL) <#}}#> )
+	DELETE FROM [admin].[DeletedObjects] WHERE [Id] = @<#= entity.KeyField #>
+GO
+
+CREATE PROCEDURE [<#= entity.Schema #>].[<#= entity.Name #>_adm_markdelete]
+	<# foreach(var field in entity.Fields){ #>
+	@<#= field.Name #> <#= field.SqlTypeShort #><# if(!entity.LastField(field.Name)){ #>,<#}#>
+	<#}#>
+AS
+	SET NOCOUNT ON
+	IF EXISTS(SELECT * FROM [<#= entity.Schema #>].[<#= entity.Name #>] WHERE <#= entity.KeyField #> = @<#= entity.KeyField #>)
+	UPDATE [<#= entity.Schema #>].[<#= entity.Name #>] SET
+		<# foreach(var field in entity.Fields){ #>
+		[<#= field.Name #>] = @<#= field.Name #><# if(!entity.LastField(field.Name)){ #>,<#}#>
+		<#}#>
+	WHERE <#= entity.KeyField #> = @<#= entity.KeyField #>
+	ELSE
+	INSERT INTO [<#= entity.Schema #>].[<#= entity.Name #>]
+	(
+		<# foreach(var field in entity.Fields){ #>
+		[<#= field.Name #>]<# if(!entity.LastField(field.Name)){ #>,<#}#>
+		<#}#>
+	)
+	VALUES
+	(
+		<# foreach(var field in entity.Fields){ #>
+		@<#= field.Name #><# if(!entity.LastField(field.Name)){ #>,<#}#>
+		<#}#>
+	)
+	IF NOT EXISTS(SELECT * FROM [admin].[DeletedObjects] WHERE [Id] = @<#= entity.KeyField #>)
+		INSERT INTO [admin].[DeletedObjects]([Id],[Entity],[CreationDate]) VALUES (@<#= entity.KeyField #>,'<#= entity.Schema #>.<#= entity.Name #>',GETDATE())
+GO
+
+CREATE PROCEDURE [<#= entity.Schema #>].[<#= entity.Name #>_adm_delete] @<#= entity.KeyField #> UNIQUEIDENTIFIER AS
+	SET NOCOUNT ON
+--	DELETE FROM [<#= entity.Schema #>].[<#= entity.Name #>] WHERE <#= entity.KeyField #> = @<#= entity.KeyField #>
+	UPDATE [<#= entity.Schema #>].[<#= entity.Name #>_tracking] SET
+		[sync_row_is_tombstone] = 1, 
+		[local_update_peer_key] = 0, 
+		[update_scope_local_id] = NULL, 
+		[last_change_datetime] = GETDATE() 
+	WHERE <#= entity.KeyField #> = @<#= entity.KeyField #>
+	UPDATE [admin].[DeletedObjects] SET [DeletionDate] = GETDATE() WHERE [Id] = @<#= entity.KeyField #>
+GO
+
+CREATE PROCEDURE [<#= entity.Schema #>].[<#= entity.Name #>_adm_exists] @<#= entity.KeyField #> UNIQUEIDENTIFIER AS
+	SET NOCOUNT ON
+	SELECT <#= entity.KeyField #> FROM [<#= entity.Schema #>].[<#= entity.Name #>] WHERE <#= entity.KeyField #> = @<#= entity.KeyField #>
+GO
+
+CREATE PROCEDURE [<#= entity.Schema #>].[<#= entity.Name #>_adm_getnotexisting] @Xml XML AS
+	SET NOCOUNT ON
+	SELECT 
+	1 AS Tag, 
+	NULL AS Parent,
+	'<#= entity.Schema #>.<#= entity.Name #>' AS [Entity!1!Name],
+	NULL AS [Row!2!Id]
+	UNION ALL
+	SELECT 
+		2 AS Tag, 
+		1 AS Parent,
+		NULL AS [Entity!1Name],
+		T1.c.value('@Id','UNIQUEIDENTIFIER') AS [Row!2!Id]
+	FROM @Xml.nodes('//Row') T1(c)
+	LEFT JOIN [<#= entity.Schema #>].[<#= entity.Name #>] T2 ON T2.Id = T1.c.value('@Id','UNIQUEIDENTIFIER')
+	WHERE T2.Id IS NULL
+	ORDER BY 2,1
+	FOR XML EXPLICIT
+GO
+
+<# foreach(var tabularSection in entity.TabularSections){ #>
+
+CREATE PROCEDURE [<#= entity.Schema #>].[<#= entity.Name #>_<#= tabularSection.Name #>_adm_insert]
+	<# foreach(var field in tabularSection.FieldsExceptKey){ #>
+	@<#= field.Name #> <#= field.SqlTypeShort #><# if(!tabularSection.LastField(field.Name)){ #>,<#}#>
+	<#}#>
+AS
+	SET NOCOUNT ON
+	INSERT INTO [<#= entity.Schema #>].[<#= entity.Name #>_<#= tabularSection.Name #>](
+		<# foreach(var field in tabularSection.FieldsExceptKey){ #>[<#= field.Name #>]<# if(!tabularSection.LastField(field.Name)){ #>,<#}#><#}#>
+	) 
+	VALUES
+	(
+		<# foreach(var field in tabularSection.FieldsExceptKey){ #>@<#= field.Name #><# if(!tabularSection.LastField(field.Name)){ #>,<#}#><#}#>
+	)
+GO
+
+CREATE PROCEDURE [<#= entity.Schema #>].[<#= entity.Name #>_<#= tabularSection.Name #>_adm_insert_batch] @Ref UNIQUEIDENTIFIER, @Data [<#= entity.Schema #>].[T_<#= entity.Name #>_<#= tabularSection.Name #>] READONLY
+AS
+	SET NOCOUNT ON
+	INSERT INTO [<#= entity.Schema #>].[<#= entity.Name #>_<#= tabularSection.Name #>](
+		[Ref]<# foreach(var field in tabularSection.TabularFieldsExceptRefAndKey){ #>,[<#= field.Name #>]<#}#>
+	)
+	SELECT 
+		@Ref
+		<# foreach(var field in tabularSection.TabularFieldsExceptRefAndKey){ #>,[<#= field.Name #>]<#}#>
+		FROM @Data
+GO
+
+CREATE PROCEDURE [<#= entity.Schema #>].[<#= entity.Name #>_<#= tabularSection.Name #>_adm_clear] @Ref UNIQUEIDENTIFIER AS
+	SET NOCOUNT ON
+	DELETE FROM [<#= entity.Schema #>].[<#= entity.Name #>_<#= tabularSection.Name #>] WHERE [Ref] = @Ref
+GO
+
+<# if(tabularSection.HasTabularSectionKey){ #>
+
+CREATE PROCEDURE [<#= entity.Schema #>].[<#= entity.Name #>_<#= tabularSection.Name #>_adm_selectkeys] @Ref UNIQUEIDENTIFIER AS
+	SELECT <# foreach(var field in tabularSection.FieldsExceptKey){ #>[<#= field.Name #>]<# if(!tabularSection.LastField(field.Name)){ #>,<#}#><#}#>
+	FROM [<#= entity.Schema #>].[<#= entity.Name #>_<#= tabularSection.Name #>] WHERE [Ref] = @Ref
+GO
+
+CREATE PROCEDURE [<#= entity.Schema #>].[<#= entity.Name #>_<#= tabularSection.Name #>_adm_update]
+	<# foreach(var field in tabularSection.FieldsExceptKey){ #>
+	@<#= field.Name #> <#= field.SqlTypeShort #><# if(!tabularSection.LastField(field.Name)){ #>,<#}#>
+	<#}#>
+AS
+	SET NOCOUNT ON
+	IF EXISTS(SELECT * FROM [<#= entity.Schema #>].[<#= entity.Name #>_<#= tabularSection.Name #>] WHERE [Ref] = @Ref<# foreach(var field in tabularSection.TabularSectionKeys){ #> AND ([<#= field.Name #>] = @<#= field.Name #> OR ([<#= field.Name #>] IS NULL AND @<#= field.Name #> IS NULL))<#}#>)
+	UPDATE [<#= entity.Schema #>].[<#= entity.Name #>_<#= tabularSection.Name #>] SET
+		<# foreach(var field in tabularSection.FieldsExceptKey){ #>
+		[<#= field.Name #>] = @<#= field.Name #><# if(!tabularSection.LastField(field.Name)){ #>,<#}#>
+		<#}#>
+	WHERE [Ref] = @Ref<# foreach(var field in tabularSection.TabularSectionKeys){ #> AND [<#= field.Name #>] = @<#= field.Name #><#}#> AND 
+	( 1=0<# foreach(var field in tabularSection.TabularFieldsExceptKeys){ if(!field.SqlTypeShort.Equals("NTEXT")) { #> OR [<#= field.Name #>] <> @<#= field.Name #><#}}#> )
+	ELSE
+	INSERT INTO [<#= entity.Schema #>].[<#= entity.Name #>_<#= tabularSection.Name #>](
+		<# foreach(var field in tabularSection.FieldsExceptKey){ #>[<#= field.Name #>]<# if(!tabularSection.LastField(field.Name)){ #>,<#}#><#}#>
+	) 
+	VALUES
+	(
+		<# foreach(var field in tabularSection.FieldsExceptKey){ #>@<#= field.Name #><# if(!tabularSection.LastField(field.Name)){ #>,<#}#><#}#>
+	)
+GO
+
+CREATE PROCEDURE [<#= entity.Schema #>].[<#= entity.Name #>_<#= tabularSection.Name #>_adm_update_batch_all] @Ref UNIQUEIDENTIFIER, @Data [<#= entity.Schema #>].[T_<#= entity.Name #>_<#= tabularSection.Name #>] READONLY
+AS
+	SET NOCOUNT ON
+	UPDATE [<#= entity.Schema #>].[<#= entity.Name #>_<#= tabularSection.Name #>] SET
+		<# foreach(var field in tabularSection.TabularFieldsExceptRefAndKey){ #>
+		[<#= field.Name #>] = D.[<#= field.Name #>]<# if(!tabularSection.LastField(field.Name)){ #>,<#}#>
+		<#}#>
+	FROM [<#= entity.Schema #>].[<#= entity.Name #>_<#= tabularSection.Name #>] T
+	JOIN @Data D ON T.Ref = @Ref<# foreach(var field in tabularSection.TabularSectionKeys){ #> AND (T.[<#= field.Name #>] = D.[<#= field.Name #>] OR (T.[<#= field.Name #>] IS NULL AND D.[<#= field.Name #>] IS NULL))<#}#>
+	WHERE T.Ref = @Ref AND
+	( 1=0<# foreach(var field in tabularSection.TabularFieldsExceptRefAndKey){ if(!field.SqlTypeShort.Equals("NTEXT")) { #> OR T.[<#= field.Name #>] <> D.[<#= field.Name #>]<#}}#> )
+
+	INSERT INTO [<#= entity.Schema #>].[<#= entity.Name #>_<#= tabularSection.Name #>](
+		[Ref]<# foreach(var field in tabularSection.TabularFieldsExceptRefAndKey){ #>,[<#= field.Name #>]<#}#>
+	)
+	SELECT 
+		@Ref
+		<# foreach(var field in tabularSection.TabularFieldsExceptRefAndKey){ #>,D.[<#= field.Name #>]<#}#>
+		FROM @Data D
+		LEFT JOIN [<#= entity.Schema #>].[<#= entity.Name #>_<#= tabularSection.Name #>] T ON T.Ref = @Ref<# foreach(var field in tabularSection.TabularSectionKeys){ #> AND (T.[<#= field.Name #>] = D.[<#= field.Name #>] OR (T.[<#= field.Name #>] IS NULL AND D.[<#= field.Name #>] IS NULL))<#}#>
+	WHERE T.[<#= tabularSection.KeyField #>] IS NULL
+
+	DELETE FROM [<#= entity.Schema #>].[<#= entity.Name #>_<#= tabularSection.Name #>]
+	FROM [<#= entity.Schema #>].[<#= entity.Name #>_<#= tabularSection.Name #>] T
+	LEFT JOIN @Data D ON T.Ref = @Ref<# foreach(var field in tabularSection.TabularSectionKeys){ #> AND (T.[<#= field.Name #>] = D.[<#= field.Name #>] OR (T.[<#= field.Name #>] IS NULL AND D.[<#= field.Name #>] IS NULL))<#}#>
+	WHERE T.Ref = @Ref<# foreach(var field in tabularSection.TabularSectionKeys){ #> AND D.[<#= field.Name #>] IS NULL<#}#>
+	 
+GO
+
+CREATE PROCEDURE [<#= entity.Schema #>].[<#= entity.Name #>_<#= tabularSection.Name #>_adm_delete] @Ref UNIQUEIDENTIFIER
+	<# foreach(var field in tabularSection.TabularSectionKeys){ #>
+	,@<#= field.Name #> <#= field.SqlTypeShort #>
+	<#}#>
+AS
+	SET NOCOUNT ON
+	DELETE FROM [<#= entity.Schema #>].[<#= entity.Name #>_<#= tabularSection.Name #>]
+	WHERE [Ref] = @Ref<# foreach(var field in tabularSection.TabularSectionKeys){ #> AND [<#= field.Name #>] = @<#= field.Name #><#}#>	
+GO
+
+<#}#>
+
+<#}#>
+
+<#}#>
+
+---------------------------------------------------------SYNC GETCHANGES ----------------------------------------------------------
+GO
+
+<# int n = 0; #>
+<# foreach(var entity in config.Entities){ #>
+
+CREATE PROCEDURE [<#= entity.Schema #>].[<#= entity.Name #>_adm_getchanges] @SessionId UNIQUEIDENTIFIER AS
+	SET NOCOUNT ON
+	DECLARE @DateFrom DATETIME, @DateTo DATETIME
+	SELECT @DateFrom = LastTime FROM [admin].LastSyncTime
+	SELECT @DateTo = StartTime FROM [admin].SyncSession WHERE [Id] = @SessionId
+	IF @DateFrom IS NULL OR @DateTo IS NULL
+	  RAISERROR('Invalid interval', 16, 1)
+
+	DECLARE @Ids TABLE(Id UNIQUEIDENTIFIER)
+	INSERT @Ids 
+	SELECT E.[<#= entity.KeyField #>] 
+	FROM [<#= entity.Schema #>].[<#= entity.Name #>] E
+	JOIN [<#= entity.Schema #>].[<#= entity.Name #>_tracking] T ON T.[<#= entity.KeyField #>] = E.[<#= entity.KeyField #>]
+	WHERE T.[last_change_datetime] BETWEEN @DateFrom AND @DateTo AND (NOT T.update_scope_local_id IS NULL/* OR NOT T.create_scope_local_id IS NULL*/)
+	<# foreach(var tabularSection in entity.TabularSections){ #>
+	UNION
+	SELECT E.Ref 
+	FROM [<#= entity.Schema #>].[<#= entity.Name #>_<#= tabularSection.Name #>] E
+	JOIN [<#= entity.Schema #>].[<#= entity.Name #>_<#= tabularSection.Name #>_tracking] T ON T.[<#= tabularSection.KeyField #>] = E.[<#= tabularSection.KeyField #>]
+	WHERE T.[last_change_datetime] BETWEEN @DateFrom AND @DateTo AND (NOT T.update_scope_local_id IS NULL/* OR NOT T.create_scope_local_id IS NULL*/)	
+	<#}#>
+
+	SELECT
+	1 AS Tag, NULL AS Parent,
+	'<#= entity.Schema #>.<#= entity.Name #>' AS [Entity!1!Name],
+	NULL AS [Row!2!<#= entity.KeyField #>],
+	<# foreach(var field in entity.FieldsExceptKey){ #>NULL AS [Row!2!<#= field.Name #>]<# if(!entity.LastField(field.Name)){ #>,<#}#><#}#>
+	<# n = 0; #>
+	<# foreach(var ts in entity.TabularSections){ #>
+		<# n++; #>
+		,NULL AS [<#= ts.Name #>!<#= n #>1]
+		<#}#>
+		<# n = 0; #>
+		<# foreach(var ts in entity.TabularSections){ #>
+			<# n++; #>
+			<# foreach(var fld in ts.Fields){ #>
+			,NULL AS [Row!<#= n #>2!<#= fld.Name #>]
+		<#}#>
+	<#}#>
+
+	UNION ALL
+
+	SELECT
+	2 AS Tag, 1 AS Parent,
+	NULL AS [Entity!1!Name],
+	H.[<#= entity.KeyField #>] AS [Row!2!<#= entity.KeyField #>],
+	<# foreach(var field in entity.FieldsExceptKey){ #>H.[<#= field.Name #>] AS [Row!2!<#= field.Name #>]<# if(!entity.LastField(field.Name)){ #>,<#}#><#}#>
+	<# n = 0; #>
+	<# foreach(var ts in entity.TabularSections){ #>
+		<# n++; #>
+		,NULL AS [<#= ts.Name #>!<#= n #>1]
+		<#}#>
+		<# n = 0; #>
+		<# foreach(var ts in entity.TabularSections){ #>
+			<# n++; #>
+			<# foreach(var fld in ts.Fields){ #>
+			,NULL AS [Row!<#= n #>2!<#= fld.Name #>]
+		<#}#>
+	<#}#>
+	FROM [<#= entity.Schema #>].[<#= entity.Name #>] H
+	JOIN @Ids Ids ON Ids.Id = H.Id
+
+	<# n = 0; #>
+	<# foreach(var tabularSection in entity.TabularSections){ #>
+	<# n++; #>
+
+	UNION ALL
+
+	SELECT
+	<#= n #>1 AS Tag, 2 AS Parent,
+	NULL AS [Entity!1!Name],
+	Ids.Id AS [Row!2!<#= entity.KeyField #>],
+	<# foreach(var field in entity.FieldsExceptKey){ #>NULL AS [Row!2!<#= field.Name #>]<# if(!entity.LastField(field.Name)){ #>,<#}#><#}#>
+	<# foreach(var ts in entity.TabularSections){ #>
+		,NULL AS [<#= ts.Name #>!<#= n #>1]
+		<#}#>
+		<# foreach(var ts in entity.TabularSections){ #>
+			<# foreach(var fld in ts.Fields){ #>
+			,NULL AS [Row!<#= n #>2!<#= fld.Name #>]
+		<#}#>
+	<#}#>
+	FROM @Ids Ids
+
+	UNION ALL
+
+	SELECT
+	<#= n #>2 AS Tag, <#= n #>1 AS Parent,
+	NULL AS [Entity!1!Name],
+	Ids.Id AS [Row!2!<#= entity.KeyField #>],
+	<# foreach(var field in entity.FieldsExceptKey){ #>NULL AS [Row!2!<#= field.Name #>]<# if(!entity.LastField(field.Name)){ #>,<#}#><#}#>
+	<# foreach(var ts in entity.TabularSections){ #>
+		,NULL AS [<#= ts.Name #>!<#= n #>1]
+		<#}#>
+		<# foreach(var ts in entity.TabularSections){ #>
+			<# foreach(var fld in ts.Fields){ #>
+			<# if(ts.Equals(tabularSection)) {#> ,T.[<#= fld.Name #>] AS [Row!<#= n #>2!<#= fld.Name #>]<#}#>
+			<# if(!ts.Equals(tabularSection)) {#> ,NULL AS [Row!<#= n #>2!<#= fld.Name #>]<#}#>
+		<#}#>
+	<#}#>
+	FROM @Ids Ids
+	JOIN [<#= entity.Schema #>].[<#= entity.Name #>_<#= tabularSection.Name #>] T ON T.Ref = Ids.Id
+
+	<#}#>
+
+	ORDER BY [Row!2!<#= entity.KeyField #>], Tag <# for(int i=0; i<entity.TabularSections.Count;i++){ #>,[Row!<#= (i+1).ToString() #>2!LineNumber]<#}#>
+
+	FOR XML EXPLICIT
+GO
+
+<#}#>

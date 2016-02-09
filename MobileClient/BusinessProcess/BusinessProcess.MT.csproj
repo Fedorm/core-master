@@ -1,0 +1,114 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{936167C7-B7D2-4337-A59B-42BC523FF5B5}</ProjectGuid>
+    <ProjectTypeGuids>{6BC8ED88-2882-458C-8E55-DFD12B67127B};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <RootNamespace>BitMobile.BusinessProcess</RootNamespace>
+    <IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
+    <AssemblyName>BusinessProcess</AssemblyName>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>full</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Net.Http.Extensions, Version=2.2.29.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Net.Http.2.2.29\lib\monotouch\System.Net.Http.Extensions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Net.Http.Primitives, Version=4.2.29.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Net.Http.2.2.29\lib\monotouch\System.Net.Http.Primitives.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BusinessProcessContext.cs" />
+    <Compile Include="ClientModel\Args.cs" />
+    <Compile Include="ClientModel\BarcodeScanner.cs" />
+    <Compile Include="ClientModel\Console.cs" />
+    <Compile Include="ClientModel\CurrentController.cs" />
+    <Compile Include="ClientModel\Error.cs" />
+    <Compile Include="ClientModel\Gallery.cs" />
+    <Compile Include="ClientModel\Gps.cs" />
+    <Compile Include="ClientModel\GpsTracking.cs" />
+    <Compile Include="ClientModel\HttpRequest.cs" />
+    <Compile Include="ClientModel\LocalNotification.cs" />
+    <Compile Include="ClientModel\PushNotification.cs" />
+    <Compile Include="ClientModel\ReturnResult.cs" />
+    <Compile Include="ClientModel\Translate.cs" />
+    <Compile Include="ClientModel\Web.cs" />
+    <Compile Include="ClientModel\WebRequest.cs" />
+    <Compile Include="SolutionConfiguration\BusinessProcess.cs" />
+    <Compile Include="SolutionConfiguration\Configuration.cs" />
+    <Compile Include="ClientModel\Camera.cs" />
+    <Compile Include="ClientModel\ContextAwareObject.cs" />
+    <Compile Include="ClientModel\Converter.cs" />
+    <Compile Include="ClientModel\Dialog.cs" />
+    <Compile Include="ClientModel\EnumerableAdapter.cs" />
+    <Compile Include="ClientModel\Db.cs" />
+    <Compile Include="ClientModel\FileSystem.cs" />
+    <Compile Include="ClientModel\Phone.cs" />
+    <Compile Include="ClientModel\Query.cs" />
+    <Compile Include="ClientModel\Variables.cs" />
+    <Compile Include="ClientModel\Workflow.cs" />
+    <Compile Include="SolutionConfiguration\WarmupAction.cs" />
+    <Compile Include="SolutionConfiguration\DefaultStyle.cs" />
+    <Compile Include="SolutionConfiguration\Style.cs" />
+    <Compile Include="SolutionConfiguration\GlobalEvents.cs" />
+    <Compile Include="SolutionConfiguration\Mixin.cs" />
+    <Compile Include="SolutionConfiguration\Module.cs" />
+    <Compile Include="SolutionConfiguration\Script.cs" />
+    <Compile Include="Controllers\Controller.cs" />
+    <Compile Include="Controllers\GlobalEventsController.cs" />
+    <Compile Include="Controllers\GlobalModuleController.cs" />
+    <Compile Include="Controllers\ScreenController.cs" />
+    <Compile Include="Factory\BusinessProcessFactory.cs" />
+    <Compile Include="Factory\ControllerFactory.cs" />
+    <Compile Include="Factory\ConfigurationFactory.cs" />
+    <Compile Include="Factory\ObjectFactory.cs" />
+    <Compile Include="Factory\ScreenFactory.cs" />
+    <Compile Include="WorkingProcess\Action.cs" />
+    <Compile Include="WorkingProcess\BusinessProcess.cs" />
+    <Compile Include="WorkingProcess\Step.cs" />
+    <Compile Include="WorkingProcess\Workflow.cs" />
+    <Compile Include="ClientModel\Application.cs" />
+    <Compile Include="ClientModel\Clipboard.cs" />
+    <Compile Include="ClientModel\Email.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.MonoTouch.CSharp.targets" />
+  <ItemGroup>
+    <ProjectReference Include="..\Application\Application.MT.csproj">
+      <Project>{32CCD428-607B-4F93-ADD7-3F5986A74769}</Project>
+      <Name>Application.MT</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Common\Common.MT.csproj">
+      <Project>{3FF1102C-B767-4E1A-8D0C-14BB5BEA302E}</Project>
+      <Name>Common.MT</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.BusinessProcess.MT.config" />
+  </ItemGroup>
+</Project>

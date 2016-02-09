@@ -1,0 +1,180 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{F3F0B51F-F344-40AD-89E0-ADDE47745A0F}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>DeviceService</RootNamespace>
+    <AssemblyName>SyncLibrary</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;SERVER</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE;SERVER</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Synchronization, Version=2.1.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\Microsoft SDKs\Microsoft Sync Framework\2.1\Runtime\x64\Microsoft.Synchronization.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Synchronization.Data, Version=3.1.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\Microsoft SDKs\Microsoft Sync Framework\2.1\Runtime\ADO.NET\V3.1\x64\Microsoft.Synchronization.Data.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Synchronization.Data.Server, Version=3.1.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\Microsoft SDKs\Microsoft Sync Framework\2.1\Runtime\ADO.NET\V3.1\x64\Microsoft.Synchronization.Data.Server.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Synchronization.Data.SqlServer, Version=3.1.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\Microsoft SDKs\Microsoft Sync Framework\2.1\Runtime\ADO.NET\V3.1\x64\Microsoft.Synchronization.Data.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.ServiceModel.Activation" />
+    <Reference Include="System.ServiceModel.Web" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SyncServiceLib\Batching\Batch.cs" />
+    <Compile Include="SyncServiceLib\Batching\BatchHeader.cs" />
+    <Compile Include="SyncServiceLib\Batching\FileBasedBatchHandler.cs" />
+    <Compile Include="SyncServiceLib\Batching\IBatchHandler.cs" />
+    <Compile Include="SyncServiceLib\Common\Conflict.cs" />
+    <Compile Include="SyncServiceLib\Common\IOfflineEntity.cs" />
+    <Compile Include="SyncServiceLib\Common\OfflineEntityMetadata.cs" />
+    <Compile Include="SyncServiceLib\Common\SyncConflict.cs" />
+    <Compile Include="SyncServiceLib\Common\SyncConflictResolution.cs" />
+    <Compile Include="SyncServiceLib\Common\SyncError.cs" />
+    <Compile Include="SyncServiceLib\Configuration\ISyncServiceConfiguration.cs" />
+    <Compile Include="SyncServiceLib\Configuration\MetadataCache.cs" />
+    <Compile Include="SyncServiceLib\Configuration\MetadataCacheItem.cs" />
+    <Compile Include="SyncServiceLib\Configuration\MetadataCacheKey.cs" />
+    <Compile Include="SyncServiceLib\Configuration\SyncServiceConfiguration.cs" />
+    <Compile Include="SyncServiceLib\Diag\DiagHelper.cs" />
+    <Compile Include="SyncServiceLib\Error\Error.cs" />
+    <Compile Include="SyncServiceLib\Error\ErrorHandler.cs" />
+    <Compile Include="SyncServiceLib\Error\HttpStatusCode.cs" />
+    <Compile Include="SyncServiceLib\Error\Strings.cs" />
+    <Compile Include="SyncServiceLib\Error\SyncServiceException.cs" />
+    <Compile Include="SyncServiceLib\Formatters\AtomEntryInfoWrapper.cs" />
+    <Compile Include="SyncServiceLib\Formatters\AtomHelper.cs" />
+    <Compile Include="SyncServiceLib\Formatters\BMFormatterConstants.cs" />
+    <Compile Include="SyncServiceLib\Formatters\BMReader.cs" />
+    <Compile Include="SyncServiceLib\Formatters\BMWriter.cs" />
+    <Compile Include="SyncServiceLib\Formatters\EntryInfoWrapper.cs" />
+    <Compile Include="SyncServiceLib\Formatters\FormatterConstants.cs" />
+    <Compile Include="SyncServiceLib\Formatters\FormatterUtilities.cs" />
+    <Compile Include="SyncServiceLib\Formatters\JsonElementTypes.cs" />
+    <Compile Include="SyncServiceLib\Formatters\JsonEntryInfoWrapper.cs" />
+    <Compile Include="SyncServiceLib\Formatters\JsonHelper.cs" />
+    <Compile Include="SyncServiceLib\Formatters\ODataAtomReader.cs" />
+    <Compile Include="SyncServiceLib\Formatters\ODataAtomWriter.cs" />
+    <Compile Include="SyncServiceLib\Formatters\ODataJsonReader.cs" />
+    <Compile Include="SyncServiceLib\Formatters\ODataJsonWriter.cs" />
+    <Compile Include="SyncServiceLib\Formatters\ReaderItemType.cs" />
+    <Compile Include="SyncServiceLib\Formatters\ReflectionUtility.cs" />
+    <Compile Include="SyncServiceLib\Formatters\SyncReader.cs" />
+    <Compile Include="SyncServiceLib\Formatters\SyncWriter.cs" />
+    <Compile Include="SyncServiceLib\RequestProcessor\DelegateBodyWriter.cs" />
+    <Compile Include="SyncServiceLib\RequestProcessor\DownloadChangesRequestProcessor.cs" />
+    <Compile Include="SyncServiceLib\RequestProcessor\IRequestProcessor.cs" />
+    <Compile Include="SyncServiceLib\RequestProcessor\RequestProcessorFactory.cs" />
+    <Compile Include="SyncServiceLib\RequestProcessor\ScopeSchemaRequestProcessor.cs" />
+    <Compile Include="SyncServiceLib\RequestProcessor\SyncRequestProcessorBase.cs" />
+    <Compile Include="SyncServiceLib\RequestProcessor\SyncScopesRequestProcessor.cs" />
+    <Compile Include="SyncServiceLib\RequestProcessor\UploadChangesRequestProcessor.cs" />
+    <Compile Include="SyncServiceLib\Server\HttpContextServiceHostEx.cs" />
+    <Compile Include="SyncServiceLib\Server\SyncServiceEx.cs" />
+    <Compile Include="SyncServiceLib\Server\SyncServiceHostFactoryEx.cs" />
+    <Compile Include="SyncServiceLib\Server\SyncServiceHostEx.cs" />
+    <Compile Include="SyncServiceLib\Server\diagxslt.Designer.cs" />
+    <Compile Include="SyncServiceLib\Server\Enums.cs" />
+    <Compile Include="SyncServiceLib\Server\HttpContextServiceHost.cs" />
+    <Compile Include="SyncServiceLib\Server\IRequestHandler.cs" />
+    <Compile Include="SyncServiceLib\Server\Request.cs" />
+    <Compile Include="SyncServiceLib\Server\RequestParser.cs" />
+    <Compile Include="SyncServiceLib\Server\ServiceError.cs" />
+    <Compile Include="SyncServiceLib\Server\SyncBlob.cs" />
+    <Compile Include="SyncServiceLib\Server\SyncConflictContext.cs" />
+    <Compile Include="SyncServiceLib\Server\SyncConflictInterceptorAttribute.cs" />
+    <Compile Include="SyncServiceLib\Server\SyncDownloadResponseOperationContext.cs" />
+    <Compile Include="SyncServiceLib\Server\SyncEntityPropertyIsNullableAttribute.cs" />
+    <Compile Include="SyncServiceLib\Server\SyncEntityPropertyMappingAttribute.cs" />
+    <Compile Include="SyncServiceLib\Server\SyncEntityTypeAttribute.cs" />
+    <Compile Include="SyncServiceLib\Server\SyncInterceptorAttribute.cs" />
+    <Compile Include="SyncServiceLib\Server\SyncInterceptorsInfoWrapper.cs" />
+    <Compile Include="SyncServiceLib\Server\SyncOperationContext.cs" />
+    <Compile Include="SyncServiceLib\Server\SyncRequestInterceptorAttribute.cs" />
+    <Compile Include="SyncServiceLib\Server\SyncResponseInterceptorAttribute.cs" />
+    <Compile Include="SyncServiceLib\Server\SyncService.cs" />
+    <Compile Include="SyncServiceLib\Server\SyncServiceHost.cs" />
+    <Compile Include="SyncServiceLib\Server\SyncServiceHostFactory.cs" />
+    <Compile Include="SyncServiceLib\Server\SyncServiceRequestInfo.cs" />
+    <Compile Include="SyncServiceLib\Server\SyncServiceTracer.cs" />
+    <Compile Include="SyncServiceLib\Server\SyncUploadRequestOperationContext.cs" />
+    <Compile Include="SyncServiceLib\Server\SyncUploadResponseOperationContext.cs" />
+    <Compile Include="SyncServiceLib\SqlProvider\ApplyChangesResponse.cs" />
+    <Compile Include="SyncServiceLib\SqlProvider\DataSetToEntitiesConverter.cs" />
+    <Compile Include="SyncServiceLib\SqlProvider\GetChangesResponse.cs" />
+    <Compile Include="SyncServiceLib\SqlProvider\IAsymmetricProviderService.cs" />
+    <Compile Include="SyncServiceLib\SqlProvider\Provider\BatchRangeSetUtil.cs" />
+    <Compile Include="SyncServiceLib\SqlProvider\Provider\RowSorter.cs" />
+    <Compile Include="SyncServiceLib\SqlProvider\Provider\SqlEditionHelper.cs" />
+    <Compile Include="SyncServiceLib\SqlProvider\Provider\SyncUtil.cs" />
+    <Compile Include="SyncServiceLib\SqlProvider\SqlSyncProviderFilterParameterInfo.cs" />
+    <Compile Include="SyncServiceLib\SqlProvider\SqlSyncProviderService.cs" />
+    <Compile Include="SyncServiceLib\Utility\ODataIdParser.cs" />
+    <Compile Include="SyncServiceLib\Utility\SyncServiceConstants.cs" />
+    <Compile Include="SyncServiceLib\Utility\WebUtil.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Project>{5734973c-7a63-4a15-bc3e-45bff070d609}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="SyncServiceLib\Diag\diag.xslt" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

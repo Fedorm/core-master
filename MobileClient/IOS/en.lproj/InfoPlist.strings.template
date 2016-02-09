@@ -1,0 +1,3 @@
+﻿// Label of application for english language. Required. Depends of solution type. Values: "BIT.Mobile", "BIT.Catch", "BIT.SuperService"
+CFBundleDisplayName = %label%; 
+CFBundleName = %label%;

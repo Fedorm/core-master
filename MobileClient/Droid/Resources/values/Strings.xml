@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>  
+  <string name="bitMobile">BIT.Mobile</string>
+  <string name="superAgent">BIT.Catch</string>
+  <string name="superService">BIT.SuperService</string>
+  <string name="settings">Settings</string>
+</resources>

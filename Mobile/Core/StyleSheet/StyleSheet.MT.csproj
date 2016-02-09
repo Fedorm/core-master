@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>10.0.0</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{0BA68CF9-8AFB-49FA-96D8-D5A9FF38F91A}</ProjectGuid>
+    <ProjectTypeGuids>{6BC8ED88-2882-458C-8E55-DFD12B67127B};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <RootNamespace>StyleSheet</RootNamespace>
+    <IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
+    <AssemblyName>StyleSheet</AssemblyName>
+    <ReleaseVersion>1.5.8.42</ReleaseVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>True</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>False</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>False</ConsolePause>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>none</DebugType>
+    <Optimize>True</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>False</ConsolePause>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core" />
+    <Reference Include="monotouch" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.MonoTouch.CSharp.targets" />
+  <ItemGroup>
+    <Compile Include="SynonymAttribute.cs" />
+    <Compile Include="StyleSheet.cs" />
+    <Compile Include="Style.cs" />
+    <Compile Include="Size.cs" />
+    <Compile Include="Padding.cs" />
+    <Compile Include="Measure.cs" />
+    <Compile Include="Margin.cs" />
+    <Compile Include="IStyledObject.cs" />
+    <Compile Include="IStyleSheetHelper.cs" />
+    <Compile Include="ICustomStyleSheet.cs" />
+    <Compile Include="Font.cs" />
+    <Compile Include="Color.cs" />
+    <Compile Include="BorderRadius.cs" />
+    <Compile Include="Border.cs" />
+    <Compile Include="BackgroundImage.cs" />
+    <Compile Include="TextAlign.cs" />
+    <Compile Include="DockAlign.cs" />
+    <Compile Include="WhiteSpace.cs" />
+    <Compile Include="HorizontalAlign.cs" />
+    <Compile Include="VerticalAlign.cs" />
+    <Compile Include="Bound.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Properties\" />
+  </ItemGroup>
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties ProjectLinkerExcludeFilter="\\?desktop(\\.*)?$;\\?silverlight(\\.*)?$;\.desktop;\.silverlight;\.xaml;^service references(\\.*)?$;\.clientconfig;^web references(\\.*)?$" ProjectLinkReference="19f1d8ba-6b94-4e98-8550-9cdcf262f036" />
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>

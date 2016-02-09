@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WixLocalization Culture="en-us" xmlns="http://schemas.microsoft.com/wix/2006/localization">
+  <String Id="msierrXmlFileFailedRead">Error reading XML file</String>
+  <String Id="msierrXmlFileFailedOpen">Error opening XML file</String>
+  <String Id="msierrXmlFileFailedSelect">Error working with XML files</String>
+  <String Id="msierrXmlFileFailedSave">Error saving XML file</String>
+</WixLocalization>

@@ -1,0 +1,63 @@
+﻿/* ReSharper disable All */
+body {
+    background-color: #fff;
+}
+
+vl {
+    width: 640sp;
+    height: 100sp;
+    background-color: #000;
+    background-image: none;
+    border-style: none;
+    border-width: 0sp;
+    border-color: none;
+    border-radius: 0sp;
+    selected-color: none;
+}
+
+hl {
+    width: 100%;
+    height: 20mm;
+    background-color: #000;
+    background-image: none;
+    border-style: none;
+    border-width: 0sp;
+    border-color: none;
+    border-radius: 0sp;
+    selected-color: none;
+}
+
+dl {
+    width: 10%;
+    height: 100%;
+    background-color: #000;
+    background-image: none;
+    border-style: none;
+    border-width: 0sp;
+    border-color: none;
+    border-radius: 0sp;
+    selected-color: none;
+}
+
+.red {
+    background-color: #f00;
+}
+
+.green {
+    background-color: #0f0;
+}
+
+.photo {
+    background-image: url(cat.png);
+}
+
+.borders {
+    border-style: solid;
+    border-width: 1sp;
+    border-color: #fff;
+    border-radius: 1sp;
+}
+
+.clickable {
+    selected-color: #fff;
+}

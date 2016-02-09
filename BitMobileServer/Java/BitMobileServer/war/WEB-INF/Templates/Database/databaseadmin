@@ -1,0 +1,149 @@
+USE `$cfg.databaseName$`;
+###
+
+$!-------------------------------------------- CRUD OPERATIONS----------------------------------------!$
+
+$cfg.entities:{ entity | 
+
+CREATE PROCEDURE `$entity.schema$_$entity.name$_adm_insert`(
+	$entity.fields:{ field | 
+		p$field.name$ $field.sqlTypeShort$$if(!field.isLast)$,$endif$
+	}$)
+BEGIN
+	INSERT INTO `$entity.schema$_$entity.name$`(	
+		$entity.fields:{ field | `$field.name$`$if(!field.isLast)$,$endif$}$
+	) 
+	VALUES
+	(
+		$entity.fields:{ field | p$field.name$$if(!field.isLast)$,$endif$}$
+	);
+	DELETE FROM `admin_DeletedObjects` WHERE Id = p$entity.KeyField$;
+END
+###
+
+CREATE PROCEDURE `$entity.schema$_$entity.name$_adm_update`(
+	$entity.fields:{ field | 
+		p$field.name$ $field.sqlTypeShort$$if(!field.isLast)$,$endif$
+	}$)
+BEGIN
+	UPDATE `$entity.schema$_$entity.name$` SET
+		$entity.fields:{ field | `$field.name$` = p$field.name$$if(!field.isLast)$,$endif$}$
+	WHERE $entity.keyField$ = p$entity.keyField$ AND
+	( 1=0 $entity.fields:{ field | OR `$field.name$` <> p$field.name$ OR (`$field.name$` IS NULL AND NOT p$field.name$ IS NULL) OR (NOT `$field.name$` IS NULL AND p$field.name$ IS NULL) }$);	
+END
+###
+
+CREATE PROCEDURE `$entity.schema$_$entity.name$_adm_markdelete`(
+	$entity.fields:{ field | 
+		p$field.name$ $field.sqlTypeShort$$if(!field.isLast)$,$endif$
+	}$)
+BEGIN
+	IF EXISTS(SELECT * FROM `$entity.schema$_$entity.name$` WHERE $entity.keyField$ = p$entity.keyField$) THEN
+	UPDATE `$entity.schema$_$entity.name$` SET
+		$entity.fields:{ field | `$field.name$` = p$field.name$$if(!field.isLast)$,$endif$
+		}$
+	WHERE $entity.keyField $ = p$entity.keyField$;
+	ELSE
+	INSERT INTO `$entity.schema$_$entity.name$`
+	(
+		$entity.fields:{ field | `$field.name$`$if(!field.isLast)$,$endif$}$
+	)
+	VALUES
+	(
+		$entity.fields:{ field | p$field.name$$if(!field.isLast)$,$endif$}$
+	);
+	END IF;
+	IF NOT EXISTS(SELECT * FROM `admin_DeletedObjects` WHERE Id = p$entity.keyField$) THEN
+		INSERT INTO `admin_DeletedObjects`(Id,Entity,CreationDate) VALUES (p$entity.keyField$,`$entity.schema$_$entity.name$`,NOW());
+	END IF;
+END
+###
+
+CREATE PROCEDURE `$entity.schema$_$entity.name$_adm_delete`(p$entity.keyField$ VARCHAR(36))
+BEGIN
+	UPDATE `admin_DeletedObjects` SET `DeletionDate` = NOW() WHERE Id = p$entity.keyField$;
+END
+###
+
+CREATE PROCEDURE `$entity.schema$_$entity.name$_adm_exists`(p$entity.keyField$ VARCHAR(36), OUT `pResult` INT)
+BEGIN
+	IF EXISTS(SELECT $entity.keyField$ FROM `$entity.schema$_$entity.name$` WHERE $entity.keyField$ = p$entity.keyField$) THEN
+		SET pResult = 1;
+	END IF;
+END
+###
+
+CREATE PROCEDURE `$entity.schema$_$entity.name$_adm_getnotexisting`()
+BEGIN
+END
+###
+
+$entity.tabularSections:{ tabularSection |
+
+CREATE PROCEDURE `$entity.schema$_$entity.name$_$tabularSection.name$_adm_insert`(
+	$tabularSection.fieldsExceptKey:{ field | p$field.name$ $field.sqlTypeShort$$if(!field.isLast)$,$endif$
+	}$)
+BEGIN
+	INSERT INTO `$entity.schema$_$entity.name$_$tabularSection.name$`(
+		`$entity.keyField$`$tabularSection.fieldsExceptKey:{ field | ,`$field.name$`}$
+	) 
+	VALUES
+	(
+		UUID()$tabularSection.fieldsExceptKey:{ field | ,p$field.name$}$
+	);
+END
+###
+
+CREATE PROCEDURE `$entity.schema$_$entity.name$_$tabularSection.name$_adm_clear`(pRef VARCHAR(36))
+BEGIN
+	DELETE FROM `$entity.schema$_$entity.name$_$tabularSection.name$`
+	WHERE Ref = pRef;
+END
+###
+
+$if(tabularSection.hasTabularSectionKey)$
+
+CREATE PROCEDURE `$entity.schema$_$entity.name$_$tabularSection.name$_adm_selectkeys`(pRef VARCHAR(36))
+BEGIN
+	SELECT $tabularSection.fieldsExceptKey:{ field | `$field.name$`$if(!field.isLast)$,$endif$}$
+	FROM `$entity.schema$_$entity.name$_$tabularSection.name$`
+	WHERE Ref = pRef;
+END
+###
+
+CREATE PROCEDURE `$entity.schema$_$entity.name$_$tabularSection.name$_adm_update`(
+	$tabularSection.fieldsExceptKey:{ field | p$field.name$ $field.sqlTypeShort$$if(!field.isLast)$,$endif$
+	}$)
+BEGIN
+	IF EXISTS(SELECT * FROM `$entity.schema$_$entity.name$_$tabularSection.name$` WHERE Ref = pRef $tabularSection.tabularSectionKeys:{ field | AND (`$field.name$` = p$field.name$ OR (`$field.name$` IS NULL AND p$field.name$ IS NULL)) }$) THEN
+	UPDATE `$entity.schema$_$entity.name$_$tabularSection.name$` SET
+		$tabularSection.fieldsExceptKey:{ field | `$field.name$` = p$field.name$$if(!field.isLast)$,$endif
+		$}$
+	WHERE Ref = pRef $tabularSection.tabularSectionKeys:{ field | AND `$field.name$` = p$field.name$ }$ AND   
+	(1=0 $tabularSection.tabularFieldsExceptKeys:{ field | OR `$field.name$` <> p$field.name$ }$);
+	ELSE
+	INSERT INTO `$entity.schema$_$entity.name$_$tabularSection.name$`(
+		`$entity.keyField$`$tabularSection.fieldsExceptKey:{ field | ,`$field.name$`}$
+	) 
+	VALUES
+	(
+		UUID()$tabularSection.fieldsExceptKey:{ field | ,p$field.name$ }$
+	);	
+	END IF;
+END
+###
+
+CREATE PROCEDURE `$entity.schema$_$entity.name$_$tabularSection.name$_adm_delete`(
+	pRef VARCHAR(36)$tabularSection.tabularSectionKeys:{ field | ,p$field.name$ $field.sqlTypeShort$}$)
+BEGIN
+	DELETE FROM `$entity.schema$_$entity.name$_$tabularSection.name$`
+	WHERE Ref = pRef $tabularSection.tabularSectionKeys:{ field | AND `$field.name$` = p$field.name$ }$;
+END
+###
+
+$endif$
+
+}$
+
+}$
+

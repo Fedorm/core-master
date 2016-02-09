@@ -1,0 +1,326 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{86D37A0C-96FA-4126-BA3C-AA30160C035A}</ProjectGuid>
+    <ProjectTypeGuids>{EFBA0AD7-5A72-4C68-AF49-83D382785DCF};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>BitMobile.Droid</RootNamespace>
+    <AssemblyName>BitBrowser</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+    <AndroidApplication>true</AndroidApplication>
+    <AndroidResgenFile>Resources\Resource.Designer.cs</AndroidResgenFile>
+    <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
+    <AndroidSupportedAbis>armeabi,armeabi-v7a,x86</AndroidSupportedAbis>
+    <MandroidI18n />
+    <TargetFrameworkVersion>v4.4</TargetFrameworkVersion>
+    <AndroidManifest>Properties\AndroidManifest.xml</AndroidManifest>
+    <AndroidUseLatestPlatformSdk>False</AndroidUseLatestPlatformSdk>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AndroidLinkMode>None</AndroidLinkMode>
+    <EmbedAssembliesIntoApk>False</EmbedAssembliesIntoApk>
+    <AndroidStoreUncompressedFileExtensions>
+    </AndroidStoreUncompressedFileExtensions>
+    <JavaMaximumHeapSize>
+    </JavaMaximumHeapSize>
+    <JavaOptions>
+    </JavaOptions>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AndroidUseSharedRuntime>False</AndroidUseSharedRuntime>
+    <EmbedAssembliesIntoApk>True</EmbedAssembliesIntoApk>
+    <AndroidSupportedAbis>armeabi,armeabi-v7a,x86,x86_64,arm64-v8a</AndroidSupportedAbis>
+    <AndroidLinkSkip />
+    <AndroidLinkMode>SdkOnly</AndroidLinkMode>
+    <BundleAssemblies>False</BundleAssemblies>
+    <AndroidCreatePackagePerAbi>False</AndroidCreatePackagePerAbi>
+    <AndroidStoreUncompressedFileExtensions />
+    <MandroidI18n />
+    <Debugger>Xamarin</Debugger>
+    <AotAssemblies>False</AotAssemblies>
+    <EnableLLVM>False</EnableLLVM>
+    <AndroidEnableMultiDex>False</AndroidEnableMultiDex>
+    <EnableProguard>False</EnableProguard>
+    <DevInstrumentationEnabled>False</DevInstrumentationEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Develop|AnyCPU'">
+    <OutputPath>bin\Develop\</OutputPath>
+    <DefineConstants>TRACE;DEVELOP</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <AndroidUseSharedRuntime>False</AndroidUseSharedRuntime>
+    <AndroidLinkSkip>
+    </AndroidLinkSkip>
+    <AndroidLinkMode>None</AndroidLinkMode>
+    <EmbedAssembliesIntoApk>True</EmbedAssembliesIntoApk>
+    <AndroidStoreUncompressedFileExtensions>
+    </AndroidStoreUncompressedFileExtensions>
+    <JavaMaximumHeapSize>
+    </JavaMaximumHeapSize>
+    <JavaOptions>
+    </JavaOptions>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Mono.Android" />
+    <Reference Include="mscorlib" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Xml" />
+    <Reference Include="GCM.Client">
+      <HintPath>..\Components\GCMClient-1.0\lib\android\GCM.Client.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.Android.Support.v4">
+      <HintPath>..\Components\xamandroidsupportv4-18-19.1.0\lib\android\Xamarin.Android.Support.v4.dll</HintPath>
+    </Reference>
+    <Reference Include="zxing.portable, Version=0.14.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ZXing.Net.Mobile.1.5.4.0\lib\MonoAndroid403\zxing.portable.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="ZXingNetMobile, Version=1.5.4.20, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ZXing.Net.Mobile.1.5.4.0\lib\MonoAndroid403\ZXingNetMobile.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Application\AndroidApplicationContext.cs" />
+    <Compile Include="Controls\MediaPlayer.cs" />
+    <Compile Include="Providers\JokeProvider.cs" />
+    <Compile Include="Controls\CustomText.cs" />
+    <Compile Include="Providers\CameraProvider.cs" />
+    <Compile Include="Providers\ClipboardProvider.cs" />
+    <Compile Include="Providers\DialogProvider.cs" />
+    <Compile Include="Providers\DisplayProvider.cs" />
+    <Compile Include="Providers\EmailProvider.cs" />
+    <Compile Include="Providers\GalleryProvider.cs" />
+    <Compile Include="Providers\GpsProvider.cs" />
+    <Compile Include="Providers\GpsTracker.cs" />
+    <Compile Include="Application\Settings.cs" />
+    <Compile Include="Backgrounding\BaseService.cs" />
+    <Compile Include="Controls\CustomSwipeLayout.cs" />
+    <Compile Include="Controls\SwipeVerticalLayout.cs" />
+    <Compile Include="Controls\SwipeHorizontalLayout.cs" />
+    <Compile Include="Helper.cs" />
+    <Compile Include="Backgrounding\ServiceBinder.cs" />
+    <Compile Include="Backgrounding\ServiceConnectedEventArgs.cs" />
+    <Compile Include="Backgrounding\ServiceConnection.cs" />
+    <Compile Include="Providers\LocalNotificationProvider.cs" />
+    <Compile Include="Providers\WebProvider.cs" />
+    <Compile Include="PushNotifications\GcmBroadcastReceiver.cs" />
+    <Compile Include="PushNotifications\GcmService.cs" />
+    <Compile Include="PushNotifications\Manager.cs" />
+    <Compile Include="PushNotifications\PushNotificationsManagerFactory.cs" />
+    <Compile Include="Screens\InitialScreen.cs" />
+    <Compile Include="StyleSheet\ImageCache.cs" />
+    <Compile Include="StyleSheet\StyleSheetExtensions.cs" />
+    <Compile Include="UI\Control%27.cs" />
+    <Compile Include="InfobaseManager.cs" />
+    <Compile Include="BitBrowserApp.cs" />
+    <Compile Include="BaseScreen.cs" />
+    <Compile Include="UI\Control.cs" />
+    <Compile Include="UI\ControlExtensions.cs" />
+    <Compile Include="UI\CustomViewGroup.cs" />
+    <Compile Include="UI\GestureType.cs" />
+    <Compile Include="UI\IGesturable.cs" />
+    <Compile Include="UI\LayoutHandler.cs" />
+    <Compile Include="UI\MeasureHandler.cs" />
+    <Compile Include="Screens\Infobases.cs" />
+    <Compile Include="Controls\WebMapGoogle.cs" />
+    <Compile Include="Controls\WebImage.cs" />
+    <Compile Include="Controls\WebView.cs" />
+    <Compile Include="Controls\Button.cs" />
+    <Compile Include="Controls\CheckBox.cs" />
+    <Compile Include="Controls\MemoEdit.cs" />
+    <Compile Include="Controls\DockLayout.cs" />
+    <Compile Include="Controls\EditText.cs" />
+    <Compile Include="Controls\HorizontalLayout.cs" />
+    <Compile Include="Controls\HorizontalLine.cs" />
+    <Compile Include="Controls\Image.cs" />
+    <Compile Include="Controls\CustomLayout.cs" />
+    <Compile Include="Controls\Indicator.cs" />
+    <Compile Include="Controls\CustomEdit.cs" />
+    <Compile Include="Controls\Screen.cs" />
+    <Compile Include="Controls\ScrollView.cs" />
+    <Compile Include="Controls\TextView.cs" />
+    <Compile Include="Controls\VerticalLayout.cs" />
+    <Compile Include="Screens\Logon.cs" />
+    <Compile Include="Tests\AndroidViewProxy.cs" />
+    <Compile Include="ExceptionHandler.cs" />
+    <Compile Include="PreferencesScreen.cs" />
+    <Compile Include="Resources\Resource.Designer.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Screens\ProgressScreen.cs" />
+    <Compile Include="UI\SelectionBehaviour.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\Progress.axml">
+      <SubType>AndroidResource</SubType>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\Logon.axml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\values\Strings.xml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\anim\go_next_in.xml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\anim\go_next_out.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\anim\go_prev_in.xml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\anim\go_prev_out.xml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\anim\refresh_in.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\anim\refresh_out.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\xml\Preferences.xml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Properties\AndroidManifest.xml" />
+    <AndroidResource Include="Resources\values-ru\Strings.xml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\drawable\Icon_BitMobile.png" />
+    <AndroidResource Include="Resources\drawable\BitMobileTop.png" />
+    <AndroidResource Include="Resources\drawable\BitMobileBottom.png" />
+    <AndroidResource Include="Resources\drawable\Lock.png" />
+    <AndroidResource Include="Resources\drawable\UserName.png" />
+    <AndroidResource Include="Resources\drawable\Password.png" />
+    <AndroidResource Include="Resources\drawable\SuperAgentBottom.png" />
+    <AndroidResource Include="Resources\drawable\SuperServiceBottom.png" />
+    <AndroidResource Include="Resources\drawable\SuperAgentLogo.png" />
+    <AndroidResource Include="Resources\drawable\SuperServiceLogo.png" />
+    <AndroidResource Include="Resources\drawable\SuperServiceTop.png" />
+    <AndroidResource Include="Resources\drawable\SuperAgentTop.png" />
+    <AndroidResource Include="Resources\drawable\Icon_SuperAgent.png" />
+    <AndroidResource Include="Resources\drawable\Icon.png" />
+    <AndroidResource Include="Resources\drawable\Icon_SuperService.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\BitMobileBottom.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\BitMobileTop.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\SuperAgentBottom.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\SuperAgentTop.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\SuperServiceBottom.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\SuperServiceTop.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\BitMobileBottom.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\BitMobileTop.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\SuperAgentBottom.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\SuperAgentTop.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\SuperServiceBottom.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\SuperServiceTop.png" />
+    <AndroidResource Include="Resources\drawable-ldpi\BitMobileBottom.png" />
+    <AndroidResource Include="Resources\drawable-ldpi\BitMobileTop.png" />
+    <AndroidResource Include="Resources\drawable-ldpi\SuperAgentBottom.png" />
+    <AndroidResource Include="Resources\drawable-ldpi\SuperAgentTop.png" />
+    <AndroidResource Include="Resources\drawable-ldpi\SuperServiceBottom.png" />
+    <AndroidResource Include="Resources\drawable-ldpi\SuperServiceTop.png" />
+    <AndroidResource Include="Resources\drawable-mdpi\BitMobileBottom.png" />
+    <AndroidResource Include="Resources\drawable-mdpi\BitMobileTop.png" />
+    <AndroidResource Include="Resources\drawable-mdpi\SuperAgentBottom.png" />
+    <AndroidResource Include="Resources\drawable-mdpi\SuperAgentTop.png" />
+    <AndroidResource Include="Resources\drawable-mdpi\SuperServiceBottom.png" />
+    <AndroidResource Include="Resources\drawable-mdpi\SuperServiceTop.png" />
+    <AndroidResource Include="Resources\drawable\LandSuperServiceLogo.png" />
+    <AndroidResource Include="Resources\drawable\LandLogo.png" />
+    <AndroidResource Include="Resources\drawable\Specialfor.png" />
+    <AndroidResource Include="Resources\raw\Cartoon_sound_effects_bongs_1.wav" />
+    <AndroidResource Include="Resources\raw\Cartoon_sound_effects_zip_4.wav" />
+    <AndroidResource Include="Resources\raw\Comedy_effect_kiss.wav" />
+    <AndroidResource Include="Resources\raw\Comedy_effect_spring_3.wav" />
+    <AndroidResource Include="Resources\raw\Comedy_effect_squeak_and_pop.wav" />
+    <AndroidResource Include="Resources\raw\Comical_sound_series_boing_spring_2.wav" />
+    <AndroidResource Include="Resources\raw\Comical_sounds_1.wav" />
+    <AndroidResource Include="Resources\raw\Comical_sounds_2.wav" />
+    <AndroidResource Include="Resources\raw\Whip_and_bonk.wav" />
+    <AndroidResource Include="Resources\raw\Cartoon_sound_effects_boing.wav" />
+    <AndroidResource Include="Resources\raw\Cartoon_sound_effects_bong_4.wav" />
+    <AndroidResource Include="Resources\raw\Comical_sound_series_bongs_1.wav" />
+    <AndroidResource Include="Resources\drawable\cursor.xml" />
+    <AndroidResource Include="Resources\drawable\warning.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\Infobases.axml">
+      <SubType>AndroidResource</SubType>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\TextViewForListView.axml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Application\Application.MD.csproj">
+      <Project>{6B05CF5B-79D7-4D43-9DDA-0849A6259F61}</Project>
+      <Name>Application.MD</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Bulder\Bulder.MD.csproj">
+      <Project>{8B475242-B77F-40D8-8C2B-C871F04CA3E5}</Project>
+      <Name>Bulder.MD</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Common\Common.MD.csproj">
+      <Project>{774597B4-F92C-4C09-AFD8-C78E654813EB}</Project>
+      <Name>Common.MD</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <XamarinComponentReference Include="GCMClient">
+      <Version>1.0</Version>
+      <Visible>False</Visible>
+    </XamarinComponentReference>
+    <XamarinComponentReference Include="xamandroidsupportv4-18">
+      <Visible>False</Visible>
+      <Version>19.1.0</Version>
+    </XamarinComponentReference>
+    <XamarinComponentReference Include="zxing.net.mobile">
+      <Visible>False</Visible>
+      <Version>1.5.4.0</Version>
+    </XamarinComponentReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+     Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+</Project>

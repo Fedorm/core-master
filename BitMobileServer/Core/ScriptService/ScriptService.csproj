@@ -1,0 +1,95 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{62F4A5CC-9F97-4EE2-8F7B-1487FC4F4807}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ScriptService</RootNamespace>
+    <AssemblyName>ScriptService</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.ServiceModel.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Model\DB.cs" />
+    <Compile Include="Model\DbRecordset.cs" />
+    <Compile Include="Model\IDbRecordset.cs" />
+    <Compile Include="Model\Tracker.cs" />
+    <Compile Include="Persist\TelegramSettignsPersist.cs" />
+    <Compile Include="View\XmlTemplateView.cs" />
+    <Compile Include="View\HtmlView.cs" />
+    <Compile Include="IScriptRequestHandler.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ScriptRequestHandler.cs" />
+    <Compile Include="View\Translator\View.cs" />
+    <Compile Include="View\Translator\CustomDictionary.cs" />
+    <Compile Include="View\Translator\If.cs" />
+    <Compile Include="View\Translator\Include.cs" />
+    <Compile Include="View\Translator\Iterator.cs" />
+    <Compile Include="View\Translator\NotInDictionaryException.cs" />
+    <Compile Include="View\Translator\Property.cs" />
+    <Compile Include="View\Translator\Push.cs" />
+    <Compile Include="View\Translator\Translator.cs" />
+    <Compile Include="View\Translator\ValueStack.cs" />
+    <Compile Include="View\Translator\ValueStackTag.cs" />
+    <Compile Include="View\TemplateView.cs" />
+    <Compile Include="View\BaseView.cs" />
+    <Compile Include="View\ViewFactory.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Project>{5734973c-7a63-4a15-bc3e-45bff070d609}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GPSService\GPSService.csproj">
+      <Project>{59088FC9-B0D8-4FB2-97DA-5EC2CA9F75E4}</Project>
+      <Name>GPSService</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ScriptEngine\ScriptEngine.csproj">
+      <Project>{75662e4f-457e-46a1-890a-98f3406b7ea7}</Project>
+      <Name>ScriptEngine</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Telegram\Telegram.csproj">
+      <Project>{5561cd72-536a-4f6f-b7ce-f50e5d9f0c90}</Project>
+      <Name>Telegram</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

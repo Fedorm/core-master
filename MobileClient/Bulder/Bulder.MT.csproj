@@ -1,0 +1,100 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{9064AA04-AA56-4FED-8C47-AAD855E41AD2}</ProjectGuid>
+    <ProjectTypeGuids>{6BC8ED88-2882-458C-8E55-DFD12B67127B};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <RootNamespace>BitMobile.Bulder</RootNamespace>
+    <IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
+    <AssemblyName>Bulder</AssemblyName>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>full</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="SolutionBuilder.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.MonoTouch.CSharp.targets" />
+  <ItemGroup>
+    <ProjectReference Include="..\Application\Application.MT.csproj">
+      <Project>{32CCD428-607B-4F93-ADD7-3F5986A74769}</Project>
+      <Name>Application.MT</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BusinessProcess\BusinessProcess.MT.csproj">
+      <Project>{936167c7-b7d2-4337-a59b-42bc523ff5b5}</Project>
+      <Name>BusinessProcess.MT</Name>
+      <IsAppExtension>false</IsAppExtension>
+      <IsWatchApp>false</IsWatchApp>
+    </ProjectReference>
+    <ProjectReference Include="..\Common\Common.MT.csproj">
+      <Project>{3FF1102C-B767-4E1A-8D0C-14BB5BEA302E}</Project>
+      <Name>Common.MT</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Controls\Controls.MT.csproj">
+      <Project>{D26FA01B-4F6E-427E-B766-C780C6145581}</Project>
+      <Name>Controls.MT</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DataAccessLayer\DataAccessLayer.MT.csproj">
+      <Project>{66C35582-890C-48D9-B25E-AB5B427BC243}</Project>
+      <Name>DataAccessLayer.MT</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DbEngine\DbEngine.MT.csproj">
+      <Project>{71CAC2AF-D558-4ACB-9716-22CDCF402E3D}</Project>
+      <Name>DbEngine.MT</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Debugger\Debugger.MT.csproj">
+      <Project>{4686B398-7336-4BC9-AC92-D9F14B5CAC26}</Project>
+      <Name>Debugger.MT</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ExpressionEvaluator\ExpressionEvaluator.MT.csproj">
+      <Project>{1BA397C4-7D52-40B3-829B-B966B672F63B}</Project>
+      <Name>ExpressionEvaluator.MT</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\IO\IO.MT.csproj">
+      <Project>{CB6C37ED-3EBC-4F04-80B3-AD88B8BED3E0}</Project>
+      <Name>IO.MT</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Log\Log.MT.csproj">
+      <Project>{C1565DBF-86E0-48EC-B3D4-0C18A5232FA8}</Project>
+      <Name>Log.MT</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ScriptEngine\ScriptEngine.MT.csproj">
+      <Project>{19D22939-D918-41D6-BB55-63D827F5AB40}</Project>
+      <Name>ScriptEngine.MT</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\StyleSheet\StyleSheet.MT.csproj">
+      <Project>{B9798CE2-68CC-4FFA-A773-ECBF6EE61944}</Project>
+      <Name>StyleSheet.MT</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SyncLibrary\SyncLibrary.MT.csproj">
+      <Project>{1B85BCC2-47B7-48F0-9081-10DF18AF0438}</Project>
+      <Name>SyncLibrary.MT</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ValueStack\ValueStack.MT.csproj">
+      <Project>{5167E28F-308C-44B2-B7E6-5E20874D1125}</Project>
+      <Name>ValueStack.MT</Name>
+    </ProjectReference>
+  </ItemGroup>
+</Project>

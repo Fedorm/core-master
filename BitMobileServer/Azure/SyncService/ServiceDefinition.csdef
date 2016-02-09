@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ServiceDefinition name="BitMobileAzureSerivce" xmlns="http://schemas.microsoft.com/ServiceHosting/2008/10/ServiceDefinition" schemaVersion="2015-04.2.6">
+  <WebRole name="SyncRole" vmsize="Small">
+    <Sites>
+      <Site name="Web">
+        <Bindings>
+          <Binding name="Endpoint1" endpointName="Endpoint1" />
+        </Bindings>
+      </Site>
+    </Sites>
+    <Endpoints>
+      <InputEndpoint name="Endpoint1" protocol="http" port="80" />
+      <InputEndpoint name="Ftp" protocol="tcp" port="21" />
+      <InputEndpoint name="FtpPassive1" protocol="tcp" port="40000" />
+      <InputEndpoint name="FtpPassive2" protocol="tcp" port="40001" />
+      <InputEndpoint name="FtpPassive3" protocol="tcp" port="40002" />
+      <InputEndpoint name="FtpPassive4" protocol="tcp" port="40003" />
+      <InputEndpoint name="FtpPassive5" protocol="tcp" port="40004" />
+      <InputEndpoint name="FtpPassive6" protocol="tcp" port="40005" />
+      <InputEndpoint name="FtpPassive7" protocol="tcp" port="40006" />
+      <InputEndpoint name="FtpPassive8" protocol="tcp" port="40007" />
+      <InputEndpoint name="FtpPassive9" protocol="tcp" port="40008" />
+      <InputEndpoint name="FtpPassive10" protocol="tcp" port="40009" />
+      <InputEndpoint name="FtpPassive11" protocol="tcp" port="40010" />
+      <InputEndpoint name="FtpPassive12" protocol="tcp" port="40011" />
+      <InputEndpoint name="FtpPassive13" protocol="tcp" port="40012" />
+      <InputEndpoint name="FtpPassive14" protocol="tcp" port="40013" />
+      <InputEndpoint name="FtpPassive15" protocol="tcp" port="40014" />
+      <InputEndpoint name="FtpPassive16" protocol="tcp" port="40015" />
+      <InputEndpoint name="FtpPassive17" protocol="tcp" port="40016" />
+      <InputEndpoint name="FtpPassive18" protocol="tcp" port="40017" />
+      <InputEndpoint name="FtpPassive19" protocol="tcp" port="40018" />
+      <InputEndpoint name="FtpPassive20" protocol="tcp" port="40019" />
+    </Endpoints>
+    <Imports></Imports>
+    <LocalResources>
+      <LocalStorage name="Storage" sizeInMB="10000" cleanOnRoleRecycle="false" />
+      <LocalStorage name="WCFServiceWebRole1.svclog" cleanOnRoleRecycle="false" />
+    </LocalResources>
+    <Certificates></Certificates>
+    <Startup>
+      <Task commandLine="Register.cmd" executionContext="elevated" taskType="simple"></Task>
+    </Startup>
+    <ConfigurationSettings>
+      <Setting name="DatabaseServer" />
+      <Setting name="RootPassword" />
+      <Setting name="BlobStorage" />
+    </ConfigurationSettings>
+  </WebRole>
+</ServiceDefinition>

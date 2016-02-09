@@ -1,0 +1,38 @@
+﻿<#@ template language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<?xml version="1.0" encoding="utf-8" ?>
+<c:Screen xmlns:c="BitMobile.Controls" xmlns:s="BitMobile.ValueStack">
+
+  <c:VerticalLayout>
+
+	  <c:NavigationBar>
+		<c:NavigationButton CssClass="btnSync" Text="Sync" OnClickAction="Sync" />
+		<c:NavigationButton CssClass="btnSave" Text="Save" OnClickAction="Save" />
+	  </c:NavigationBar>
+
+      <c:ScrollView>
+    
+      <c:VerticalLayout>
+      
+        <# foreach(var entity in config.Entities){ #>
+
+		  <# if(entity.Schema.ToLower().Equals("catalog")){ #>
+          <c:HorizontalLayout OnClickAction="OpenScreen:<#= entity.Schema #>.<#= entity.Name #>_List.xml">
+              <c:TextView Text="<#= entity.Schema #>.<#= entity.Name #>"></c:TextView>
+          </c:HorizontalLayout>
+          
+          <c:HorizontalLine/>
+		  <#}#>
+
+		<#}#>
+    
+      </c:VerticalLayout>
+
+    </c:ScrollView>
+       
+  </c:VerticalLayout>
+
+</c:Screen>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WixLocalization Culture="ru-ru" xmlns="http://schemas.microsoft.com/wix/2006/localization">
+	
+  <String Id="DotNetNotFound">Данной установке требуется .NET Framework 4.5, установите необходимые компоненты.</String>
+  <String Id="IIS7NotFound">Данной установке требуется IIS 7 или выше, установите необходимые компоненты.</String>
+  <String Id="ShortcutName" Overridable="yes">Утилита настройки BITMobile Server</String>
+
+  <String Id="DefaultWebSiteName" Overridable="yes">Default Web Site</String>
+  <String Id="DefaultAppPoolName" Overridable="yes">DefaultAppPool</String>
+  <String Id="InvalidWebAppNameDlgText" Overridable="yes">Имя приложения не может быть пустым.</String>
+  <String Id="InvalidSiteNameDlgText" Overridable="yes">Не указан веб-сайт.</String>
+  <String Id="InvalidPoolNameDlgText" Overridable="yes">Не указан пул приложений.</String>
+  <String Id="WebAppInstallDlgWebSiteLabel" Overridable="yes">Установить приложение на веб-сайт:</String>
+  <String Id="WebAppInstallDlgAppNameLabel" Overridable="yes">Укажите имя приложения:</String>
+  <String Id="WebAppInstallDlgAppPoolLabel" Overridable="yes">Укажите пул приложений:</String>
+
+  <String Id="msierrSecureObjectsFailedCreateSD" Overridable="yes">Failed to create security descriptor for [3]\[4], system error: [2]</String>
+  <String Id="msierrSecureObjectsFailedSet" Overridable="yes">Failed to set security descriptor on object [3], system error: [2]</String>
+  <String Id="msierrSecureObjectsUnknownType" Overridable="yes">Unknown Object Type [3], system error: [2]</String>
+
+</WixLocalization>

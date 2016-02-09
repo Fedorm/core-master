@@ -1,0 +1,296 @@
+﻿<#@ template language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+
+CREATE TABLE [admin].SelectChangesLog(
+	ScopeId INT NOT NULL, 
+	TableName VARCHAR(250) NOT NULL, 
+	CreationDate DATETIME NOT NULL DEFAULT(GETDATE())
+)
+GO
+ALTER TABLE [admin].SelectChangesLog ADD CONSTRAINT UQ_SelectChangesLog_1 UNIQUE([ScopeId],[TableName],[CreationDate])
+GO
+
+<# foreach(var entity in config.Entities){ #>
+
+ALTER PROCEDURE [<#= entity.Schema #>].[<#= entity.Name #>_selectchanges]
+@sync_min_timestamp BigInt,
+@sync_scope_local_id Int,
+@sync_scope_restore_count Int,
+@sync_update_peer_key Int
+<# foreach(var filterParameter in entity.SyncFilterParameters){ #>,@<#= filterParameter.Name #> <#= filterParameter.SqlTypeShort #> <#}#> 
+AS
+--INSERT INTO [admin].SelectChangesLog([ScopeId],[TableName]) VALUES(@sync_scope_local_id, '<#= entity.Schema #>.<#= entity.Name #>')
+
+IF @sync_min_timestamp = 0
+
+SELECT
+<# foreach(var field in entity.Fields){ #>
+<# if(field.Name.Equals(entity.KeyField)){ #>[side].[<#= field.Name #>],<#}#>
+<# if(!field.Name.Equals(entity.KeyField)){ #>[base].[<#= field.Name #>],<#}#>
+<#}#>
+[side].[sync_row_is_tombstone],
+[side].[local_update_peer_timestamp] as sync_row_timestamp,
+case when ([side].[update_scope_local_id] is null or [side].[update_scope_local_id] <> @sync_scope_local_id) then [side].[local_update_peer_timestamp] else [side].[scope_update_peer_timestamp] end as sync_update_peer_timestamp,
+case when ([side].[update_scope_local_id] is null or [side].[update_scope_local_id] <> @sync_scope_local_id) then case when ([side].[local_update_peer_key] > @sync_scope_restore_count) then @sync_scope_restore_count else [side].[local_update_peer_key] end else [side].[scope_update_peer_key] end as sync_update_peer_key,
+case when ([side].[create_scope_local_id] is null or [side].[create_scope_local_id] <> @sync_scope_local_id) then [side].[local_create_peer_timestamp] else [side].[scope_create_peer_timestamp] end as sync_create_peer_timestamp,
+case when ([side].[create_scope_local_id] is null or [side].[create_scope_local_id] <> @sync_scope_local_id) then case when ([side].[local_create_peer_key] > @sync_scope_restore_count) then @sync_scope_restore_count else [side].[local_create_peer_key] end else [side].[scope_create_peer_key] end as sync_create_peer_key
+FROM [<#= entity.Schema #>].[<#= entity.Name #>] [base]
+INNER JOIN [<#= entity.Schema #>].[<#= entity.Name #>_tracking] [side] ON [base].[<#= entity.KeyField #>] = [side].[<#= entity.KeyField #>]
+WHERE ([side].[update_scope_local_id] IS NULL OR [side].[update_scope_local_id] <> @sync_scope_local_id OR ([side].[update_scope_local_id] = @sync_scope_local_id AND [side].[scope_update_peer_key] <> @sync_update_peer_key))
+AND (1=1 
+<# if(entity.SyncFilter!="" && !entity.SyncFilterIsComplicated){ #>
+AND (<#= entity.SyncFilter #>)
+<#}#>
+<# if(entity.SyncFilter!="" && entity.SyncFilterIsComplicated) { #>
+AND ([side].[<#= entity.SyncFilterColumn #>] IN (SELECT Id FROM [<#= entity.Schema #>].[<#= entity.Name #>_filterids] WHERE ScopeId = @sync_scope_local_id AND IsNew = 0))
+<#}#>
+)-- OR ([side].[sync_row_is_tombstone] = 1 AND ([side].[update_scope_local_id] = @sync_scope_local_id OR [side].[update_scope_local_id] IS NULL))
+
+ELSE
+
+SELECT
+<# foreach(var field in entity.Fields){ #>
+<# if(field.Name.Equals(entity.KeyField)){ #>[side].[<#= field.Name #>],<#}#>
+<# if(!field.Name.Equals(entity.KeyField)){ #>[base].[<#= field.Name #>],<#}#>
+<#}#>
+[side].[sync_row_is_tombstone],
+[side].[local_update_peer_timestamp] as sync_row_timestamp,
+case when ([side].[update_scope_local_id] is null or [side].[update_scope_local_id] <> @sync_scope_local_id) then [side].[local_update_peer_timestamp] else [side].[scope_update_peer_timestamp] end as sync_update_peer_timestamp,
+case when ([side].[update_scope_local_id] is null or [side].[update_scope_local_id] <> @sync_scope_local_id) then case when ([side].[local_update_peer_key] > @sync_scope_restore_count) then @sync_scope_restore_count else [side].[local_update_peer_key] end else [side].[scope_update_peer_key] end as sync_update_peer_key,
+case when ([side].[create_scope_local_id] is null or [side].[create_scope_local_id] <> @sync_scope_local_id) then [side].[local_create_peer_timestamp] else [side].[scope_create_peer_timestamp] end as sync_create_peer_timestamp,
+case when ([side].[create_scope_local_id] is null or [side].[create_scope_local_id] <> @sync_scope_local_id) then case when ([side].[local_create_peer_key] > @sync_scope_restore_count) then @sync_scope_restore_count else [side].[local_create_peer_key] end else [side].[scope_create_peer_key] end as sync_create_peer_key
+FROM [<#= entity.Schema #>].[<#= entity.Name #>] [base]
+RIGHT JOIN [<#= entity.Schema #>].[<#= entity.Name #>_tracking] [side] ON [base].[<#= entity.KeyField #>] = [side].[<#= entity.KeyField #>]
+WHERE ([side].[update_scope_local_id] IS NULL OR [side].[update_scope_local_id] <> @sync_scope_local_id OR ([side].[update_scope_local_id] = @sync_scope_local_id AND [side].[scope_update_peer_key] <> @sync_update_peer_key)) AND [side].[local_update_peer_timestamp] > @sync_min_timestamp
+AND (1=1 
+<# if(entity.SyncFilter!="" && !entity.SyncFilterIsComplicated){ #>
+AND (<#= entity.SyncFilter #>)
+<#}#>
+<# if(entity.SyncFilter!="" && entity.SyncFilterIsComplicated) { #>
+AND ([side].[<#= entity.SyncFilterColumn #>] IN (SELECT Id FROM [<#= entity.Schema #>].[<#= entity.Name #>_filterids] WHERE ScopeId = @sync_scope_local_id AND IsNew = 0))
+<#}#>
+) OR ([side].[sync_row_is_tombstone] = 1 AND ([side].[update_scope_local_id] = @sync_scope_local_id OR [side].[update_scope_local_id] IS NULL) AND [side].[local_update_peer_timestamp] > @sync_min_timestamp)
+
+<# if(entity.SyncFilterIsComplicated){ #>
+UNION
+
+SELECT
+<# foreach(var field in entity.Fields){ #>
+<# if(field.Name.Equals(entity.KeyField)){ #>[side].[<#= field.Name #>],<#}#>
+<# if(!field.Name.Equals(entity.KeyField)){ #>[base].[<#= field.Name #>],<#}#>
+<#}#>
+T.IsNew - 1 as [sync_row_is_tombstone],
+[side].[local_update_peer_timestamp] + 1000000 as sync_row_timestamp,
+[side].[local_update_peer_timestamp] + 1000000 as sync_update_peer_timestamp,
+case when ([side].[local_update_peer_key] > @sync_scope_restore_count) then @sync_scope_restore_count else [side].[local_update_peer_key] end + 1000000 as sync_update_peer_key,
+[side].[local_create_peer_timestamp] as sync_create_peer_timestamp,
+case when ([side].[local_create_peer_key] > @sync_scope_restore_count) then @sync_scope_restore_count else [side].[local_create_peer_key] end as sync_create_peer_key
+FROM [<#= entity.Schema #>].[<#= entity.Name #>] [base]
+JOIN [<#= entity.Schema #>].[<#= entity.Name #>_filterids] T ON T.Id = [base].[<#= entity.SyncFilterColumn #>]
+JOIN [<#= entity.Schema #>].[<#= entity.Name #>_tracking] [side] ON [base].[<#= entity.KeyField #>] = [side].[<#= entity.KeyField #>]
+WHERE T.ScopeId = @sync_scope_local_id AND T.IsNew > 0 AND 
+([side].[update_scope_local_id] IS NULL OR [side].[update_scope_local_id] <> @sync_scope_local_id OR ([side].[update_scope_local_id] = @sync_scope_local_id AND [side].[scope_update_peer_key] <> @sync_update_peer_key))
+AND ([side].[update_scope_local_id] <> @sync_scope_local_id OR [side].[update_scope_local_id] IS NULL)
+<#}#>
+
+GO
+
+<# foreach(var tabularSection in entity.TabularSections){ #>
+
+ALTER PROCEDURE [<#= entity.Schema #>].[<#= entity.Name #>_<#= tabularSection.Name #>_selectchanges]
+@sync_min_timestamp BigInt,
+@sync_scope_local_id Int,
+@sync_scope_restore_count Int,
+@sync_update_peer_key Int
+<# foreach(var filterParameter in tabularSection.SyncFilterParameters){ #>,@<#= filterParameter.Name #> <#= filterParameter.SqlTypeShort #> <#}#>
+AS
+IF @sync_min_timestamp = 0
+
+SELECT
+<# foreach(var field in tabularSection.Fields){ #>
+<# if(field.Name.Equals(entity.KeyField)){ #>[side].[<#= field.Name #>],<#}#>
+<# if(!field.Name.Equals(entity.KeyField)){ #>[base].[<#= field.Name #>],<#}#>
+<#}#>
+[side].[sync_row_is_tombstone],
+[side].[local_update_peer_timestamp] as sync_row_timestamp,
+case when ([side].[update_scope_local_id] is null or [side].[update_scope_local_id] <> @sync_scope_local_id) then [side].[local_update_peer_timestamp] else [side].[scope_update_peer_timestamp] end as sync_update_peer_timestamp,
+case when ([side].[update_scope_local_id] is null or [side].[update_scope_local_id] <> @sync_scope_local_id) then case when ([side].[local_update_peer_key] > @sync_scope_restore_count) then @sync_scope_restore_count else [side].[local_update_peer_key] end else [side].[scope_update_peer_key] end as sync_update_peer_key,
+case when ([side].[create_scope_local_id] is null or [side].[create_scope_local_id] <> @sync_scope_local_id) then [side].[local_create_peer_timestamp] else [side].[scope_create_peer_timestamp] end as sync_create_peer_timestamp,
+case when ([side].[create_scope_local_id] is null or [side].[create_scope_local_id] <> @sync_scope_local_id) then case when ([side].[local_create_peer_key] > @sync_scope_restore_count) then @sync_scope_restore_count else [side].[local_create_peer_key] end else [side].[scope_create_peer_key] end as sync_create_peer_key
+FROM [<#= entity.Schema #>].[<#= entity.Name #>_<#= tabularSection.Name #>] [base]
+INNER JOIN [<#= entity.Schema #>].[<#= entity.Name #>] [parent] ON [base].[Ref] = [parent].[<#= entity.KeyField #>]
+INNER JOIN [<#= entity.Schema #>].[<#= entity.Name #>_<#= tabularSection.Name #>_tracking] [side] ON [base].[<#= tabularSection.KeyField #>] = [side].[<#= tabularSection.KeyField #>]
+WHERE ([side].[update_scope_local_id] IS NULL OR [side].[update_scope_local_id] <> @sync_scope_local_id OR ([side].[update_scope_local_id] = @sync_scope_local_id AND [side].[scope_update_peer_key] <> @sync_update_peer_key))
+AND (1=1 
+<# if(tabularSection.SyncFilterPatched!="" && !(tabularSection.SyncFilterIsComplicated || entity.SyncFilterIsComplicated)){ #>
+AND ((<#= tabularSection.SyncFilterPatched #>) OR ([side].[sync_row_is_tombstone] = 1 AND ([side].[update_scope_local_id] = @sync_scope_local_id OR [side].[update_scope_local_id] IS NULL)))
+<#}#>
+<# if(entity.SyncFilter!="" && entity.SyncFilterIsComplicated) { #>
+AND ([parent].[<#= entity.SyncFilterColumn #>] IN (SELECT Id FROM [<#= entity.Schema #>].[<#= entity.Name #>_filterids] WHERE ScopeId = @sync_scope_local_id AND IsNew = 0))
+<#}#>
+<# if(tabularSection.SyncFilter!="" && tabularSection.SyncFilterIsComplicated) { #>
+AND ([base].[<#= tabularSection.SyncFilterColumn #>] IN (SELECT Id FROM [<#= entity.Schema #>].[<#= entity.Name #>_<#= tabularSection.Name #>_filterids] WHERE ScopeId = @sync_scope_local_id AND IsNew = 0))
+<#}#>
+)-- OR ([side].[sync_row_is_tombstone] = 1 AND ([side].[update_scope_local_id] = @sync_scope_local_id OR [side].[update_scope_local_id] IS NULL))
+
+ELSE
+
+SELECT
+<# foreach(var field in tabularSection.Fields){ #>
+<# if(field.Name.Equals(entity.KeyField)){ #>[side].[<#= field.Name #>],<#}#>
+<# if(!field.Name.Equals(entity.KeyField)){ #>[base].[<#= field.Name #>],<#}#>
+<#}#>
+[side].[sync_row_is_tombstone],
+[side].[local_update_peer_timestamp] as sync_row_timestamp,
+case when ([side].[update_scope_local_id] is null or [side].[update_scope_local_id] <> @sync_scope_local_id) then [side].[local_update_peer_timestamp] else [side].[scope_update_peer_timestamp] end as sync_update_peer_timestamp,
+case when ([side].[update_scope_local_id] is null or [side].[update_scope_local_id] <> @sync_scope_local_id) then case when ([side].[local_update_peer_key] > @sync_scope_restore_count) then @sync_scope_restore_count else [side].[local_update_peer_key] end else [side].[scope_update_peer_key] end as sync_update_peer_key,
+case when ([side].[create_scope_local_id] is null or [side].[create_scope_local_id] <> @sync_scope_local_id) then [side].[local_create_peer_timestamp] else [side].[scope_create_peer_timestamp] end as sync_create_peer_timestamp,
+case when ([side].[create_scope_local_id] is null or [side].[create_scope_local_id] <> @sync_scope_local_id) then case when ([side].[local_create_peer_key] > @sync_scope_restore_count) then @sync_scope_restore_count else [side].[local_create_peer_key] end else [side].[scope_create_peer_key] end as sync_create_peer_key
+FROM [<#= entity.Schema #>].[<#= entity.Name #>_<#= tabularSection.Name #>] [base]
+INNER JOIN [<#= entity.Schema #>].[<#= entity.Name #>] [parent] ON [base].[Ref] = [parent].[<#= entity.KeyField #>]
+RIGHT JOIN [<#= entity.Schema #>].[<#= entity.Name #>_<#= tabularSection.Name #>_tracking] [side] ON [base].[<#= tabularSection.KeyField #>] = [side].[<#= tabularSection.KeyField #>]
+WHERE ([side].[update_scope_local_id] IS NULL OR [side].[update_scope_local_id] <> @sync_scope_local_id OR ([side].[update_scope_local_id] = @sync_scope_local_id AND [side].[scope_update_peer_key] <> @sync_update_peer_key)) AND [side].[local_update_peer_timestamp] > @sync_min_timestamp
+AND (1=1 
+<# if(tabularSection.SyncFilterPatched!="" && !(tabularSection.SyncFilterIsComplicated || entity.SyncFilterIsComplicated)){ #>
+AND ((<#= tabularSection.SyncFilterPatched #>) OR ([side].[sync_row_is_tombstone] = 1 AND ([side].[update_scope_local_id] = @sync_scope_local_id OR [side].[update_scope_local_id] IS NULL)))
+<#}#>
+<# if(entity.SyncFilter!="" && entity.SyncFilterIsComplicated) { #>
+AND ([parent].[<#= entity.SyncFilterColumn #>] IN (SELECT Id FROM [<#= entity.Schema #>].[<#= entity.Name #>_filterids] WHERE ScopeId = @sync_scope_local_id AND IsNew = 0))
+<#}#>
+<# if(tabularSection.SyncFilter!="" && tabularSection.SyncFilterIsComplicated) { #>
+AND ([base].[<#= tabularSection.SyncFilterColumn #>] IN (SELECT Id FROM [<#= entity.Schema #>].[<#= entity.Name #>_<#= tabularSection.Name #>_filterids] WHERE ScopeId = @sync_scope_local_id AND IsNew = 0))
+<#}#>
+) OR ([side].[sync_row_is_tombstone] = 1 AND ([side].[update_scope_local_id] = @sync_scope_local_id OR [side].[update_scope_local_id] IS NULL) AND [side].[local_update_peer_timestamp] > @sync_min_timestamp)
+
+<# if(tabularSection.SyncFilterPatched!="" && entity.SyncFilterIsComplicated){ #>
+/*
+UNION
+
+SELECT
+<# foreach(var field in tabularSection.Fields){ #>
+<# if(field.Name.Equals(entity.KeyField)){ #>[side].[<#= field.Name #>],<#}#>
+<# if(!field.Name.Equals(entity.KeyField)){ #>[base].[<#= field.Name #>],<#}#>
+<#}#>
+T.IsNew - 1 as [sync_row_is_tombstone],
+[side].[local_update_peer_timestamp] + 1000000 as sync_row_timestamp,
+[side].[local_update_peer_timestamp] + 1000000 as sync_update_peer_timestamp,
+case when ([side].[local_update_peer_key] > @sync_scope_restore_count) then @sync_scope_restore_count else [side].[local_update_peer_key] end + 1000000 as sync_update_peer_key,
+[side].[local_create_peer_timestamp] as sync_create_peer_timestamp,
+case when ([side].[local_create_peer_key] > @sync_scope_restore_count) then @sync_scope_restore_count else [side].[local_create_peer_key] end as sync_create_peer_key
+FROM [<#= entity.Schema #>].[<#= entity.Name #>_<#= tabularSection.Name #>] [base]
+JOIN [<#= entity.Schema #>].[<#= entity.Name #>] [parent] ON [base].[Ref] = [parent].[<#= entity.KeyField #>]
+JOIN [<#= entity.Schema #>].[<#= entity.Name #>_filterids] T ON T.Id = [parent].[<#= entity.SyncFilterColumn #>]
+JOIN [<#= entity.Schema #>].[<#= entity.Name #>_<#= tabularSection.Name #>_tracking] [side] ON [base].[<#= tabularSection.KeyField #>] = [side].[<#= tabularSection.KeyField #>]
+WHERE T.ScopeId = @sync_scope_local_id AND T.IsNew > 0 AND 
+([side].[update_scope_local_id] IS NULL OR [side].[update_scope_local_id] <> @sync_scope_local_id OR ([side].[update_scope_local_id] = @sync_scope_local_id AND [side].[scope_update_peer_key] <> @sync_update_peer_key))
+AND ([side].[update_scope_local_id] <> @sync_scope_local_id OR [side].[update_scope_local_id] IS NULL)
+*/
+<#}#>
+
+<# if(tabularSection.SyncFilterPatched!="" && tabularSection.SyncFilterIsComplicated && entity.SyncFilterIsComplicated ){ #>
+UNION
+
+SELECT
+<# foreach(var field in tabularSection.Fields){ #>
+<# if(field.Name.Equals(entity.KeyField)){ #>[side].[<#= field.Name #>],<#}#>
+<# if(!field.Name.Equals(entity.KeyField)){ #>[base].[<#= field.Name #>],<#}#>
+<#}#>
+T.IsNew - 1 as [sync_row_is_tombstone],
+[side].[local_update_peer_timestamp] + 1000000 as sync_row_timestamp,
+[side].[local_update_peer_timestamp] + 1000000 as sync_update_peer_timestamp,
+case when ([side].[local_update_peer_key] > @sync_scope_restore_count) then @sync_scope_restore_count else [side].[local_update_peer_key] end + 1000000 as sync_update_peer_key,
+[side].[local_create_peer_timestamp] as sync_create_peer_timestamp,
+case when ([side].[local_create_peer_key] > @sync_scope_restore_count) then @sync_scope_restore_count else [side].[local_create_peer_key] end as sync_create_peer_key
+FROM [<#= entity.Schema #>].[<#= entity.Name #>_<#= tabularSection.Name #>] [base]
+JOIN [<#= entity.Schema #>].[<#= entity.Name #>] [parent] ON [base].[Ref] = [parent].[<#= entity.KeyField #>]
+JOIN [<#= entity.Schema #>].[<#= entity.Name #>_filterids] T ON T.Id = [parent].[<#= entity.SyncFilterColumn #>]
+JOIN [<#= entity.Schema #>].[<#= entity.Name #>_<#= tabularSection.Name #>_filterids] T2 ON T2.Id = [base].[<#= tabularSection.SyncFilterColumn #>]
+JOIN [<#= entity.Schema #>].[<#= entity.Name #>_<#= tabularSection.Name #>_tracking] [side] ON [base].[<#= tabularSection.KeyField #>] = [side].[<#= tabularSection.KeyField #>]
+WHERE T2.ScopeId = @sync_scope_local_id AND T.IsNew > 0 AND
+<# if(entity.SyncFilterIsComplicated){ #>
+T.ScopeId = @sync_scope_local_id AND
+<#}#>
+ ([side].[update_scope_local_id] IS NULL OR [side].[update_scope_local_id] <> @sync_scope_local_id OR ([side].[update_scope_local_id] = @sync_scope_local_id AND [side].[scope_update_peer_key] <> @sync_update_peer_key))
+AND ([side].[update_scope_local_id] <> @sync_scope_local_id OR [side].[update_scope_local_id] IS NULL)
+
+UNION
+
+SELECT
+<# foreach(var field in tabularSection.Fields){ #>
+<# if(field.Name.Equals(entity.KeyField)){ #>[side].[<#= field.Name #>],<#}#>
+<# if(!field.Name.Equals(entity.KeyField)){ #>[base].[<#= field.Name #>],<#}#>
+<#}#>
+T2.IsNew - 1 as [sync_row_is_tombstone],
+[side].[local_update_peer_timestamp] + 1000000 as sync_row_timestamp,
+[side].[local_update_peer_timestamp] + 1000000 as sync_update_peer_timestamp,
+case when ([side].[local_update_peer_key] > @sync_scope_restore_count) then @sync_scope_restore_count else [side].[local_update_peer_key] end + 1000000 as sync_update_peer_key,
+[side].[local_create_peer_timestamp] as sync_create_peer_timestamp,
+case when ([side].[local_create_peer_key] > @sync_scope_restore_count) then @sync_scope_restore_count else [side].[local_create_peer_key] end as sync_create_peer_key
+FROM [<#= entity.Schema #>].[<#= entity.Name #>_<#= tabularSection.Name #>] [base]
+JOIN [<#= entity.Schema #>].[<#= entity.Name #>] [parent] ON [base].[Ref] = [parent].[<#= entity.KeyField #>]
+JOIN [<#= entity.Schema #>].[<#= entity.Name #>_filterids] T ON T.Id = [parent].[<#= entity.SyncFilterColumn #>]
+JOIN [<#= entity.Schema #>].[<#= entity.Name #>_<#= tabularSection.Name #>_filterids] T2 ON T2.Id = [base].[<#= tabularSection.SyncFilterColumn #>]
+JOIN [<#= entity.Schema #>].[<#= entity.Name #>_<#= tabularSection.Name #>_tracking] [side] ON [base].[<#= tabularSection.KeyField #>] = [side].[<#= tabularSection.KeyField #>]
+WHERE T2.ScopeId = @sync_scope_local_id AND T2.IsNew > 0 AND
+<# if(entity.SyncFilterIsComplicated){ #>
+T.ScopeId = @sync_scope_local_id AND
+<#}#>
+ ([side].[update_scope_local_id] IS NULL OR [side].[update_scope_local_id] <> @sync_scope_local_id OR ([side].[update_scope_local_id] = @sync_scope_local_id AND [side].[scope_update_peer_key] <> @sync_update_peer_key))
+AND ([side].[update_scope_local_id] <> @sync_scope_local_id OR [side].[update_scope_local_id] IS NULL)
+
+<#}#>
+
+<# if(tabularSection.SyncFilterPatched!="" && tabularSection.SyncFilterIsComplicated && !entity.SyncFilterIsComplicated ){ #>
+UNION
+
+SELECT
+<# foreach(var field in tabularSection.Fields){ #>
+<# if(field.Name.Equals(entity.KeyField)){ #>[side].[<#= field.Name #>],<#}#>
+<# if(!field.Name.Equals(entity.KeyField)){ #>[base].[<#= field.Name #>],<#}#>
+<#}#>
+T2.IsNew - 1 as [sync_row_is_tombstone],
+[side].[local_update_peer_timestamp] + 1000000 as sync_row_timestamp,
+[side].[local_update_peer_timestamp] + 1000000 as sync_update_peer_timestamp,
+case when ([side].[local_update_peer_key] > @sync_scope_restore_count) then @sync_scope_restore_count else [side].[local_update_peer_key] end + 1000000 as sync_update_peer_key,
+[side].[local_create_peer_timestamp] as sync_create_peer_timestamp,
+case when ([side].[local_create_peer_key] > @sync_scope_restore_count) then @sync_scope_restore_count else [side].[local_create_peer_key] end as sync_create_peer_key
+FROM [<#= entity.Schema #>].[<#= entity.Name #>_<#= tabularSection.Name #>] [base]
+JOIN [<#= entity.Schema #>].[<#= entity.Name #>] [parent] ON [base].[Ref] = [parent].[<#= entity.KeyField #>]
+JOIN [<#= entity.Schema #>].[<#= entity.Name #>_<#= tabularSection.Name #>_filterids] T2 ON T2.Id = [base].[<#= tabularSection.SyncFilterColumn #>]
+JOIN [<#= entity.Schema #>].[<#= entity.Name #>_<#= tabularSection.Name #>_tracking] [side] ON [base].[<#= tabularSection.KeyField #>] = [side].[<#= tabularSection.KeyField #>]
+WHERE T2.ScopeId = @sync_scope_local_id AND T2.IsNew > 0 AND
+ ([side].[update_scope_local_id] IS NULL OR [side].[update_scope_local_id] <> @sync_scope_local_id OR ([side].[update_scope_local_id] = @sync_scope_local_id AND [side].[scope_update_peer_key] <> @sync_update_peer_key))
+AND ([side].[update_scope_local_id] <> @sync_scope_local_id OR [side].[update_scope_local_id] IS NULL)
+<#}#>
+
+<# if(tabularSection.SyncFilterPatched!="" && !tabularSection.SyncFilterIsComplicated && entity.SyncFilterIsComplicated ){ #>
+UNION
+
+SELECT
+<# foreach(var field in tabularSection.Fields){ #>
+<# if(field.Name.Equals(entity.KeyField)){ #>[side].[<#= field.Name #>],<#}#>
+<# if(!field.Name.Equals(entity.KeyField)){ #>[base].[<#= field.Name #>],<#}#>
+<#}#>
+T.IsNew - 1 as [sync_row_is_tombstone],
+[side].[local_update_peer_timestamp] + 1000000 as sync_row_timestamp,
+[side].[local_update_peer_timestamp] + 1000000 as sync_update_peer_timestamp,
+case when ([side].[local_update_peer_key] > @sync_scope_restore_count) then @sync_scope_restore_count else [side].[local_update_peer_key] end + 1000000 as sync_update_peer_key,
+[side].[local_create_peer_timestamp] as sync_create_peer_timestamp,
+case when ([side].[local_create_peer_key] > @sync_scope_restore_count) then @sync_scope_restore_count else [side].[local_create_peer_key] end as sync_create_peer_key
+FROM [<#= entity.Schema #>].[<#= entity.Name #>_<#= tabularSection.Name #>] [base]
+JOIN [<#= entity.Schema #>].[<#= entity.Name #>] [parent] ON [base].[Ref] = [parent].[<#= entity.KeyField #>]
+JOIN [<#= entity.Schema #>].[<#= entity.Name #>_filterids] T ON T.Id = [parent].[<#= entity.SyncFilterColumn #>]
+JOIN [<#= entity.Schema #>].[<#= entity.Name #>_<#= tabularSection.Name #>_tracking] [side] ON [base].[<#= tabularSection.KeyField #>] = [side].[<#= tabularSection.KeyField #>]
+WHERE T.ScopeId = @sync_scope_local_id AND T.IsNew > 0 AND (<#= tabularSection.SyncFilterSimple #>) AND
+ ([side].[update_scope_local_id] IS NULL OR [side].[update_scope_local_id] <> @sync_scope_local_id OR ([side].[update_scope_local_id] = @sync_scope_local_id AND [side].[scope_update_peer_key] <> @sync_update_peer_key))
+AND ([side].[update_scope_local_id] <> @sync_scope_local_id OR [side].[update_scope_local_id] IS NULL)
+<#}#>
+
+
+GO
+<#}#>
+
+<#}#>

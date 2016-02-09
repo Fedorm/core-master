@@ -1,0 +1,359 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{8F39294C-1FFF-46C5-88E3-9D91AE69EBED}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CodeFactory</RootNamespace>
+    <AssemblyName>CodeFactory</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Synchronization.Data, Version=3.1.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\Microsoft SDKs\Microsoft Sync Framework\2.1\Runtime\ADO.NET\V3.1\x64\Microsoft.Synchronization.Data.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Synchronization.Data.Server, Version=3.1.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\Microsoft SDKs\Microsoft Sync Framework\2.1\Runtime\ADO.NET\V3.1\x64\Microsoft.Synchronization.Data.Server.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Synchronization.Data.SqlServer, Version=3.1.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\Microsoft SDKs\Microsoft Sync Framework\2.1\Runtime\ADO.NET\V3.1\x64\Microsoft.Synchronization.Data.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.SQLite">
+      <HintPath>C:\Program Files\System.Data.SQLite\2012\bin\System.Data.SQLite.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="CodeGeneration\Templates\AdminApp\DefaultCSS.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DefaultCSS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CodeGeneration\Templates\AdminApp\DefaultCSSHelper.cs" />
+    <Compile Include="CodeGeneration\Templates\AdminApp\EntityCatalog.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EntityCatalog.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CodeGeneration\Templates\AdminApp\EntityCatalogHelper.cs" />
+    <Compile Include="CodeGeneration\Templates\AdminApp\EntityList.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EntityList.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CodeGeneration\Templates\Code\ClientConstants.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ClientConstants.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CodeGeneration\Templates\Code\ClientConstantsHelper.cs" />
+    <Compile Include="CodeGeneration\Templates\Code\DbFake.cs">
+      <DependentUpon>DbFake.tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="CodeGeneration\Templates\Database\AzureKeysPatch.cs">
+      <DependentUpon>AzureKeysPatch.tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="CodeGeneration\Templates\Database\AzureKeysPatchHelper.cs" />
+    <Compile Include="CodeGeneration\Templates\Database\FiltersAzureHelper.cs" />
+    <Compile Include="CodeGeneration\Templates\Database\FiltersAzure.cs">
+      <DependentUpon>FiltersAzure.tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="CodeGeneration\Templates\Database\FiltersHelper.cs" />
+    <Compile Include="CodeGeneration\Templates\Database\Filters.cs">
+      <DependentUpon>Filters.tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="CodeGeneration\Templates\Database\NonAzureKeysPatchHelper.cs" />
+    <Compile Include="CodeGeneration\Templates\Database\NonAzureKeysPatch.cs">
+      <DependentUpon>NonAzureKeysPatch.tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="CodeGeneration\Templates\Database\SQLiteDatabaseHelper.cs" />
+    <Compile Include="CodeGeneration\Templates\Database\SQLiteDatabase.cs">
+      <DependentUpon>SQLiteDatabase.tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="CodeGeneration\Templates\Database\DataLoadHelper.cs" />
+    <Compile Include="CodeGeneration\Templates\Database\DataLoad.cs">
+      <DependentUpon>DataLoad.tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="CodeGeneration\Templates\Database\KeysPatchHelper.cs" />
+    <Compile Include="CodeGeneration\Templates\Database\KeysPatch.cs">
+      <DependentUpon>KeysPatch.tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="CodeGeneration\Templates\Database\SyncPatch2Helper.cs" />
+    <Compile Include="CodeGeneration\Templates\Database\SyncPatch2.cs">
+      <DependentUpon>SyncPatch2.tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="CodeGeneration\Templates\Database\DropDatabaseAzureHelper.cs" />
+    <Compile Include="CodeGeneration\Templates\Database\DropDatabaseAzure.cs">
+      <DependentUpon>DropDatabaseAzure.tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="CodeGeneration\Templates\Database\CreateDatabaseAzure.cs">
+      <DependentUpon>CreateDatabaseAzure.tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="KeysPatcher.cs" />
+    <Compile Include="LogHelper.cs" />
+    <Compile Include="Properties\EntityListHelper.cs" />
+    <Compile Include="CodeGeneration\Templates\AdminApp\Main.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Main.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CodeGeneration\Templates\AdminApp\MainHelper.cs" />
+    <Compile Include="CodeGeneration\Templates\Code\ClientMetadata.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ClientMetadata.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CodeGeneration\Templates\Code\ClientMetadataHelper.cs" />
+    <Compile Include="CodeGeneration\Templates\Code\Fake.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Fake.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CodeGeneration\Templates\Database\CreateDatabaseHelper.cs" />
+    <Compile Include="CodeGeneration\Templates\Database\CreateDatabase.cs">
+      <DependentUpon>CreateDatabase.tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="CodeGeneration\Templates\Database\DropDatabaseHelper.cs" />
+    <Compile Include="CodeGeneration\Templates\Database\DropDatabase.cs">
+      <DependentUpon>DropDatabase.tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="CodeGeneration\CodeFactory.cs" />
+    <Compile Include="CodeGeneration\Entity.cs" />
+    <Compile Include="CodeGeneration\Templates\Database\DatabaseAdmin.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DatabaseAdmin.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CodeGeneration\Templates\Database\DatabaseAdminHelper.cs" />
+    <Compile Include="CodeGeneration\Templates\Sync\SyncConfig.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SyncConfig.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CodeGeneration\Templates\Code\Client.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Client.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CodeGeneration\Templates\Code\ClientHelper.cs" />
+    <Compile Include="CodeGeneration\Templates\Database\Database.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Database.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CodeGeneration\Templates\Database\DatabaseHelper.cs" />
+    <Compile Include="CodeGeneration\Templates\Code\Server.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Server.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CodeGeneration\Templates\Code\ServerHelper.cs" />
+    <Compile Include="CodeGeneration\Templates\Sync\SyncConfigHelper.cs" />
+    <Compile Include="DatabaseFactory\Configuration\ConfigurationCollectionValidator.cs" />
+    <Compile Include="DatabaseFactory\Configuration\ConfigurationCollectionValidatorAttribute.cs" />
+    <Compile Include="DatabaseFactory\Configuration\FilterColumnCollection.cs" />
+    <Compile Include="DatabaseFactory\Configuration\FilterColumnConfigElement.cs" />
+    <Compile Include="DatabaseFactory\Configuration\FilterParameterCollection.cs" />
+    <Compile Include="DatabaseFactory\Configuration\FilterParameterConfigElement.cs" />
+    <Compile Include="DatabaseFactory\Configuration\SyncColumnCollection.cs" />
+    <Compile Include="DatabaseFactory\Configuration\SyncColumnConfigElement.cs" />
+    <Compile Include="DatabaseFactory\Configuration\SyncConfigurationSection.cs" />
+    <Compile Include="DatabaseFactory\Configuration\SyncScopeCollection.cs" />
+    <Compile Include="DatabaseFactory\Configuration\SyncScopeConfigElement.cs" />
+    <Compile Include="DatabaseFactory\Configuration\SyncTableCollection.cs" />
+    <Compile Include="DatabaseFactory\Configuration\SyncTableConfigElement.cs" />
+    <Compile Include="DatabaseFactory\Configuration\TargetDatabaseCollection.cs" />
+    <Compile Include="DatabaseFactory\Configuration\TargetDatabaseConfigElement.cs" />
+    <Compile Include="DatabaseFactory\DatabaseFactory.cs" />
+    <Compile Include="DatabaseFactory\SyncSvcUtil\ArgsParser.cs" />
+    <Compile Include="DatabaseFactory\SyncSvcUtil\Constans.cs" />
+    <Compile Include="DatabaseFactory\SyncSvcUtil\Enums.cs" />
+    <Compile Include="Builder.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SyncOrder.cs" />
+    <None Include="CodeGeneration\Templates\AdminApp\DefaultCSS.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>DefaultCSS.cs</LastGenOutput>
+    </None>
+    <None Include="CodeGeneration\Templates\AdminApp\EntityCatalog.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>EntityCatalog.cs</LastGenOutput>
+    </None>
+    <None Include="CodeGeneration\Templates\AdminApp\EntityList.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>EntityList.cs</LastGenOutput>
+    </None>
+    <None Include="CodeGeneration\Templates\AdminApp\Main.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>Main.cs</LastGenOutput>
+    </None>
+    <None Include="CodeGeneration\Templates\Code\ClientConstants.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>ClientConstants.cs</LastGenOutput>
+    </None>
+    <None Include="CodeGeneration\Templates\Code\ClientMetadata.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>ClientMetadata.cs</LastGenOutput>
+    </None>
+    <None Include="CodeGeneration\Templates\Code\DbFake.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>DbFake.cs</LastGenOutput>
+    </None>
+    <None Include="CodeGeneration\Templates\Code\Fake.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>Fake.cs</LastGenOutput>
+    </None>
+    <None Include="CodeGeneration\Templates\Database\AzureKeysPatch.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>AzureKeysPatch.cs</LastGenOutput>
+    </None>
+    <None Include="CodeGeneration\Templates\Database\FiltersAzure.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>FiltersAzure.cs</LastGenOutput>
+    </None>
+    <None Include="CodeGeneration\Templates\Database\Filters.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>Filters.cs</LastGenOutput>
+    </None>
+    <None Include="CodeGeneration\Templates\Database\NonAzureKeysPatch.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>NonAzureKeysPatch.cs</LastGenOutput>
+    </None>
+    <None Include="CodeGeneration\Templates\Database\SQLiteDatabase.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>SQLiteDatabase.cs</LastGenOutput>
+    </None>
+    <None Include="CodeGeneration\Templates\Database\DataLoad.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>DataLoad.cs</LastGenOutput>
+    </None>
+    <None Include="CodeGeneration\Templates\Database\KeysPatch.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>KeysPatch.cs</LastGenOutput>
+    </None>
+    <None Include="CodeGeneration\Templates\Database\SyncPatch2.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>SyncPatch2.cs</LastGenOutput>
+    </None>
+    <None Include="CodeGeneration\Templates\Database\DropDatabaseAzure.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>DropDatabaseAzure.cs</LastGenOutput>
+    </None>
+    <None Include="CodeGeneration\Templates\Database\CreateDatabaseAzure.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>CreateDatabaseAzure.cs</LastGenOutput>
+    </None>
+    <None Include="CodeGeneration\Templates\Database\CreateDatabase.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>CreateDatabase.cs</LastGenOutput>
+    </None>
+    <None Include="CodeGeneration\Templates\Database\DropDatabase.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>DropDatabase.cs</LastGenOutput>
+    </None>
+    <None Include="CodeGeneration\Templates\Database\DatabaseAdmin.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>DatabaseAdmin.cs</LastGenOutput>
+    </None>
+    <None Include="CodeGeneration\Templates\Sync\SyncConfig.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>SyncConfig.cs</LastGenOutput>
+    </None>
+    <None Include="CodeGeneration\Templates\Code\Client.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>Client.cs</LastGenOutput>
+    </None>
+    <None Include="CodeGeneration\Templates\Database\Database.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>Database.cs</LastGenOutput>
+    </None>
+    <None Include="CodeGeneration\Templates\Code\Server.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>Server.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Project>{5734973c-7a63-4a15-bc3e-45bff070d609}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Sqlite\Sqlite.csproj">
+      <Project>{0893b8de-69dd-43a3-a92d-f9230627b5c9}</Project>
+      <Name>Sqlite</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

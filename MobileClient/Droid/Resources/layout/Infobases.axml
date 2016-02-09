@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:minWidth="25px"
+    android:minHeight="25px"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F6F5F1">
+    <ImageView
+        android:src="@drawable/BitMobileBottom"
+        android:id="@+id/imageViewBottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scaleType="fitEnd"
+        android:adjustViewBounds="true"
+        android:layout_alignParentBottom="true" />
+    <TextView
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/infobasesCaption"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:typeface="normal"
+        android:layout_marginBottom="20dip"
+        android:textColor="#606060"
+        android:paddingTop="30dip" />
+    <ListView
+        android:minWidth="25px"
+        android:minHeight="25px"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/infobasesList"
+        android:layout_below="@+id/infobasesCaption"
+        android:cacheColorHint="#000000ff"
+        android:scrollingCache="false"
+        android:layout_marginBottom="100dip"/>
+</RelativeLayout>

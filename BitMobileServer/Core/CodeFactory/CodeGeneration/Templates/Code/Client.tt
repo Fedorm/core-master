@@ -1,0 +1,312 @@
+﻿<#@ template language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+using System;
+
+namespace DefaultScope
+{
+	public static class ContextFactory
+	{
+		public static Microsoft.Synchronization.ClientServices.IsolatedStorage.IsolatedStorageOfflineContext CreateContext(string cachePath, System.Uri serviceUri)
+		{
+			return new <#= config.ServerScope #>.OfflineContext(cachePath, serviceUri);
+		}
+
+		public static String ScopeName
+		{
+			get
+			{
+				return "<#= config.ServerScope #>";
+			}
+		}
+
+		public static String ConfigName
+		{
+			get
+			{
+				return "<#= config.ConfigVersion.Name #>";
+			}
+		}
+
+		public static String Version
+		{
+			get
+			{
+				return "<#= config.ConfigVersion.Version #>";
+			}
+		}
+		
+	}
+}
+
+namespace <#= config.ServerScope #> 
+{
+	<# foreach(var kvp in config.EntitiesBySchema){ #> 
+	namespace <#= kvp.Key #> 
+	{
+		<# foreach(var entity in kvp.Value){ #> 
+		
+		[System.Serializable]
+		[BitMobile.DbEngine.TableAttribute]
+		public partial class <#= entity.Name #> : Microsoft.Synchronization.ClientServices.IsolatedStorage.IsolatedStorageOfflineEntity 
+		{
+			<# foreach(var field in entity.Fields){ #>
+
+			private <#= field.DataType #> _<#= field.Name #>;				    
+
+			<# if(!field.SimpleType || field.KeyField){ #>
+			public <#= field.DataType #> __<#= field.Name #> 
+			{
+				get 
+				{
+					return _<#= field.Name #>;
+				}
+				set
+				{
+					_<#= field.Name #> = value;
+				}
+			}
+			
+			<# if(field.KeyField){ #>
+			[System.ComponentModel.DataAnnotations.KeyAttribute()]
+			[BitMobile.DbEngine.PrimaryKeyAttribute]
+			<#}#>
+			[BitMobile.DbEngine.ColumnAttribute]
+			public BitMobile.DbEngine.DbRef <#= field.Name #>
+			{
+				get
+				{
+					<# if(field.KeyField){ #>
+					return BitMobile.DbEngine.DbRef.CreateInstance("<#= kvp.Key #>_<#= entity.Name #>", _<#= field.Name #>);
+					<#}#>
+					<# if(!field.KeyField){ #>
+					return BitMobile.DbEngine.DbRef.CreateInstance("<#= field.SqlLinkedSchema #>_<#= field.SqlLinkedTable #>", _<#= field.Name #>);
+					<#}#>
+				}
+				set
+				{
+					base.OnPropertyChanging("<#= field.Name #>");
+					_<#= field.Name #> = value.Id;
+					base.OnPropertyChanged("<#= field.Name #>");
+				}
+			}								
+			<#}#>
+
+			<# if(field.SimpleType && !field.KeyField){ #>
+			[BitMobile.DbEngine.ColumnAttribute]
+			public <#= field.DataType #> <#= field.Name #> 
+			{
+				get 
+				{
+					return _<#= field.Name #>;
+				}
+				set 
+				{
+					base.OnPropertyChanging("<#= field.Name #>");					
+					_<#= field.Name #> = value;
+					base.OnPropertyChanged("<#= field.Name #>");
+				}
+			}
+			<#}#>
+
+			<#}#>
+
+			public static <#= entity.Name #> CreateInstance(OfflineContext dao)
+            {
+                <#= entity.Name #> entity = new <#= entity.Name #>();
+				//entity.Init();
+                entity._Id = System.Guid.NewGuid();
+				entity.SetIsNew();
+                //dao.AddItem<<#= entity.Name #>>(entity);
+                return entity;
+            }
+
+			<# foreach(var tabularSection in entity.TabularSections){ #>
+			
+			public System.Collections.Generic.IEnumerable<<#= entity.Schema #>.<#= entity.Name #>_<#= tabularSection.Name #>> <#= tabularSection.Name #>(OfflineContext context) 
+			{
+				System.Collections.Generic.List<<#= entity.Schema #>.<#= entity.Name #>_<#= tabularSection.Name #>> result = new System.Collections.Generic.List<<#= entity.Schema #>.<#= entity.Name #>_<#= tabularSection.Name #>>();
+				System.Collections.Generic.IEnumerable<<#= entity.Schema #>.<#= entity.Name #>_<#= tabularSection.Name #>> items = context.GetCollection<<#= entity.Schema #>.<#= entity.Name #>_<#= tabularSection.Name #>>();
+				foreach(var item in items)
+				{
+					if(item.Ref.Equals(this.Id))
+						result.Add(item);
+				}
+				return result;
+			}
+
+			<#}#>
+		}
+
+		<# foreach(var tabularSection in entity.TabularSections){ #> 
+
+		[System.Serializable]
+		[BitMobile.DbEngine.TableAttribute]
+		public partial class <#= entity.Name #>_<#= tabularSection.Name #> : Microsoft.Synchronization.ClientServices.IsolatedStorage.IsolatedStorageOfflineEntity 
+		{
+			<#= entity.Name #> _RefObject;
+
+			<# foreach(var field in tabularSection.Fields){ #>
+			
+			private <#= field.DataType #> _<#= field.Name #>;	
+			
+			<# if(!field.SimpleType || (field.KeyField || field.RefField)){ #>
+			public <#= field.DataType #> __<#= field.Name #> 
+			{
+				get 
+				{
+					return _<#= field.Name #>;
+				}
+				set
+				{
+					_<#= field.Name #> = value;
+				}
+			}
+			
+			<# if(field.KeyField){ #>
+			[System.ComponentModel.DataAnnotations.KeyAttribute()]
+			[BitMobile.DbEngine.PrimaryKeyAttribute]
+			<#}#>
+			[BitMobile.DbEngine.ColumnAttribute]
+			public BitMobile.DbEngine.DbRef <#= field.Name #>
+			{
+				get
+				{
+					<# if(field.KeyField){ #>
+					return BitMobile.DbEngine.DbRef.CreateInstance("<#= kvp.Key #>_<#= entity.Name #>_<#= tabularSection.Name #>", _<#= field.Name #>);
+					<#}#>
+					<# if(field.RefField){ #>
+					return BitMobile.DbEngine.DbRef.CreateInstance("<#= kvp.Key #>_<#= entity.Name #>", _<#= field.Name #>);
+					<#}#>
+					<# if(!field.KeyField && !field.RefField){ #>
+					return BitMobile.DbEngine.DbRef.CreateInstance("<#= field.SqlLinkedSchema #>_<#= field.SqlLinkedTable #>", _<#= field.Name #>);
+					<#}#>
+				}
+				set
+				{
+					base.OnPropertyChanging("<#= field.Name #>");
+					_<#= field.Name #> = value.Id;
+					base.OnPropertyChanged("<#= field.Name #>");
+				}
+			}								
+			<#}#>
+
+			<# if(field.SimpleType && !(field.KeyField || field.RefField)){ #>
+			[BitMobile.DbEngine.ColumnAttribute]
+			public <#= field.DataType #> <#= field.Name #> 
+			{
+				get 
+				{
+					return _<#= field.Name #>;
+				}
+				set 
+				{
+					base.OnPropertyChanging("<#= field.Name #>");					
+					_<#= field.Name #> = value;
+					base.OnPropertyChanged("<#= field.Name #>");
+				}
+			}
+			<#}#>
+			<#}#>
+
+			public static <#= entity.Name #>_<#= tabularSection.Name #> CreateInstance(OfflineContext dao)
+            {
+                <#= entity.Name #>_<#= tabularSection.Name #> entity = new <#= entity.Name #>_<#= tabularSection.Name #>();
+				//entity.Init();
+                entity._Id = System.Guid.NewGuid();
+				entity.SetIsNew();
+				//dao.AddItem<<#= entity.Name #>_<#= tabularSection.Name #>>(entity);
+                return entity;
+            }
+		}
+
+		<#}#>
+        
+		<#}#>
+
+		public class Collections
+		{
+			private OfflineContext context;
+
+			public Collections(OfflineContext context)
+			{
+				this.context = context;
+			}
+
+			<# foreach(var entity in kvp.Value){ #> 
+
+			public System.Collections.Generic.IEnumerable<<#= entity.Schema #>.<#= entity.Name #>> <#= entity.Name #> 
+			{
+				get 
+				{
+					return context.GetCollection<<#= entity.Schema #>.<#= entity.Name #>>();
+				}
+			}
+
+
+			<# foreach(var tabularSection in entity.TabularSections){ #> 
+			
+			public System.Collections.Generic.IEnumerable<<#= entity.Schema #>.<#= entity.Name #>_<#= tabularSection.Name #>> <#= entity.Name #>_<#= tabularSection.Name #> 
+			{
+				get 
+				{
+					return context.GetCollection<<#= entity.Schema #>.<#= entity.Name #>_<#= tabularSection.Name #>>();
+				}
+			}
+			
+			<#}#>
+
+			<#}#>
+		}
+
+	}
+
+	<#}#>
+
+	public partial class OfflineContext : Microsoft.Synchronization.ClientServices.IsolatedStorage.IsolatedStorageOfflineContext 
+	{    
+        public const string SyncScopeName = "<#= config.ServerScope #>";
+        
+        public OfflineContext(string cachePath, System.Uri serviceUri) : 
+                base(OfflineContext.GetSchema(), SyncScopeName, cachePath, serviceUri) {
+        }
+        
+        public OfflineContext(string cachePath, System.Uri serviceUri, System.Security.Cryptography.SymmetricAlgorithm symmAlgorithm) : 
+                base(OfflineContext.GetSchema(), SyncScopeName, cachePath, serviceUri, symmAlgorithm) {
+        }
+
+		<# foreach(var kvp in config.EntitiesBySchema){ #> 
+		
+		private <#= kvp.Key #>.Collections _<#= kvp.Key #>;
+		public <#= kvp.Key #>.Collections <#= kvp.Key #>
+        {
+            get
+            {
+                if (_<#= kvp.Key #> == null)
+                    _<#= kvp.Key #> = new <#= kvp.Key #>.Collections(this);
+                return _<#= kvp.Key #>;
+            }
+        }
+
+		<#}#>
+
+
+
+        private static Microsoft.Synchronization.ClientServices.IsolatedStorage.IsolatedStorageSchema GetSchema() 
+		{
+            Microsoft.Synchronization.ClientServices.IsolatedStorage.IsolatedStorageSchema schema = new Microsoft.Synchronization.ClientServices.IsolatedStorage.IsolatedStorageSchema();
+			<# foreach(var entity in config.Entities){ #>
+            schema.AddCollection<<#= entity.Schema #>.<#= entity.Name #>>();
+
+			<# foreach(var tabularSection in entity.TabularSections){ #> 
+            schema.AddCollection<<#= entity.Schema #>.<#= entity.Name #>_<#= tabularSection.Name #>>();
+			<#}#>
+
+			<#}#>
+            return schema;
+        }
+    }
+
+}

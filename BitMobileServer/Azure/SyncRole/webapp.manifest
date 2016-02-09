@@ -1,0 +1,14 @@
+﻿<?xml version='1.0' encoding='UTF-8' standalone='yes'?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v1" manifestVersion="1.0">
+
+  <assemblyIdentity name="webapp" version="8.0.0.0" type="x64"/>
+
+  <dependency>
+    <dependentAssembly>
+
+      <assemblyIdentity name="synchronization.assemblies" version="2.1.0.0" type="x64"/>
+    </dependentAssembly>
+  </dependency>
+
+
+</assembly>

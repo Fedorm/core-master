@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>10.0.0</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{C1D88325-4E90-41B9-91E3-CDE6E31F8C21}</ProjectGuid>
+    <ProjectTypeGuids>{6BC8ED88-2882-458C-8E55-DFD12B67127B};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <RootNamespace>Controls</RootNamespace>
+    <IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
+    <AssemblyName>Controls</AssemblyName>
+    <ReleaseVersion>1.5.8.42</ReleaseVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>True</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>False</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>False</ConsolePause>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>none</DebugType>
+    <Optimize>True</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>False</ConsolePause>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core" />
+    <Reference Include="monotouch" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.MonoTouch.CSharp.targets" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties ProjectLinkReference="3c71e970-82c2-4176-8537-1cc260f4c1c1" ProjectLinkerExcludeFilter="\\?desktop(\\.*)?$;\\?silverlight(\\.*)?$;\.desktop;\.silverlight;\.xaml;^service references(\\.*)?$;\.clientconfig;^web references(\\.*)?$" />
+    </VisualStudio>
+  </ProjectExtensions>
+  <ItemGroup>
+    <ProjectReference Include="..\StyleSheet\StyleSheet.MT.csproj">
+      <Project>{0BA68CF9-8AFB-49FA-96D8-D5A9FF38F91A}</Project>
+      <Name>StyleSheet.MT</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ValueStack\ValueStack.MT.csproj">
+      <Project>{B762BEA2-EC23-4778-91EA-674DBB35E424}</Project>
+      <Name>ValueStack.MT</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Utilities\Utilities.MT.csproj">
+      <Project>{A464059D-A4E2-4176-BE0D-A1087DF218D2}</Project>
+      <Name>Utilities.MT</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Project>{1765FE35-1DA7-40D7-B7D6-5705441B395D}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ActionHandler.cs" />
+    <Compile Include="DataBindAttribute.cs" />
+    <Compile Include="DataBinder.cs" />
+    <Compile Include="IApplicationContextAware.cs" />
+    <Compile Include="IContainer.cs" />
+    <Compile Include="IDataBind.cs" />
+    <Compile Include="IFocusable.cs" />
+    <Compile Include="IImageContainer.cs" />
+    <Compile Include="IScreen.cs" />
+    <Compile Include="ScreenData.cs" />
+    <Compile Include="GoogleMapBehavior.cs" />
+    <Compile Include="DialogButton.cs" />
+    <Compile Include="ActionHandlerEx.cs" />
+    <Compile Include="IControl.cs" />
+    <Compile Include="IValidatable.cs" />
+    <Compile Include="LayoutBehaviour.cs" />
+    <Compile Include="Rectangle.cs" />
+    <Compile Include="SwipeBehaviour.cs" />
+    <Compile Include="Component.cs" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,82 @@
+﻿<#@ template language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+
+CREATE TABLE ___Metadata([Data] TEXT)
+GO
+CREATE TABLE ___Anchor([Data] TEXT)
+GO
+CREATE TABLE ___TranStatus([Id] TEXT PRIMARY KEY, [TableName] TEXT, [Status] INTEGER)
+GO
+CREATE TABLE ___UserInfo([UserId] TEXT PRIMARY KEY, [Email] TEXT)
+GO
+CREATE TABLE ___DbStatus([UserId] TEXT PRIMARY KEY, [LastSync] TEXT, [LastSyncError] TEXT)
+GO
+CREATE TABLE ___DbLocations([Id] TEXT PRIMARY KEY, [Latitude] REAL, [Longitude] REAL, [BeginTime] TEXT, [EndTime] TEXT, [Speed] REAL, [Direction] REAL, [SatellitesCount] INTEGER, [Altitude] REAL)
+GO
+
+<# foreach(var entity in config.Entities){ #>
+
+CREATE TABLE [_<#= entity.Schema #>_<#= entity.Name #>](
+	[IsTombstone] INTEGER,[IsDirty] INTEGER
+	<# foreach(var field in entity.Fields){ #>
+	,[<#= field.Name #>] <#= field.SqliteType #>
+	<#}#>
+)
+GO
+
+CREATE TABLE [__<#= entity.Schema #>_<#= entity.Name #>](
+	[IsTombstone] INTEGER,[IsDirty] INTEGER
+	<# foreach(var field in entity.Fields){ #>
+	,[<#= field.Name #>] <#= field.SqliteType #>
+	<#}#>
+)
+GO
+
+CREATE VIEW [<#= entity.Schema #>_<#= entity.Name #>] AS
+	SELECT
+	[IsDirty]
+	<# foreach(var field in entity.Fields){ #>
+	,[<#= field.Name #>]
+	<#}#>
+	FROM _<#= entity.Schema #>_<#= entity.Name #> WHERE IsTombstone = 0
+GO
+
+CREATE INDEX [<#= entity.Schema #>_<#= entity.Name #>_IsTombstone] ON [_<#= entity.Schema #>_<#= entity.Name #>]([IsTombstone])
+GO
+
+<# foreach(var tabularSection in entity.TabularSections){ #>
+
+CREATE TABLE [_<#= entity.Schema #>_<#= entity.Name #>_<#= tabularSection.Name #>](
+	[IsTombstone] INTEGER,[IsDirty] INTEGER
+	<# foreach(var field in tabularSection.Fields){ #>
+	,[<#= field.Name #>] <#= field.SqliteType #>
+	<#}#>
+)
+GO
+
+CREATE TABLE [__<#= entity.Schema #>_<#= entity.Name #>_<#= tabularSection.Name #>](
+	[IsTombstone] INTEGER,[IsDirty] INTEGER
+	<# foreach(var field in tabularSection.Fields){ #>
+	,[<#= field.Name #>] <#= field.SqliteType #>
+	<#}#>
+)
+GO
+
+CREATE VIEW [<#= entity.Schema #>_<#= entity.Name #>_<#= tabularSection.Name #>] AS
+	SELECT
+	[IsDirty]
+	<# foreach(var field in tabularSection.Fields){ #>
+	,[<#= field.Name #>]
+	<#}#>
+	FROM _<#= entity.Schema #>_<#= entity.Name #>_<#= tabularSection.Name #> WHERE IsTombstone = 0
+GO
+
+CREATE INDEX [<#= entity.Schema #>_<#= entity.Name #>_<#= tabularSection.Name #>_IsTombstone] ON [_<#= entity.Schema #>_<#= entity.Name #>_<#= tabularSection.Name #>]([IsTombstone])
+GO
+
+<#}#>
+
+<#}#>

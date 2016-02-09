@@ -1,0 +1,287 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{C37B70F2-C2F5-4DBD-8948-FDCB2629BA4A}</ProjectGuid>
+    <ProjectTypeGuids>{EFBA0AD7-5A72-4C68-AF49-83D382785DCF};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>BitMobile.ScriptEngine</RootNamespace>
+    <AssemblyName>ScriptEngine</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+    <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Develop|AnyCPU'">
+    <OutputPath>bin\Develop\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="mscorlib" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Properties\" />
+    <Folder Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Antlr\Antlr.Runtime.Collections\CollectionUtils.cs" />
+    <Compile Include="Antlr\Antlr.Runtime.Collections\HashList.cs" />
+    <Compile Include="Antlr\Antlr.Runtime.Collections\StackList.cs" />
+    <Compile Include="Antlr\Antlr.Runtime.Debug\BlankDebugEventListener.cs" />
+    <Compile Include="Antlr\Antlr.Runtime.Debug\DebugEventHub.cs" />
+    <Compile Include="Antlr\Antlr.Runtime.Debug\DebugEventRepeater.cs" />
+    <Compile Include="Antlr\Antlr.Runtime.Debug\DebugEventSocketProxy.cs" />
+    <Compile Include="Antlr\Antlr.Runtime.Debug\DebugParser.cs" />
+    <Compile Include="Antlr\Antlr.Runtime.Debug\DebugTokenStream.cs" />
+    <Compile Include="Antlr\Antlr.Runtime.Debug\DebugTreeAdaptor.cs" />
+    <Compile Include="Antlr\Antlr.Runtime.Debug\DebugTreeNodeStream.cs" />
+    <Compile Include="Antlr\Antlr.Runtime.Debug\DebugTreeParser.cs" />
+    <Compile Include="Antlr\Antlr.Runtime.Debug\IDebugEventListener.cs" />
+    <Compile Include="Antlr\Antlr.Runtime.Debug\ParseTreeBuilder.cs" />
+    <Compile Include="Antlr\Antlr.Runtime.Debug\Profiler.cs" />
+    <Compile Include="Antlr\Antlr.Runtime.Debug\RemoteDebugEventSocketListener.cs" />
+    <Compile Include="Antlr\Antlr.Runtime.Debug\TraceDebugEventListener.cs" />
+    <Compile Include="Antlr\Antlr.Runtime.Debug\Tracer.cs" />
+    <Compile Include="Antlr\Antlr.Runtime.Misc\ErrorManager.cs" />
+    <Compile Include="Antlr\Antlr.Runtime.Misc\Stats.cs" />
+    <Compile Include="Antlr\Antlr.Runtime.Tree\BaseTree.cs" />
+    <Compile Include="Antlr\Antlr.Runtime.Tree\BaseTreeAdaptor.cs" />
+    <Compile Include="Antlr\Antlr.Runtime.Tree\CommonErrorNode.cs" />
+    <Compile Include="Antlr\Antlr.Runtime.Tree\CommonTree.cs" />
+    <Compile Include="Antlr\Antlr.Runtime.Tree\CommonTreeAdaptor.cs" />
+    <Compile Include="Antlr\Antlr.Runtime.Tree\CommonTreeNodeStream.cs" />
+    <Compile Include="Antlr\Antlr.Runtime.Tree\ITree.cs" />
+    <Compile Include="Antlr\Antlr.Runtime.Tree\ITreeAdaptor.cs" />
+    <Compile Include="Antlr\Antlr.Runtime.Tree\ITreeNodeStream.cs" />
+    <Compile Include="Antlr\Antlr.Runtime.Tree\ITreeVisitorAction.cs" />
+    <Compile Include="Antlr\Antlr.Runtime.Tree\ParseTree.cs" />
+    <Compile Include="Antlr\Antlr.Runtime.Tree\RewriteCardinalityException.cs" />
+    <Compile Include="Antlr\Antlr.Runtime.Tree\RewriteEarlyExitException.cs" />
+    <Compile Include="Antlr\Antlr.Runtime.Tree\RewriteEmptyStreamException.cs" />
+    <Compile Include="Antlr\Antlr.Runtime.Tree\RewriteRuleElementStream.cs" />
+    <Compile Include="Antlr\Antlr.Runtime.Tree\RewriteRuleNodeStream.cs" />
+    <Compile Include="Antlr\Antlr.Runtime.Tree\RewriteRuleSubtreeStream.cs" />
+    <Compile Include="Antlr\Antlr.Runtime.Tree\RewriteRuleTokenStream.cs" />
+    <Compile Include="Antlr\Antlr.Runtime.Tree\TreeParser.cs" />
+    <Compile Include="Antlr\Antlr.Runtime.Tree\TreePatternLexer.cs" />
+    <Compile Include="Antlr\Antlr.Runtime.Tree\TreePatternParser.cs" />
+    <Compile Include="Antlr\Antlr.Runtime.Tree\TreeRuleReturnScope.cs" />
+    <Compile Include="Antlr\Antlr.Runtime.Tree\TreeVisitor.cs" />
+    <Compile Include="Antlr\Antlr.Runtime.Tree\TreeWizard.cs" />
+    <Compile Include="Antlr\Antlr.Runtime.Tree\UnBufferedTreeNodeStream.cs" />
+    <Compile Include="Antlr\Antlr.Runtime\ANTLRFileStream.cs" />
+    <Compile Include="Antlr\Antlr.Runtime\ANTLRInputStream.cs" />
+    <Compile Include="Antlr\Antlr.Runtime\ANTLRReaderStream.cs" />
+    <Compile Include="Antlr\Antlr.Runtime\ANTLRStringStream.cs" />
+    <Compile Include="Antlr\Antlr.Runtime\BaseRecognizer.cs" />
+    <Compile Include="Antlr\Antlr.Runtime\BitSet.cs" />
+    <Compile Include="Antlr\Antlr.Runtime\CharStreamState.cs" />
+    <Compile Include="Antlr\Antlr.Runtime\ClassicToken.cs" />
+    <Compile Include="Antlr\Antlr.Runtime\CommonToken.cs" />
+    <Compile Include="Antlr\Antlr.Runtime\CommonTokenStream.cs" />
+    <Compile Include="Antlr\Antlr.Runtime\Constants.cs" />
+    <Compile Include="Antlr\Antlr.Runtime\DFA.cs" />
+    <Compile Include="Antlr\Antlr.Runtime\EarlyExitException.cs" />
+    <Compile Include="Antlr\Antlr.Runtime\FailedPredicateException.cs" />
+    <Compile Include="Antlr\Antlr.Runtime\ICharStream.cs" />
+    <Compile Include="Antlr\Antlr.Runtime\IIntStream.cs" />
+    <Compile Include="Antlr\Antlr.Runtime\IToken.cs" />
+    <Compile Include="Antlr\Antlr.Runtime\ITokenSource.cs" />
+    <Compile Include="Antlr\Antlr.Runtime\ITokenStream.cs" />
+    <Compile Include="Antlr\Antlr.Runtime\Lexer.cs" />
+    <Compile Include="Antlr\Antlr.Runtime\MismatchedNotSetException.cs" />
+    <Compile Include="Antlr\Antlr.Runtime\MismatchedRangeException.cs" />
+    <Compile Include="Antlr\Antlr.Runtime\MismatchedSetException.cs" />
+    <Compile Include="Antlr\Antlr.Runtime\MismatchedTokenException.cs" />
+    <Compile Include="Antlr\Antlr.Runtime\MismatchedTreeNodeException.cs" />
+    <Compile Include="Antlr\Antlr.Runtime\MissingTokenException.cs" />
+    <Compile Include="Antlr\Antlr.Runtime\NoViableAltException.cs" />
+    <Compile Include="Antlr\Antlr.Runtime\Parser.cs" />
+    <Compile Include="Antlr\Antlr.Runtime\ParserRuleReturnScope.cs" />
+    <Compile Include="Antlr\Antlr.Runtime\RecognitionException.cs" />
+    <Compile Include="Antlr\Antlr.Runtime\RecognizerSharedState.cs" />
+    <Compile Include="Antlr\Antlr.Runtime\RuleReturnScope.cs" />
+    <Compile Include="Antlr\Antlr.Runtime\Token.cs" />
+    <Compile Include="Antlr\Antlr.Runtime\TokenRewriteStream.cs" />
+    <Compile Include="Antlr\Antlr.Runtime\UnwantedTokenException.cs" />
+    <Compile Include="Engine\MethodInvoker.cs" />
+    <Compile Include="Engine\ScriptEngine.cs" />
+    <Compile Include="Engine\TypeResolver.cs" />
+    <Compile Include="Jint\Debujjer\BreakPoint.cs" />
+    <Compile Include="Jint\Debujjer\DebugInformation.cs" />
+    <Compile Include="Jint\Debujjer\SourceCodeDescriptor.cs" />
+    <Compile Include="Jint\Expressions\IFunctionDeclaration.cs" />
+    <Compile Include="Jint\Expressions\IGenericExpression.cs" />
+    <Compile Include="Jint\Expressions\WithStatement.cs" />
+    <Compile Include="Jint\Expressions\PropertyDeclarationExpression.cs" />
+    <Compile Include="Jint\Expressions\ArrayDeclaration.cs" />
+    <Compile Include="Jint\Expressions\CommaOperatorStatement.cs" />
+    <Compile Include="Jint\Expressions\ClrIdentifier.cs" />
+    <Compile Include="Jint\Expressions\IAssignable.cs" />
+    <Compile Include="Jint\Expressions\Identifier.cs" />
+    <Compile Include="Jint\Expressions\PropertyExpression.cs" />
+    <Compile Include="Jint\Expressions\IForStatement.cs" />
+    <Compile Include="Jint\Expressions\RegexpExpression.cs" />
+    <Compile Include="Jint\Expressions\JsonExpression.cs" />
+    <Compile Include="Jint\Expressions\FunctionExpression.cs" />
+    <Compile Include="Jint\Expressions\MemberExpression.cs" />
+    <Compile Include="Jint\Expressions\NewExpression.cs" />
+    <Compile Include="Jint\Expressions\MethodCall.cs" />
+    <Compile Include="Jint\Expressions\BinaryExpression.cs" />
+    <Compile Include="Jint\Expressions\BlockStatement.cs" />
+    <Compile Include="Jint\Expressions\CaseClause.cs" />
+    <Compile Include="Jint\Expressions\AssignmentExpression.cs" />
+    <Compile Include="Jint\Expressions\CatchClause.cs" />
+    <Compile Include="Jint\Expressions\ContinueStatement.cs" />
+    <Compile Include="Jint\Expressions\BreakStatement.cs" />
+    <Compile Include="Jint\Expressions\FinallyClause.cs" />
+    <Compile Include="Jint\Expressions\Statement.cs" />
+    <Compile Include="Jint\Expressions\EmptyStatement.cs" />
+    <Compile Include="Jint\Expressions\DoWhileStatement.cs" />
+    <Compile Include="Jint\Expressions\ExpressionStatement.cs" />
+    <Compile Include="Jint\Expressions\ForEachInStatement.cs" />
+    <Compile Include="Jint\Expressions\ForStatement.cs" />
+    <Compile Include="Jint\Expressions\FunctionDeclarationStatement.cs" />
+    <Compile Include="Jint\Expressions\IfStatement.cs" />
+    <Compile Include="Jint\Expressions\Program.cs" />
+    <Compile Include="Jint\Expressions\ReturnStatement.cs" />
+    <Compile Include="Jint\Expressions\SwitchStatement.cs" />
+    <Compile Include="Jint\Expressions\Expression.cs" />
+    <Compile Include="Jint\Expressions\Indexer.cs" />
+    <Compile Include="Jint\Expressions\TernaryExpression.cs" />
+    <Compile Include="Jint\Expressions\ThrowStatement.cs" />
+    <Compile Include="Jint\Expressions\TryStatement.cs" />
+    <Compile Include="Jint\Expressions\UnaryExpression.cs" />
+    <Compile Include="Jint\Expressions\ValueExpression.cs" />
+    <Compile Include="Jint\Expressions\VariableDeclarationStatement.cs" />
+    <Compile Include="Jint\Expressions\WhileStatement.cs" />
+    <Compile Include="Jint\IEntityAccessor.cs" />
+    <Compile Include="Jint\IScriptEngineContext.cs" />
+    <Compile Include="Jint\Native\ClrEntityDescriptor.cs" />
+    <Compile Include="Jint\Native\ClrMethodDescriptor.cs" />
+    <Compile Include="Jint\Native\ClrFieldDescriptor.cs" />
+    <Compile Include="Jint\Native\ClrPropertyDescriptor.cs" />
+    <Compile Include="Jint\EntityAccessor.cs" />
+    <Compile Include="Jint\Native\IGlobal.cs" />
+    <Compile Include="Jint\Native\JsApplyFunction.cs" />
+    <Compile Include="Jint\Native\Descriptor.cs" />
+    <Compile Include="Jint\Native\JsComparer.cs" />
+    <Compile Include="Jint\Native\JsConstructor.cs" />
+    <Compile Include="Jint\Native\JsError.cs" />
+    <Compile Include="Jint\Native\JsErrorConstructor.cs" />
+    <Compile Include="Jint\Native\PropertyDescriptor.cs" />
+    <Compile Include="Jint\Native\ValueDescriptor.cs" />
+    <Compile Include="Jint\Native\ClrImplDefinition.cs" />
+    <Compile Include="Jint\Native\JsClrConstructorInfo.cs" />
+    <Compile Include="Jint\Native\JsClrMethodInfo.cs" />
+    <Compile Include="Jint\Native\JsException.cs" />
+    <Compile Include="Jint\Native\JsFunctionWrapper.cs" />
+    <Compile Include="Jint\Native\JsArguments.cs" />
+    <Compile Include="Jint\Native\JsScope.cs" />
+    <Compile Include="Jint\Native\JsCallFunction.cs" />
+    <Compile Include="Jint\Native\JsDateConstructor.cs" />
+    <Compile Include="Jint\Native\JsFunctionConstructor.cs" />
+    <Compile Include="Jint\Native\JsNumberConstructor.cs" />
+    <Compile Include="Jint\Native\JsRegExpConstructor.cs" />
+    <Compile Include="Jint\Native\JsStringConstructor.cs" />
+    <Compile Include="Jint\Native\JsBooleanConstructor.cs" />
+    <Compile Include="Jint\Native\JsArrayConstructor.cs" />
+    <Compile Include="Jint\Native\JsDictionaryObject.cs" />
+    <Compile Include="Jint\Native\JsNull.cs" />
+    <Compile Include="Jint\Native\JsObjectConstructor.cs" />
+    <Compile Include="Jint\Native\CallProxyFunction.cs" />
+    <Compile Include="Jint\Native\JsInstance.cs" />
+    <Compile Include="Jint\Native\JsUndefined.cs" />
+    <Compile Include="Jint\Native\JsClr.cs" />
+    <Compile Include="Jint\Native\JsRegExp.cs" />
+    <Compile Include="Jint\Native\JsMathConstructor.cs" />
+    <Compile Include="Jint\Native\JsBoolean.cs" />
+    <Compile Include="Jint\Native\JsString.cs" />
+    <Compile Include="Jint\Native\JsNumber.cs" />
+    <Compile Include="Jint\Native\JsGlobal.cs" />
+    <Compile Include="Jint\Native\JsArray.cs" />
+    <Compile Include="Jint\Native\JsDate.cs" />
+    <Compile Include="Jint\Native\JsObject.cs" />
+    <Compile Include="Jint\Native\ClrFunction.cs" />
+    <Compile Include="Jint\Native\JsFunction.cs" />
+    <Compile Include="Jint\Native\PropertyAttributes.cs" />
+    <Compile Include="Jint\Parser\ES3Lexer.cs" />
+    <Compile Include="Jint\Parser\ES3Parser.cs" />
+    <Compile Include="Jint\Properties\AssemblyInfo.cs" />
+    <Compile Include="Jint\PropertyBags\DictionaryPropertyBag.cs" />
+    <Compile Include="Jint\PropertyBags\DoubleListPropertyBag.cs" />
+    <Compile Include="Jint\PropertyBags\HashedPropertyBag.cs" />
+    <Compile Include="Jint\PropertyBags\IPropertyBag.cs" />
+    <Compile Include="Jint\PropertyBags\MiniCachedPropertyBag.cs" />
+    <Compile Include="Jint\PropertyBags\ScopedPropertyBag.cs" />
+    <Compile Include="Jint\CachedConstructorInvoker.cs" />
+    <Compile Include="Jint\CachedMethodInvoker.cs" />
+    <Compile Include="Jint\CachedReflectionFieldGetter.cs" />
+    <Compile Include="Jint\CachedReflectionPropertyGetter.cs" />
+    <Compile Include="Jint\CachedTypeResolver.cs" />
+    <Compile Include="Jint\ExecutionVisitor.cs" />
+    <Compile Include="Jint\IConstructorInvoker.cs" />
+    <Compile Include="Jint\IFieldGetter.cs" />
+    <Compile Include="Jint\IJintVisitor.cs" />
+    <Compile Include="Jint\IMethodInvoker.cs" />
+    <Compile Include="Jint\IPropertyGetter.cs" />
+    <Compile Include="Jint\ITypeResolver.cs" />
+    <Compile Include="Jint\JintEngine.cs" />
+    <Compile Include="Jint\JintException.cs" />
+    <Compile Include="Jint\Number.cs" />
+    <Compile Include="Jint\Options.cs" />
+    <Compile Include="ScriptEngineContext.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Application\Application.MD.csproj">
+      <Project>{6b05cf5b-79d7-4d43-9dda-0849a6259f61}</Project>
+      <Name>Application.MD</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Common\Common.MD.csproj">
+      <Project>{774597b4-f92c-4c09-afd8-c78e654813eb}</Project>
+      <Name>Common.MD</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties ProjectLinkerExcludeFilter="\\?desktop(\\.*)?$;\\?silverlight(\\.*)?$;\.desktop;\.silverlight;\.xaml;^service references(\\.*)?$;\.clientconfig;^web references(\\.*)?$" ProjectLinkReference="763bce78-a32f-4a05-92aa-d30698dd1693" />
+    </VisualStudio>
+  </ProjectExtensions>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

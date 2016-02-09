@@ -1,0 +1,72 @@
+﻿<#@ template language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Microsoft.Synchronization.ClientServices.IsolatedStorage
+{
+    public class IsolatedStorageOfflineEntity 
+    {
+         protected void OnPropertyChanging(string propertyName)
+         { }
+         protected void OnPropertyChanged(string propertyName)
+         { }
+		 
+         public IsolatedStorageOfflineContext OfflineContext {get; set;}
+		 public void SetIsNew()
+		 { }
+    }
+    public class IsolatedStorageOfflineContext
+    {
+        public IsolatedStorageOfflineContext(IsolatedStorageSchema s)
+        {
+
+        }
+        public IsolatedStorageOfflineContext()
+        {
+
+        }
+        public void AddItem<T>(T entity) where T : IsolatedStorageOfflineEntity
+        {
+
+        }
+        public IEnumerable<T> GetCollection<T>() where T : IsolatedStorageOfflineEntity
+        {
+            return null;
+        }
+        public IsolatedStorageOfflineContext(IsolatedStorageSchema schema, string scopeName, string cachePath,Uri uri) :
+            this(schema, scopeName, cachePath, uri, null)
+        {
+        }
+     public IsolatedStorageOfflineContext(IsolatedStorageSchema schema, string scopeName, string cachePath,Uri uri, System.Security.Cryptography.SymmetricAlgorithm encryptionAlgorithm)
+        {}
+    }
+    public class IsolatedStorageSchema
+    {
+        public void AddCollection<T>() where T : IsolatedStorageOfflineEntity
+        {
+
+        }
+    }
+	public class IsolatedStorageCollection<T>
+	{
+		public T FindById(Guid guid)
+		{
+			return default(T);
+		}
+	}
+
+}
+namespace System.ComponentModel.DataAnnotations
+{
+   public sealed class KeyAttribute : Attribute
+   {
+   }
+}

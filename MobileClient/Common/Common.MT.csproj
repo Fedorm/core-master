@@ -1,0 +1,193 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{3FF1102C-B767-4E1A-8D0C-14BB5BEA302E}</ProjectGuid>
+    <ProjectTypeGuids>{6BC8ED88-2882-458C-8E55-DFD12B67127B};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <RootNamespace>BitMobile.Common</RootNamespace>
+    <IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
+    <AssemblyName>Common</AssemblyName>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>full</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Application\Exceptions\IExceptionHandler.cs" />
+    <Compile Include="Application\IApplicationContext.cs" />
+    <Compile Include="Application\IApplicationSettings.cs" />
+    <Compile Include="Application\SolutionType.cs" />
+    <Compile Include="Application\Tracking\ITracker.cs" />
+    <Compile Include="BusinessProcess\Controllers\IController.cs" />
+    <Compile Include="BusinessProcess\Controllers\IGlobalEventsController.cs" />
+    <Compile Include="BusinessProcess\Controllers\IScreenController.cs" />
+    <Compile Include="BusinessProcess\Factory\IBusinessProcessFactory.cs" />
+    <Compile Include="BusinessProcess\Factory\IConfigurationFactory.cs" />
+    <Compile Include="BusinessProcess\Factory\IControllerFactory.cs" />
+    <Compile Include="BusinessProcess\Factory\IObjectFactory.cs" />
+    <Compile Include="BusinessProcess\Factory\IScreenFactory.cs" />
+    <Compile Include="BusinessProcess\IBusinessProcessContext.cs" />
+    <Compile Include="Controls\DataBindAttribute.cs" />
+    <Compile Include="Controls\IActionHandler.cs" />
+    <Compile Include="Controls\IActionHandlerEx.cs" />
+    <Compile Include="Controls\IComponent.cs" />
+    <Compile Include="Controls\IControlsContext.cs" />
+    <Compile Include="Controls\IDataBinder.cs" />
+    <Compile Include="Controls\IInputValidator.cs" />
+    <Compile Include="Controls\ILayoutable.cs" />
+    <Compile Include="Controls\ILayoutableContainer.cs" />
+    <Compile Include="Controls\ILayoutableContainerBehaviour.cs" />
+    <Compile Include="Controls\ILayoutBehaviour.cs" />
+    <Compile Include="Controls\ILocker.cs" />
+    <Compile Include="Controls\ISwipeBehaviour.cs" />
+    <Compile Include="Controls\IWebMapBehavior.cs" />
+    <Compile Include="Controls\MarkupElement.cs" />
+    <Compile Include="CoreInformation.cs" />
+    <Compile Include="DataAccessLayer\IDalContext.cs" />
+    <Compile Include="DataAccessLayer\ITranslator.cs" />
+    <Compile Include="DbEngine\IDbContext.cs" />
+    <Compile Include="DbEngine\IDbRefFactory.cs" />
+    <Compile Include="DbEngine\ProcessMode.cs" />
+    <Compile Include="Debugger\IDebugContext.cs" />
+    <Compile Include="Develop\Assert.cs" />
+    <Compile Include="Develop\TimeCollector.cs" />
+    <Compile Include="Develop\TimeStamp.cs" />
+    <Compile Include="Device\Providers\IDialogButton.cs" />
+    <Compile Include="BusinessProcess\WorkingProcess\IAction.cs" />
+    <Compile Include="BusinessProcess\WorkingProcess\IBusinessProcess.cs" />
+    <Compile Include="BusinessProcess\WorkingProcess\IStep.cs" />
+    <Compile Include="BusinessProcess\WorkingProcess\IWorkflow.cs" />
+    <Compile Include="BusinessProcess\SolutionConfiguration\IBusinessProcess.cs" />
+    <Compile Include="BusinessProcess\SolutionConfiguration\IConfiguration.cs" />
+    <Compile Include="BusinessProcess\SolutionConfiguration\IDefaultStyles.cs" />
+    <Compile Include="BusinessProcess\SolutionConfiguration\IGlobalEvents.cs" />
+    <Compile Include="BusinessProcess\SolutionConfiguration\IGlobalModules.cs" />
+    <Compile Include="BusinessProcess\SolutionConfiguration\IMixins.cs" />
+    <Compile Include="BusinessProcess\SolutionConfiguration\IScript.cs" />
+    <Compile Include="BusinessProcess\SolutionConfiguration\IStyle.cs" />
+    <Compile Include="BusinessProcess\SolutionConfiguration\IWarmupActions.cs" />
+    <Compile Include="Controls\IApplicationContextAware.cs" />
+    <Compile Include="Controls\IContainer.cs" />
+    <Compile Include="Controls\IControl.cs" />
+    <Compile Include="Controls\IDataBind.cs" />
+    <Compile Include="Controls\IFocusable.cs" />
+    <Compile Include="Controls\IPersistable.cs" />
+    <Compile Include="Controls\IRectangle.cs" />
+    <Compile Include="Controls\IScreen.cs" />
+    <Compile Include="Controls\IScreenData.cs" />
+    <Compile Include="Controls\IValidatable.cs" />
+    <Compile Include="DataAccessLayer\IDal.cs" />
+    <Compile Include="DataAccessLayer\ISyncEventArgs.cs" />
+    <Compile Include="DataAccessLayer\SyncEventHandler.cs" />
+    <Compile Include="DbEngine\IDatabase.cs" />
+    <Compile Include="DbEngine\IDatabaseAware.cs" />
+    <Compile Include="DbEngine\IDbCache.cs" />
+    <Compile Include="DbEngine\IDbRecordset.cs" />
+    <Compile Include="DbEngine\IDbRecordsetEx.cs" />
+    <Compile Include="DbEngine\IDbRef.cs" />
+    <Compile Include="DbEngine\IDbTransaction.cs" />
+    <Compile Include="DbEngine\ISqliteEntity.cs" />
+    <Compile Include="Debugger\IDebugger.cs" />
+    <Compile Include="Debugger\IDebuggerAware.cs" />
+    <Compile Include="Device\Providers\ICameraProvider.cs" />
+    <Compile Include="Device\Providers\IDialogProvider.cs" />
+    <Compile Include="Device\Providers\IDisplayProvider.cs" />
+    <Compile Include="Device\Providers\IEmailProvider.cs" />
+    <Compile Include="Device\Providers\IGalleryProvider.cs" />
+    <Compile Include="Device\Providers\IGpsCoordinate.cs" />
+    <Compile Include="Device\Providers\ILocalNotificationProvider.cs" />
+    <Compile Include="Device\Providers\ILocationProvider.cs" />
+    <Compile Include="Device\Providers\IWebProvider.cs" />
+    <Compile Include="Entites\IEntityField.cs" />
+    <Compile Include="Entites\IEntityType.cs" />
+    <Compile Include="ExpressionEvaluator\IEvaluator.cs" />
+    <Compile Include="ExpressionEvaluator\IExpressionContext.cs" />
+    <Compile Include="ExpressionEvaluator\IExpressionFactory.cs" />
+    <Compile Include="IO\IIOContext.cs" />
+    <Compile Include="IO\ILocalProvider.cs" />
+    <Compile Include="IO\IFile.cs" />
+    <Compile Include="IO\IRemoteProvider.cs" />
+    <Compile Include="Log\IFileSystemReport.cs" />
+    <Compile Include="Log\ILog.cs" />
+    <Compile Include="Log\ILoggable.cs" />
+    <Compile Include="Log\ILogger.cs" />
+    <Compile Include="Log\IReport.cs" />
+    <Compile Include="Log\IReporter.cs" />
+    <Compile Include="Log\IReportSender.cs" />
+    <Compile Include="Log\NonLogAttribute.cs" />
+    <Compile Include="Log\ReportType.cs" />
+    <Compile Include="ScriptEngine\IDebugInformation.cs" />
+    <Compile Include="ScriptEngine\IGlobalModule.cs" />
+    <Compile Include="ScriptEngine\IJsExecutable.cs" />
+    <Compile Include="ScriptEngine\Injection.cs" />
+    <Compile Include="ScriptEngine\IScriptEngine.cs" />
+    <Compile Include="ScriptEngine\IScriptEngineAware.cs" />
+    <Compile Include="ScriptEngine\IScriptEngineContext.cs" />
+    <Compile Include="StyleSheet\BorderStyleValues.cs" />
+    <Compile Include="StyleSheet\IColorInfo.cs" />
+    <Compile Include="StyleSheet\IStyleHelper.cs" />
+    <Compile Include="StyleSheet\IStyleKey.cs" />
+    <Compile Include="StyleSheet\IStyleKeyPart.cs" />
+    <Compile Include="StyleSheet\IStyleSheetContext.cs" />
+    <Compile Include="StyleSheet\Styles.cs" />
+    <Compile Include="StyleSheet\SynonymAttribute.cs" />
+    <Compile Include="StyleSheet\WhiteSpaceKind.cs" />
+    <Compile Include="StyleSheet\TextAlignValues.cs" />
+    <Compile Include="StyleSheet\DockAlignValues.cs" />
+    <Compile Include="StyleSheet\HorizontalAlignValues.cs" />
+    <Compile Include="StyleSheet\ICustomStyleSheet.cs" />
+    <Compile Include="StyleSheet\IStyle.cs" />
+    <Compile Include="StyleSheet\IStyledObject.cs" />
+    <Compile Include="StyleSheet\IStyleSheet.cs" />
+    <Compile Include="StyleSheet\IStyleSheetHelper.cs" />
+    <Compile Include="StyleSheet\VerticalAlignValues.cs" />
+    <Compile Include="Utils\WebHelper.cs" />
+    <Compile Include="SyncLibrary\CacheControllerWebException.cs" />
+    <Compile Include="SyncLibrary\ICacheController.cs" />
+    <Compile Include="SyncLibrary\ICacheControllerBehavior.cs" />
+    <Compile Include="SyncLibrary\IOfflineContext.cs" />
+    <Compile Include="SyncLibrary\ISyncContext.cs" />
+    <Compile Include="ValueStack\ICommonData.cs" />
+    <Compile Include="ValueStack\ICustomDictionary.cs" />
+    <Compile Include="ValueStack\IElse.cs" />
+    <Compile Include="ValueStack\IExternalFunction.cs" />
+    <Compile Include="ValueStack\IIf.cs" />
+    <Compile Include="ValueStack\IInclude.cs" />
+    <Compile Include="ValueStack\IIndexedProperty.cs" />
+    <Compile Include="ValueStack\IEntity.cs" />
+    <Compile Include="ValueStack\IIterator.cs" />
+    <Compile Include="ValueStack\IIteratorStatus.cs" />
+    <Compile Include="ValueStack\IPush.cs" />
+    <Compile Include="ValueStack\IValueStack.cs" />
+    <Compile Include="ValueStack\IValueStackContext.cs" />
+    <Compile Include="ValueStack\IValueStackTag.cs" />
+    <Compile Include="ValueStack\ValueStackConst.cs" />
+    <Compile Include="StyleSheet\IBound.cs" />
+    <Compile Include="StyleSheet\TextFormatValues.cs" />
+    <Compile Include="Device\Providers\IClipboardProvider.cs" />
+    <Compile Include="IO\FileSystemItem.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.MonoTouch.CSharp.targets" />
+</Project>

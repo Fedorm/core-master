@@ -1,0 +1,59 @@
+USE `$cfg.databaseName$`;
+###
+
+$! --------------------------------------------Основные таблицы---------------------------------------------- !$
+$cfg.entities:{ entity | 
+
+CREATE TABLE `$entity.schema$_$entity.name$`(
+$entity.fields:{ field | 
+`$field.name$` $field.sqlType$$if(!field.isLast)$,$endif$
+}$);
+###
+ALTER TABLE `$entity.schema$_$entity.name$` ADD CONSTRAINT PK_$entity.schema$_$entity.name$ PRIMARY KEY NONCLUSTERED($entity.keyField$); 
+###
+
+$entity.tabularSections:{ tabularSection |
+CREATE TABLE `$entity.schema$_$entity.name$_$tabularSection.name$`(
+$tabularSection.fields:{ field | 
+`$field.name$` $field.sqlType$$if(!field.isLast)$,$endif$
+}$);
+###
+ALTER TABLE `$entity.schema$_$entity.name$_$tabularSection.name$` ADD CONSTRAINT PK_$entity.schema$_$entity.name$_$tabularSection.name$ PRIMARY KEY NONCLUSTERED($tabularSection.keyField$); 
+###
+ALTER TABLE `$entity.schema$_$entity.name$_$tabularSection.name$` ADD CONSTRAINT FK_$entity.schema$_$entity.name$_$tabularSection.name$_EntityId FOREIGN KEY (Ref) REFERENCES $entity.schema$_$entity.name$(Id) ON DELETE CASCADE;
+###
+$if(tabularSection.hasTabularSectionKey)$
+ALTER TABLE `$entity.schema$_$entity.name$_$tabularSection.name$` ADD CONSTRAINT UQ_$entity.schema$_$entity.name$_$tabularSection.name$_Key UNIQUE (`Ref`$tabularSection.tabularSectionKeys:{ field | ,`$field.name$`}$);
+###
+$endif$
+
+}$
+
+}$
+
+$! -------------------------------------------Констрейнты ---------------------------------------------!$
+
+$cfg.entities:{ entity | 
+
+$entity.fields:{ field | 
+$if(!field.simpleType)$
+ALTER TABLE `$entity.schema$_$entity.name$` ADD CONSTRAINT FK_$field.foreignKeyName$ FOREIGN KEY (`$field.name$`) REFERENCES `$field.sqlLinkedSchema$_$field.sqlLinkedTable$`(Id);
+###
+$endif$
+$if(field.unique)$
+ALTER TABLE `$entity.schema$_$entity.name$` ADD CONSTRAINT UQ_$entity.schema$_$entity.name$_$field.name$ UNIQUE (`$field.name$`);
+###
+$endif$
+}$
+
+$entity.tabularSections:{ tabularSection |
+$tabularSection.fields:{ field | 
+$if(!field.simpleType)$
+ALTER TABLE `$entity.schema$_$entity.name$_$tabularSection.name$` ADD CONSTRAINT FK_$field.foreignKeyName$ FOREIGN KEY (`$field.name$`) REFERENCES `$field.sqlLinkedSchema$_$field.sqlLinkedTable$`(Id);
+###
+$endif$
+}$
+
+}$
+
+}$
