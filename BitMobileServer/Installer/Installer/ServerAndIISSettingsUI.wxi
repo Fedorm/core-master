@@ -1,16 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Include xmlns="http://schemas.microsoft.com/wix/2006/wi">
-   
+
   <Fragment>
 
     <EnsureTable Id='ComboBox'/>
 
     <Binary Id="WebAppCA" SourceFile="WebAppInstallCustomActions.CA.dll" />
 
-    <CustomAction Id="EnumerateIISWebSitesAndAppPools" BinaryKey="WebAppCA" DllEntry="EnumerateIISWebSitesAndAppPools" Execute="immediate" Return="check" />
+    <CustomAction Id="EnumerateIISWebSitesAndAppPools"
+                  BinaryKey="WebAppCA"
+                  DllEntry="EnumerateIISWebSitesAndAppPools"
+                  Execute="immediate"
+                  Return="check"
+               
+                  
+                  />
 
     <UI>
-    
+
       <Dialog Id="InvalidWebAliasAliasDlg" Width="260" Height="85" Title="!(loc.ServerSettingsError)">
 
         <Control Id="Return" Type="PushButton" X="102" Y="57" Width="56" Height="17" Default="yes" Cancel="yes" Text="OK">
@@ -30,21 +37,21 @@
           <Condition Action="show"><![CDATA[WEB_APP_NAME = ""]]></Condition>
 
         </Control>
-        
+
         <Control Id="InvalidSite" Type="Text" X="48" Y="15" Width="194" Height="30" Text="!(loc.InvalidSiteNameDlgText)" >
 
           <Condition Action="hide"><![CDATA[WEBSITE_NAME <> ""]]></Condition>
           <Condition Action="show"><![CDATA[WEBSITE_NAME = ""]]></Condition>
 
         </Control>
-        
+
         <Control Id="Icon" Type="Icon" X="15" Y="15" Width="24" Height="24" FixedSize="yes" IconSize="32" Text="WixUI_Ico_Exclam" />
 
       </Dialog>
-      
-      
+
+
       <Dialog Id="ServerAndIISSettingsDlg" Width="370" Height="270" Title="!(loc.InstallDirDlg_Title)">
-          
+
         <Control Id="Next" Type="PushButton" X="236" Y="243" Width="56" Height="17" Default="yes" Text="!(loc.WixUINext)" />
         <Control Id="Back" Type="PushButton" X="180" Y="243" Width="56" Height="17" Text="!(loc.WixUIBack)" />
         <Control Id="Cancel" Type="PushButton" X="304" Y="243" Width="56" Height="17" Cancel="yes" Text="!(loc.WixUICancel)">
@@ -66,20 +73,20 @@
 
         <Control Type="Text" Id="AppNameLabel" Width="320" Height="15" X="20" Y="147" Text="!(loc.WebAppInstallDlgAppNameLabel)" />
         <Control Type="Edit" Id="AppNameEdit" Width="200" Height="18" X="20" Y="162" Property="WEB_APP_NAME" />
-                                
+
         <Control Type="Text" Id="AppPoolLabel" Width="300" Height="15" X="20" Y="184" Text="!(loc.WebAppInstallDlgAppPoolLabel)"></Control>
         <Control Type="ComboBox" Property="APP_POOL_NAME" Id="AppPoolCombo" Width="200" Height="18" X="20" Y="199"  ComboList="yes" Sorted="yes"></Control>
-                
+
       </Dialog>
-      
+
     </UI>
 
     <InstallUISequence>
 
       <Custom Action="EnumerateIISWebSitesAndAppPools" After="CostInitialize" Overridable="yes">NOT Installed</Custom>
-    
+
     </InstallUISequence>
-    
+
   </Fragment>
-  
+
 </Include>
