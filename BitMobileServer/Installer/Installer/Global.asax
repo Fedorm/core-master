@@ -1,1 +1,1 @@
-﻿<%@ Application Codebehind="Global.asax.cs" Inherits="SyncOnPremises.Global" Language="C#" %>
+﻿<%@ Application Inherits="SystemService.Global" Language="C#" %>

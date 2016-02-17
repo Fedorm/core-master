@@ -40,12 +40,12 @@
          </InstallExecuteSequence>-->
 
     <CustomAction Id="test"
-                  ExeCommand="[INSTALLFOLDER]bat.bat"
+    ExeCommand="[INSTALLFOLDER]bat.bat"
     Directory="INSTALLFOLDER"
     Execute="deferred"
     Return="asyncNoWait"/>
     <InstallExecuteSequence>
-      <Custom Action="test" After="InstallFiles" >NOT Installed</Custom>
+    <Custom Action="test" After="InstallFiles" >NOT Installed</Custom>
     </InstallExecuteSequence>
 
     <!--<CustomAction Id="InstallSync" 
@@ -136,7 +136,7 @@ ChangePermission ="yes" TakeOwnership ="yes" GenericExecute ="yes" Read
         </CreateFolder>
         <iis:WebVirtualDir Id="VirtualDir" Alias="[WEB_APP_NAME]" Directory="INSTALLFOLDER" WebSite="WebSite">
           <iis:WebApplication Id="MyWebAppApplication" WebAppPool="AppPool" Name="$(var.DefaultAppName)" />
-          <iis:WebDirProperties Id="MyWebSite_Properties" AnonymousAccess="yes" WindowsAuthentication="no" DefaultDocuments="Default.aspx" />
+          <iis:WebDirProperties Id="MyWebSite_Properties" AnonymousAccess="yes" WindowsAuthentication="yes" DefaultDocuments="Default.aspx" />
         </iis:WebVirtualDir>
       </Component>
     </DirectoryRef>
