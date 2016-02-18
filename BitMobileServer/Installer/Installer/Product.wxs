@@ -148,6 +148,9 @@ ChangePermission ="yes" TakeOwnership ="yes" GenericExecute ="yes" Read
         <File Id="Common" Source="$(var.BinaryFileDir)Common.dll" DiskId="1" />
         <File Id="FtpService" Source="$(var.BinaryFileDir)FtpService.dll" DiskId="1" />
         <File Id="GPSService" Source="$(var.BinaryFileDir)GPSService.dll" DiskId="1" />
+        
+        <File Id="LicenseService" Source="$(var.BinaryFileDir)LicenseService.dll" DiskId="1"/>
+        
         <File Id="ScriptEngine" Source="$(var.BinaryFileDir)ScriptEngine.dll" DiskId="1" />
         <File Id="ScriptService" Source="$(var.BinaryFileDir)ScriptService.dll" DiskId="1" />
         <File Id="SyncLibrary" Source="$(var.BinaryFileDir)SyncLibrary.dll" DiskId="1" />
@@ -161,7 +164,19 @@ ChangePermission ="yes" TakeOwnership ="yes" GenericExecute ="yes" Read
         <File Id="MicrosoftSynchronizationDataServer" Source="$(var.BinaryFileDir)Microsoft.Synchronization.Data.Server.dll" DiskId="1" />
         <File Id="MicrosoftSynchronizationDataSqlServer" Source="$(var.BinaryFileDir)Microsoft.Synchronization.Data.SqlServer.dll" DiskId="1" />
         <File Id="MicrosoftSynchronization" Source="$(var.BinaryFileDir)Microsoft.Synchronization.dll" DiskId="1" />
+        
+        <File Id="Newtonsoft.Json" Source="$(var.BinaryFileDir)Newtonsoft.Json.dll" DiskId="1" />
+        <File Id="PushService" Source="$(var.BinaryFileDir)PushService.dll" DiskId="1" />
+        <File Id="PushSharp.Android" Source="$(var.BinaryFileDir)PushSharp.Android.dll" DiskId="1" />
+        <File Id="PushSharp.Apple" Source="$(var.BinaryFileDir)PushSharp.Apple.dll" DiskId="1" />
+        <File Id="PushSharp.Core" Source="$(var.BinaryFileDir)PushSharp.Core.dll" DiskId="1" />
+       
         <File Id="Synchronization21" Source="$(var.SourceFileDir)Utils\Synchronization21.dll" DiskId="1" SelfRegCost="1" />
+      
+     <File Id="SQLite.Interop" Source="$(var.BinaryFileDir)SQLite.Interop.dll" DiskId="1" />
+        <File Id="System.Data.SQLite" Source="$(var.BinaryFileDir)System.Data.SQLite.dll" DiskId="1" />
+        <File Id="Telegram" Source="$(var.BinaryFileDir)Telegram.dll" DiskId="1" />
+      
       </Component>
     </DirectoryRef>
     <DirectoryRef Id="UtilsFolder">
